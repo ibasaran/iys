@@ -12,7 +12,7 @@ def login_page(request):
         if loginForm.is_valid():
             username = loginForm.cleaned_data['username']
             password = loginForm.cleaned_data['password']
-            hospitalId = loginForm.cleaned_data['hospital']
+            hospitalId = loginForm.cleaned_data['hospital'].id
             print("Kullanıcı Adı:%s Şifre: %s Hastane ID: %s" % (username, password,hospitalId))
             the_user = authenticate(username=username, password=password)
             if the_user:
