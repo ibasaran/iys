@@ -24,3 +24,7 @@ def login_page(request):
         loginForm = LoginForm()
 
     return render(request, 'auth/login.html',{'loginForm':loginForm})
+
+
+def dashboard(request):
+    return render(request, 'dashboard.html', {})
