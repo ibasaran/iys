@@ -21,6 +21,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     #path('core/',include('core.urls', namespace='core')),
     url(r'^', include('core.urls', namespace='core')),
+    url(r'^', include('hasta.urls', namespace='hasta')),
 ]
 
 admin.site.site_header="IYS SUPER ADMİN YONETIM SAYFASI"

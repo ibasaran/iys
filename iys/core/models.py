@@ -68,7 +68,7 @@ class DolumTipi(models.Model):
 
 class DolumYeri(models.Model):
     dolumTipi = models.ForeignKey(DolumTipi,on_delete=models.SET_NULL,null=True)
-    miktari = models.IntegerField(max_length=25, verbose_name='Miktarı')
+    miktari = models.IntegerField( verbose_name='Miktarı')
     birimTipi = models.ForeignKey(BirimTipi,on_delete=models.SET_NULL,null=True)
     durumTipi = models.ForeignKey(DurumTipi,on_delete=models.SET_NULL,null=True)
 
@@ -78,3 +78,84 @@ class DolumYeri(models.Model):
 
     class Meta:
         verbose_name='Dolum Yeri'
+
+class Mayi(models.Model):
+    name = models.CharField(max_length=250, verbose_name='Mayi Adı')
+    miktari = models.IntegerField( verbose_name='Miktarı')
+    birimTipi = models.ForeignKey(BirimTipi,on_delete=models.SET_NULL,null=True)
+    durumTipi = models.ForeignKey(DurumTipi,on_delete=models.SET_NULL,null=True)
+    def __str__(self):
+        return self.name + ' ' + str(self.miktari) + ' ' + self.birimTipi.name
+
+    class Meta:
+        verbose_name='Mayi'
+
+class Ilac(models.Model):
+    etkenMadde = models.CharField(max_length=250, verbose_name='Etken Madde')
+    adi = models.CharField(max_length=250, verbose_name='İlaç Adı')
+    piyasaAdi = models.CharField(max_length=250, verbose_name='Piyasa Adı')
+    esdegerIlac = models.CharField(max_length=250, verbose_name='Eşdeğer İlaç')
+    mg = models.IntegerField( verbose_name='Mg')
+    ml = models.IntegerField( verbose_name='Ml')
+    dolumYeri = models.ForeignKey(DolumYeri,on_delete=models.SET_NULL,null=True)
+    birimTipi = models.ForeignKey(BirimTipi,on_delete=models.SET_NULL,null=True)
+    durumTipi = models.ForeignKey(DurumTipi,on_delete=models.SET_NULL,null=True)
+    saklamaKosulu = models.CharField(max_length=250, verbose_name='Saklama Koşulu')
+    uyari = models.CharField(max_length=250, verbose_name='Uyari')
+
+
+    def __str__(self):
+        return self.adi + ' ' + str(self.etkenMadde) + ' ' + self.piyasaAdi
+
+    class Meta:
+        verbose_name='İlaç'
+
+
+class UygulamaYolu(models.Model):
+    adi = models.CharField(max_length=250, verbose_name='Uygulama Yolu Adı')
+    durumTipi = models.ForeignKey(DurumTipi,on_delete=models.SET_NULL,null=True)
+    def __str__(self):
+        return self.adi
+
+    class Meta:
+        verbose_name='Uygulama Yolu'
+
+
+class ServisBilgileri(models.Model):
+    servisAdi = models.CharField(max_length=250, verbose_name='Servis Adı')
+    durumTipi = models.ForeignKey(DurumTipi,on_delete=models.SET_NULL,null=True)
+    def __str__(self):
+        return self.servisAdi
+
+    class Meta:
+        verbose_name='ServisBilgileri'
+
+
+class Cinsiyet(models.Model):
+    name = models.CharField(max_length=50,verbose_name='Cinsiyet Adı')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name='Cinsiyet'
+
+
+class KurumBilgisi(models.Model):
+    name = models.CharField(max_length=250, verbose_name='Kurum Adı')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name='Kurum Bilgisi'
+
+
+class SureTipi(models.Model):
+    name = models.CharField(max_length=250, verbose_name='Süre Tipi Adı')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name='Süre Tipi'

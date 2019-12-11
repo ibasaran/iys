@@ -1,0 +1,124 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block content %}
+<form method="POST" action="{% url 'hasta:hastaEdit' %}"   class="form-horizontal form-label-left">
+    {% csrf_token %}
+    <div class="item form-group">
+      <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Protokol Numarası <span class="required">*</span>
+      </label>
+      <div class="col-md-6 col-sm-6 ">
+        {{hastaForm.protokolNo}}
+      </div>
+    </div>
+
+    <div class="item form-group">
+        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">T.C. Kimilik Numarası </span>
+        </label>
+        <div class="col-md-6 col-sm-6 ">
+          {{hastaForm.tcNo}}
+        </div>
+    </div>
+
+    <div class="item form-group">
+        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Adı</span>
+        </label>
+        <div class="col-md-6 col-sm-6 ">
+          {{hastaForm.name}}
+        </div>
+    </div>
+
+    <div class="item form-group">
+        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Soyadı</span>
+        </label>
+        <div class="col-md-6 col-sm-6 ">
+          {{hastaForm.surname}}
+        </div>
+    </div>
+
+    <div class="item form-group">
+        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Cinsiyeti</span>
+        </label>
+        <div class="col-md-6 col-sm-6 ">
+          {{hastaForm.cinsiyet}}
+        </div>
+    </div>
+
+
+    <div class="item form-group">
+        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Doğum Tarihi</span>
+        </label>
+        <div class="col-md-6 col-sm-6 ">
+          {{hastaForm.dogumTarihi}}
+        </div>
+    </div>
+
+    <div class="item form-group">
+        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Yaşı</span>
+        </label>
+        <div class="col-md-6 col-sm-6 ">
+          {{hastaForm.yasi}}
+        </div>
+    </div>
+
+    <div class="item form-group">
+        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Durum Tipi</span>
+        </label>
+        <div class="col-md-6 col-sm-6 ">
+          {{hastaForm.durumTipi}}
+        </div>
+    </div>
+
+
+    <div class="item form-group">
+        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Boy</span>
+        </label>
+        <div class="col-md-6 col-sm-6 ">
+          {{hastaForm.boy}}
+        </div>
+    </div>
+
+    <div class="item form-group">
+        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Kilo</span>
+        </label>
+        <div class="col-md-6 col-sm-6 ">
+          {{hastaForm.kilo}}
+        </div>
+    </div>
+    
+    <div class="item form-group">
+        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Vucut Yüzey Alanı</span>
+        </label>
+        <div class="col-md-6 col-sm-6 ">
+          {{hastaForm.vucutYuzeyAlani}}
+        </div>
+    </div>
+
+    <div class="item form-group">
+        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Kurum Bilgisi</span>
+        </label>
+        <div class="col-md-6 col-sm-6 ">
+          {{hastaForm.kurumBilgisi}}
+        </div>
+    </div>
+
+
+    <div class="item form-group">
+        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Servis Bilgisi</span>
+        </label>
+        <div class="col-md-6 col-sm-6 ">
+          {{hastaForm.servisBilgisi}}
+        </div>
+    </div>
+
+
+    <div class="ln_solid"></div>
+    <div class="item form-group">
+      <div class="col-md-6 col-sm-6 offset-md-3">
+        <button class="btn btn-primary" type="reset">Reset</button>
+        <button type="submit" class="btn btn-success">Submit</button>
+      </div>
+    </div>
+
+  </form>
+{% endblock content %}

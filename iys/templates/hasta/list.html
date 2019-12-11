@@ -1,0 +1,34 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<table id="datatable-buttons" class="table table-striped table-bordered" style="width:100%">
+    <thead>
+      <tr>
+        <th>Adı</th>
+        <th>Soyadı</th>
+        <th>Protokol No</th>
+        <th>TC No</th>
+        <th>Cinsiyet</th>
+        <th>Kurum</th>
+      </tr>
+    </thead>
+
+
+    <tbody>
+        {% for hasta in hastalar %}
+            <tr>
+                <td>{{hasta.name}}</td>
+                <td>{{hasta.surname}}</td>
+                <td>{{hasta.protokolNo}}</td>
+                <td>{{hasta.tcNo}}</td>
+                <td>{{hasta.cinsiyet.name}}</td>
+                <td>{{hasta.kurumBilgisi.name}}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+
+
+{% endblock content %}

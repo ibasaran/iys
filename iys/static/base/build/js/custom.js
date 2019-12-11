@@ -1818,20 +1818,20 @@ if (typeof NProgress != 'undefined') {
         validator.checkField.apply($(this).siblings().last()[0]);
       });
 
-      $('form').submit(function(e) {
-        e.preventDefault();
-        var submit = true;
+    //   $('form').submit(function(e) {
+    //     e.preventDefault();
+    //     var submit = true;
 
-        // evaluate the form using generic validaing
-        if (!validator.checkAll($(this))) {
-          submit = false;
-        }
+    //     // evaluate the form using generic validaing
+    //     if (!validator.checkAll($(this))) {
+    //       submit = false;
+    //     }
 
-        if (submit)
-          this.submit();
+    //     if (submit)
+    //       this.submit();
 
-        return false;
-		});
+    //     return false;
+	// 	});
 	  
 	  };
 	   
@@ -5029,7 +5029,7 @@ if (typeof NProgress != 'undefined') {
 		init_morris_charts();
 		init_skycons();
 		init_select2();
-		init_validator();
+		// init_validator();
 		init_DataTables();
 		init_chart_doughnut();
 		init_gauge();
