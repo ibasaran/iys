@@ -131,3 +131,19 @@ STATICFILES_DIRS = (
 )
 
 LOGIN_URL='/'
+
+OPEN_URLS = [
+    'admin',
+    '/admin',
+    '/admin/',
+    '/dashboard/',
+    '/admin/login/'
+]
+
+LOGIN_EXEMPT_URLS = (
+    r'^$',
+    r'^admin$',
+    r'^register$',
+)
+
+ADMIN_URL = '/admin'
