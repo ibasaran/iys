@@ -4,12 +4,77 @@
 {% block content %}
 
 
-<form action="" method="post">
+<form action="" method="post" style="margin-top:50px">
         {% csrf_token %}
-        {{ form.as_p }}
+        
+        <div class="item form-group">
+            <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Hasta </span>
+            </label>
+            <div class="col-md-6 col-sm-6 ">
+            {{form.hasta}}
+            </div>
+        </div>
+
+        <div class="item form-group">
+            <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Reçete Tarihi </span>
+            </label>
+            <div class="col-md-6 col-sm-6 ">
+            {{form.receteTarihi}}
+            </div>
+        </div>
+
+        <div class="item form-group">
+            <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">İlaç </span>
+            </label>
+            <div class="col-md-6 col-sm-6 ">
+            {{form.ilac}}
+            </div>
+        </div>
 
 
-        <table class="table">
+        <div class="item form-group">
+            <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Mayi </span>
+            </label>
+            <div class="col-md-6 col-sm-6 ">
+            {{form.mayi}}
+            </div>
+        </div>
+
+        <div class="item form-group">
+            <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">İstenen Miktar </span>
+            </label>
+            <div class="col-md-6 col-sm-6 ">
+            {{form.istenenMiktar}}
+            </div>
+        </div>
+
+        <div class="item form-group">
+            <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Birimi </span>
+            </label>
+            <div class="col-md-6 col-sm-6 ">
+            {{form.birimTipi}}
+            </div>
+        </div>
+
+        <div class="item form-group">
+            <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Süre </span>
+            </label>
+            <div class="col-md-6 col-sm-6 ">
+            {{form.sure}}
+            </div>
+        </div>
+
+        <div class="item form-group">
+            <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Süre Tipi </span>
+            </label>
+            <div class="col-md-6 col-sm-6 ">
+            {{form.sureTipi}}
+            </div>
+        </div>
+
+        
+
+        <table class="table" style="width:50%"> 
 
                 {{ receteuygulamas.management_form }}
 
@@ -48,3 +113,14 @@
 
 
 {% endblock content %}
+
+
+{% block js %}
+<script  type="text/javascript">
+$('.date-picker').datetimepicker({
+    format: 'YYYY-MM-DD'
+});
+
+</script>
+
+{% endblock js %}

@@ -3,21 +3,43 @@
 
 {% block content %}
 
-<h2>Here are all user profiles: </h2>
-<div>
-    <ul>
-        {% for profile in object_list %}
-            <li>{{ profile.first_name }} {{ profile.last_name }} | <a
-                    href="{% url 'profile-update' profile.pk %}">edit</a>
-                <a href="{% url 'profile-delete' profile.pk %}">delete</a>
-            </li>
-        {% empty %}
-            <li>No profile yet.</li>
-        {% endfor %}
 
-    </ul>
-    <p>
-        <a href="{% url 'profile-add' %}">add a profile</a>
-    </p>
-</div>
+
+<table id="datatable-buttons" class="table table-striped table-bordered" style="width:100%">
+    <thead>
+      <tr>
+        <th>Adı</th>
+        <th>Soyadı</th>
+        <th>Protokol No</th>
+        <th>Recete Tarihi</th>
+        <th>İlac Adı</th>
+        <th>Etken Madde</th>
+        <th>Düzenle</th>
+        <th>Sil</th>
+      </tr>
+    </thead>
+
+    <tbody>
+        {% for recete in object_list %}
+            <tr>
+                <td>{{recete.hasta.name}}</td>
+                <td>{{recete.hasta.surname}}</td>
+                <td>{{recete.hasta.protokolNo}}</td>
+                <td>{{recete.receteTarihi}}</td>
+                <td>{{recete.ilac.name}}</td>
+                <td>{{recete.ilac.etkenMadde}}</td>
+                <td><a href="{% url 'recete:recete-update' recete.pk %}">edit</a></td>
+                <td>
+                    <form method="post" action="{% url 'recete:recete-delete' recete.pk %}">
+                    {% csrf_token %}
+                        <input type="submit"  value="Sil"/>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+
+
+
 {% endblock content %}

@@ -1,0 +1,60 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<form method="POST"  class="form-horizontal form-label-left" style="margin-top:50px;">
+ {% csrf_token %}
+    <div class="item form-group">
+      <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Recete Tarihi
+      </label>
+      <div class="col-md-6 col-sm-6 ">
+        <input class="date-picker form-control" name="receteTarihi" />
+      </div>
+    </div>
+
+    <div class="item form-group">
+      <div class="col-md-6 col-sm-6 offset-md-3">
+        <button type="submit" class="btn btn-success">ARA</button>
+      </div>
+    </div>
+
+</form>
+
+
+<table id="datatable-buttons" class="table table-striped table-bordered" style="width:100%">
+    <thead>
+      <tr>
+        <th>Reçete Tarihi</th>
+        <th>Hastane Adı</th>
+      </tr>
+    </thead>
+
+    <tbody>
+        {% for hazirlamaBilgisi in hazirlamaListesi %}
+            <tr>
+                <td>{{hazirlamaBilgisi.recete.receteTarihi}}</td>
+                
+                <td>{{hazirlamaBilgisi.recete.hastane.name}}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+
+
+
+{% endblock content %}
+
+
+
+
+{% block js %}
+<script  type="text/javascript">
+$('.date-picker').datetimepicker({
+    format: 'YYYY-MM-DD'
+});
+
+</script>
+
+{% endblock js %}

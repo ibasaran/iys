@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" href="images/favicon.ico" type="image/ico" />
 
-    <title>Gentelella Alela! | </title>
+    <title>İYS </title>
 
     <!-- Bootstrap -->
     <link href="{% static 'base/vendors/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -29,7 +29,11 @@
 
     <!-- Custom Theme Style -->
     <link href="{% static 'base/build/css/custom.min.css' %}" rel="stylesheet">
-  </head>
+
+     <link href="{% static 'base/vendors/bootstrap-daterangepicker/daterangepicker.css' %}" rel="stylesheet">
+ 
+  <link href="{% static 'base/vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css' %}" rel="stylesheet">
+</head>
 
   <body class="nav-md">
     <div class="container body">
@@ -52,7 +56,7 @@
               <div class="menu_section">
                 
                 <ul class="nav side-menu">
-                  <li><a><i class="fa fa-home"></i> Genel <span class="fa fa-chevron-down"></span></a>
+                  <li><a href="{% url 'core:dashboard' %}"><i class="fa fa-home"></i> Genel </a>
                   
                   </li>
                   <li><a><i class="fa fa-edit"></i> Hasta Bilgileri <span class="fa fa-chevron-down"></span></a>
@@ -64,13 +68,12 @@
                   <li><a><i class="fa fa-desktop"></i> Reçete Bilgileri <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="{% url 'recete:recete-add' %}">Reçete Ekle</a></li>
-                      <li><a href="{% url 'hasta:hastaEdit' %}">Media Gallery</a></li>
+                      <li><a href="{% url 'recete:recete-list' %}">Reçete Listesi</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-table"></i> Hazırlama <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="tables.html">Tables</a></li>
-                      <li><a href="tables_dynamic.html">Table Dynamic</a></li>
+                      <li><a href="{% url 'recete:hazirlamaList' %}">Hazırlama Listesi</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-bar-chart-o"></i> Raporlar <span class="fa fa-chevron-down"></span></a>
@@ -98,16 +101,11 @@
               <ul class=" navbar-right">
                 <li class="nav-item dropdown open" style="padding-left: 15px;">
                   <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                    <img src="images/img.jpg" alt="">John Does
+                    {{ request.user.username }}
                   </a>
                   <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item"  href="javascript:;"> Profile</a>
-                      <a class="dropdown-item"  href="javascript:;">
-                        <span class="badge bg-red pull-right">50%</span>
-                        <span>Settings</span>
-                      </a>
-                  <a class="dropdown-item"  href="javascript:;">Help</a>
-                    <a class="dropdown-item"  href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                   
+                    <a class="dropdown-item"  href="{% url 'core:logout' %}"><i class="fa fa-sign-out pull-right"></i> ÇIKIŞ</a>
                   </div>
                 </li>
 
@@ -146,8 +144,11 @@
       </div>
     </div>
 
-    <!-- jQuery -->
+
+  <!-- jQuery -->
     <script src="{% static 'base/vendors/jquery/dist/jquery.min.js' %}"></script>
+
+
     <!-- Bootstrap -->
     <script src="{% static 'base/vendors/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
     <!-- FastClick -->
@@ -203,6 +204,11 @@
 
     <!-- Custom Theme Scripts -->
     <script src="{% static 'base/build/js/custom.min.js' %}"></script>
-	
+  <script src="{% static 'base/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js' %}"></script>
+  
+   
+
+	{% block js %}
+  {% endblock js %}
   </body>
 </html>
