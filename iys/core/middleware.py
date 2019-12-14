@@ -7,7 +7,7 @@ class LoginRequiredMiddleware:
         self.get_response = get_response
         self.login_url = settings.LOGIN_URL
         self.open_urls = [self.login_url] + \
-                         getattr(settings, 'OPEN_URLS', [])
+                         getattr(settings, 'OPEN_URLS', ['admin'])
 
     def __call__(self, request):
         if not request.user.is_authenticated \
