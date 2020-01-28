@@ -18,7 +18,7 @@ class HastaForm(ModelForm):
             'tcNo': NumberInput(attrs={'class':'form-control'}),
             'name':TextInput(attrs={'class':'form-control'}),
             'surname': TextInput(attrs={'class':'form-control'}),
-            'dogumTarihi': DateInput(attrs={'class':'form-control'}),
+            'dogumTarihi': DateInput(attrs={'class':' date-picker form-control'}),
             'yasi': NumberInput(attrs={'class':'form-control'}),
             'boy': NumberInput(attrs={'class':'form-control'}),
             'kilo': NumberInput(attrs={'class':'form-control'}),

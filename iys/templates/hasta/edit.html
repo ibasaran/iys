@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-<form method="POST" action="{% url 'hasta:hastaEdit' %}"   class="form-horizontal form-label-left">
+<form style="margin-top:50px" method="POST" action="{% url 'hasta:hastaEdit' %}"   class="form-horizontal form-label-left">
     {% csrf_token %}
     <div class="item form-group">
       <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Protokol Numarası <span class="required">*</span>
@@ -122,3 +122,14 @@
 
   </form>
 {% endblock content %}
+
+
+{% block js %}
+<script  type="text/javascript">
+$('.date-picker').datetimepicker({
+    format: 'YYYY-MM-DD'
+});
+
+</script>
+
+{% endblock js %}
