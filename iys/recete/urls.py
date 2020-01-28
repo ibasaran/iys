@@ -26,4 +26,5 @@ urlpatterns = [
         views.HastaAutocomplete.as_view(),
         name='hasta-autocomplete',
     ),
+    path('recetePrint/<str:id>', views.printRecete , name='recete-print'),
 ]
