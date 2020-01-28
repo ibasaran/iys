@@ -22,6 +22,7 @@ class Hasta(models.Model):
 
     class Meta:
         verbose_name = 'Hasta Bilgileri'
+        ordering = ['-id']
 
 
 

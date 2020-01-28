@@ -89,6 +89,7 @@ class Mayi(models.Model):
 
     class Meta:
         verbose_name='Mayi'
+        ordering = ['-id']
 
 class Ilac(models.Model):
     etkenMadde = models.CharField(max_length=250, verbose_name='Etken Madde')
@@ -109,6 +110,7 @@ class Ilac(models.Model):
 
     class Meta:
         verbose_name='İlaç'
+        ordering = ['-id']
 
 
 class UygulamaYolu(models.Model):

@@ -1,10 +1,14 @@
 from django.urls import reverse
 from django.db import transaction
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from .models import Recete, ReceteUygulama
 from .forms import ReceteFormSet, ReceteForm
 import datetime
+from core.models import Hospital
+from dal import autocomplete
+from core.models import Mayi, Ilac
+from hasta.models import Hasta
 
 class ReceteList(ListView):
     model = Recete
@@ -45,7 +49,7 @@ class ReceteUygulamaCreate(CreateView):
         #self.object.hastane.id = self.request.session['hastaneId']
         with transaction.atomic():
             self.object = form.save(commit=False)
-            self.object.hastane_id = self.request.session['hastaneId']
+            self.object.hastane = get_object_or_404(Hospital, pk=self.request.session['hastaneId'])
             self.object = form.save()
 
             if receteuygulamas.is_valid():
@@ -82,6 +86,7 @@ class ReceteUygulamaUpdate(UpdateView):
         context = self.get_context_data()
         receteuygulamas = context['receteuygulamas']
         with transaction.atomic():
+            self.object.hastane = get_object_or_404(Hospital, pk=self.request.session['hastaneId'])
             self.object = form.save()
 
             if receteuygulamas.is_valid():
@@ -101,14 +106,56 @@ class ReceteDelete(DeleteView):
 
 
 def hazirlamaList(request):
-
+    print(request.session['hastaneId'])
     context = {}
     if(request.method == 'POST'):
         receteTarihi = request.POST.get('receteTarihi', '')
         print(receteTarihi)
         hazirlamaListesi = ReceteUygulama.objects.filter(recete__hastane__id=request.session['hastaneId'],recete__receteTarihi=datetime.datetime.strptime(str(receteTarihi), "%Y-%m-%d").date())
-        
+        print(hazirlamaListesi.query)
         context['hazirlamaListesi'] = hazirlamaListesi
 
     
     return render(request, "recete/receteHazirlama.html", context)
+
+
+
+class MayiAutocomplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        # Don't forget to filter out results depending on the visitor !
+        #if not self.request.user.is_authenticated():
+        #    return Mayi.objects.none()
+
+        qs = Mayi.objects.all()
+
+        if self.q:
+            qs = qs.filter(name__istartswith=self.q)
+
+        return qs
+
+class HastaAutocomplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        # Don't forget to filter out results depending on the visitor !
+        #if not self.request.user.is_authenticated():
+        #    return Mayi.objects.none()
+
+        qs = Hasta.objects.all()
+
+        if self.q:
+            qs = qs.filter(name__istartswith=self.q)
+
+        return qs
+
+
+class IlacAutocomplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        # Don't forget to filter out results depending on the visitor !
+        #if not self.request.user.is_authenticated():
+        #    return Mayi.objects.none()
+
+        qs = Ilac.objects.all()
+
+        if self.q:
+            qs = qs.filter(adi__istartswith=self.q)
+
+        return qs

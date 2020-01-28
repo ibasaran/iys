@@ -109,6 +109,9 @@
         <input type="submit" value="KAYDET"/> <a href="{% url 'recete:recete-list' %}">back to the list</a>
 </form>
 
+<script type="text/javascript" src="{% static 'base/vendors/jquery/dist/jquery.min.js' %}"></script>
+
+{{ form.media }}
 
 
 
@@ -116,7 +119,7 @@
 
 
 {% block js %}
-<script  type="text/javascript">
+<script  type="text/javascript" ">
 $('.date-picker').datetimepicker({
     format: 'YYYY-MM-DD'
 });

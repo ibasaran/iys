@@ -33,3 +33,5 @@ def dashboard(request):
 def logout(request):
     dj_logout(request)
     return HttpResponseRedirect('/')
+
+
