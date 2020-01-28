@@ -117,8 +117,11 @@ def hazirlamaList(request):
         hazirlamaListesi = ReceteUygulama.objects.filter(recete__hastane__id=request.session['hastaneId'],recete__receteTarihi=datetime.datetime.strptime(str(receteTarihi), "%Y-%m-%d").date())
         print(hazirlamaListesi.query)
         context['hazirlamaListesi'] = hazirlamaListesi
-
-    
+    else:
+        today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
+        today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
+        hazirlamaListesi = ReceteUygulama.objects.filter(recete__hastane__id=request.session['hastaneId'],recete__receteTarihi__range=(today_min, today_max))
+        context['hazirlamaListesi'] = hazirlamaListesi
     return render(request, "recete/receteHazirlama.html", context)
 
 
