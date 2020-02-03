@@ -1,5 +1,5 @@
 from django.db import models
-from core.models import Cinsiyet,DurumTipi,KurumBilgisi,ServisBilgileri
+from core.models import DurumTipi,KurumBilgisi,ServisBilgileri,Cinsiyet
 
 
 class Hasta(models.Model):

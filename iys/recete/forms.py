@@ -1,7 +1,7 @@
 from django.forms import ModelForm, inlineformset_factory,NumberInput, DateInput
 from django import forms
 from .models import Recete, ReceteUygulama
-from core.models import Ilac,Mayi,BirimTipi,SureTipi
+from core.models import Ilac,Mayi,BirimTipi,SureTipi,UygulamaSaati,UygulamaYolu
 from hasta.models import Hasta
 from dal import autocomplete
 
@@ -12,6 +12,8 @@ class ReceteForm(ModelForm):
     mayi = forms.ModelChoiceField(required=False,queryset=Mayi.objects.all(), widget=autocomplete.ModelSelect2(url='recete:mayi-autocomplete',attrs={'class':'form-control'}), empty_label='Seçiniz')
     birimTipi = forms.ModelChoiceField(required=False,queryset=BirimTipi.objects.all(), widget=forms.Select(attrs={'class':'form-control'}), empty_label='Seçiniz')
     sureTipi = forms.ModelChoiceField(required=False,queryset=SureTipi.objects.all(), widget=forms.Select(attrs={'class':'form-control'}), empty_label='Seçiniz')
+    uygulamaSaati = forms.ModelMultipleChoiceField(queryset=UygulamaSaati.objects.all(),widget=forms.CheckboxSelectMultiple)
+    uygulamaYolu = forms.ModelChoiceField(required=False,queryset=UygulamaYolu.objects.all(), widget=forms.Select(attrs={'class':'form-control'}), empty_label='Seçiniz')
 
     class Meta:
         model = Recete

@@ -161,3 +161,14 @@ class SureTipi(models.Model):
 
     class Meta:
         verbose_name='Süre Tipi'
+
+
+class UygulamaSaati(models.Model):
+    saat = models.TimeField(verbose_name='Uygulama Saati')
+    #recete = models.ManyToManyField(Recete, blank=True)
+
+    def __str__(self):
+        return str(self.saat)
+
+    class Meta:
+        verbose_name='Uygulama Saati'

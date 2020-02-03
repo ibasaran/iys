@@ -1,5 +1,5 @@
 from django.contrib import admin
-from core.models import Hospital, HospitalUser, BirimTipi,DurumTipi, TozBilgileri,DolumTipi,DolumYeri,Mayi,Ilac,UygulamaYolu,ServisBilgileri,Cinsiyet,KurumBilgisi,SureTipi
+from core.models import Hospital, HospitalUser, BirimTipi,DurumTipi, TozBilgileri,DolumTipi,DolumYeri,Mayi,Ilac,UygulamaYolu,ServisBilgileri,Cinsiyet,KurumBilgisi,SureTipi,UygulamaSaati
 
 admin.site.register(Hospital)
 admin.site.register(HospitalUser)
@@ -15,3 +15,4 @@ admin.site.register(ServisBilgileri)
 admin.site.register(Cinsiyet)
 admin.site.register(KurumBilgisi)
 admin.site.register(SureTipi)
+admin.site.register(UygulamaSaati)

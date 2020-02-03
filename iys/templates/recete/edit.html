@@ -3,78 +3,127 @@
 
 {% block content %}
 
+<style>
+#id_uygulamaSaati {
+    list-style-type: none;
+}
+</style>
 
-<form action="" method="post" style="margin-top:50px">
+<div class="x_content">
+<form id="demo-form2" action="" method="post" style="margin-top:50px" class="form-horizontal form-label-left">
         {% csrf_token %}
+
+        <div  class="col-md-12 col-sm-12 " >
+
+            <div class="col-md-6 col-sm-6 ">
+
+                <div class="x_panel">
+
+                    <div class="x_title">
+                            <h2>Reçete Bilgileri</h2>
+                            <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Hasta </span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 ">
+                            {{form.hasta}}
+                            </div>
+                        </div>
+                
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Reçete Tarihi </span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 ">
+                            {{form.receteTarihi}}
+                            </div>
+                        </div>
+                
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">İlaç </span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 ">
+                            {{form.ilac}}
+                            </div>
+                        </div>
+                
+                
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Mayi </span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 ">
+                            {{form.mayi}}
+                            </div>
+                        </div>
+                
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">İstenen Miktar </span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 ">
+                            {{form.istenenMiktar}}
+                            </div>
+                        </div>
+                
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Birimi </span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 ">
+                            {{form.birimTipi}}
+                            </div>
+                        </div>
+                
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Süre </span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 ">
+                            {{form.sure}}
+                            </div>
+                        </div>
+                
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Süre Tipi </span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 ">
+                            {{form.sureTipi}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
         
-        <div class="item form-group">
-            <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Hasta </span>
-            </label>
-            <div class="col-md-6 col-sm-6 ">
-            {{form.hasta}}
             </div>
+
+            <div class="col-md-6 col-sm-6 ">
+                <div class="x_panel">
+                    <div class="x_title">
+                                <h2>Uygulama Bilgileri</h2>
+                                <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Uygulama Yolu</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 ">
+                            {{form.uygulamaYolu}}
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Uygulama Saatleri</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 ">
+                            {{form.uygulamaSaati}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
-        <div class="item form-group">
-            <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Reçete Tarihi </span>
-            </label>
-            <div class="col-md-6 col-sm-6 ">
-            {{form.receteTarihi}}
-            </div>
-        </div>
-
-        <div class="item form-group">
-            <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">İlaç </span>
-            </label>
-            <div class="col-md-6 col-sm-6 ">
-            {{form.ilac}}
-            </div>
-        </div>
-
-
-        <div class="item form-group">
-            <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Mayi </span>
-            </label>
-            <div class="col-md-6 col-sm-6 ">
-            {{form.mayi}}
-            </div>
-        </div>
-
-        <div class="item form-group">
-            <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">İstenen Miktar </span>
-            </label>
-            <div class="col-md-6 col-sm-6 ">
-            {{form.istenenMiktar}}
-            </div>
-        </div>
-
-        <div class="item form-group">
-            <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Birimi </span>
-            </label>
-            <div class="col-md-6 col-sm-6 ">
-            {{form.birimTipi}}
-            </div>
-        </div>
-
-        <div class="item form-group">
-            <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Süre </span>
-            </label>
-            <div class="col-md-6 col-sm-6 ">
-            {{form.sure}}
-            </div>
-        </div>
-
-        <div class="item form-group">
-            <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Süre Tipi </span>
-            </label>
-            <div class="col-md-6 col-sm-6 ">
-            {{form.sureTipi}}
-            </div>
-        </div>
-
+       
         
 
-        <table class="table" style="width:50%"> 
+     <table class="table" style="width:50%;display: none;"> 
 
                 {{ receteuygulamas.management_form }}
 
@@ -106,9 +155,9 @@
 
         </table>
 
-        <input type="submit" value="KAYDET"/> <a href="{% url 'recete:recete-list' %}">back to the list</a>
+        <input class="btn btn-success" type="submit" value="    KAYDET    "/> <a class="btn btn-primary" href="{% url 'recete:recete-list' %}">Reçete listesine dön</a>
 </form>
-
+</div>
 <script type="text/javascript" src="{% static 'base/vendors/jquery/dist/jquery.min.js' %}"></script>
 
 {{ form.media }}

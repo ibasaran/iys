@@ -38,17 +38,19 @@
     </thead>
 
     <tbody>
-        {% for hazirlamaBilgisi in hazirlamaListesi %}
+        {% for recete in hazirlamaListesi %}
+          {% for hazirmaSaati in recete.uygulamaSaati.all %}
             <tr>
-                <td>{{hazirlamaBilgisi.recete.hasta.protokolNo}}</td>
-                <td>{{hazirlamaBilgisi.recete.hasta.name }} {{hazirlamaBilgisi.recete.hasta.surname }}</td>
-                <td>{{hazirlamaBilgisi.recete.hasta.tcNo}}</td>
-                <td>{{hazirlamaBilgisi.recete.receteTarihi}}</td>
-                <td>{{hazirlamaBilgisi.recete.ilac.adi}}</td>
-                <td>{{hazirlamaBilgisi.recete.hasta.servisBilgisi.servisAdi}}</td>
-                <td>{{hazirlamaBilgisi.uygulamaSaati}}</td>
-                <td><a href="{% url 'recete:recete-print' hazirlamaBilgisi.pk %}">Yazdır(PDF)</a></td>
+                <td>{{recete.hasta.protokolNo }}</td>
+                <td>{{recete.hasta.name }} {{recete.hasta.surname }}</td>
+                <td>{{recete.hasta.tcNo}}</td>
+                <td>{{recete.receteTarihi}}</td>
+                <td>{{recete.ilac.adi}}</td>
+                <td>{{recete.hasta.servisBilgisi.servisAdi}}</td>
+                <td>{{hazirmaSaati.saat}}</td>
+                <td><a href="{% url 'recete:recete-print' recete.pk hazirmaSaati.pk%}" target="_new">Yazdır(PDF)</a></td>
             </tr>
+          {% endfor %}
         {% endfor %}
     </tbody>
   </table>

@@ -1,6 +1,6 @@
 from django.db import models
 from hasta.models import Hasta
-from core.models import Ilac, Mayi, BirimTipi,UygulamaYolu,SureTipi,Hospital
+from core.models import Ilac, Mayi, BirimTipi,UygulamaYolu,SureTipi,Hospital,UygulamaSaati
 
 
 
@@ -14,7 +14,9 @@ class Recete(models.Model):
     sureTipi = models.ForeignKey(SureTipi, on_delete=models.SET_NULL, null=True, blank=True)
     receteTarihi = models.DateField()
     hastane = models.ForeignKey(Hospital, on_delete=models.SET_NULL, null=True, blank=True)
-
+    uygulamaSaati = models.ManyToManyField(UygulamaSaati)
+    uygulamaYolu = models.ForeignKey(UygulamaYolu, on_delete=models.SET_NULL, null=True)
+    
     def __str__(self):
         return self.hasta.name + ' ' + self.hasta.surname + ' ' + self.ilac.adi + ' ' + self.receteTarihi
 
@@ -32,6 +34,5 @@ class ReceteUygulama(models.Model):
 
     class Meta:
         verbose_name='Reçete Uygulama'
-
 
 

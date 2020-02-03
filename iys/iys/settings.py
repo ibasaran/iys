@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'core',
     'hasta',
     'recete',
-    'report'
+    'report',
 ]
 
 MIDDLEWARE = [
@@ -154,4 +154,5 @@ DATE_FORMAT='d/m/Y'
 DATETIME_FORMAT='d/m/Y'
 DATETIME_INPUT_FORMATS='d/m/Y'
 TIME_FORMAT='H:i'
+TIME_INPUT_FORMATS = ('%I:%M',)
 

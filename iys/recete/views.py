@@ -3,6 +3,7 @@ from django.db import transaction
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 from django.shortcuts import render,get_object_or_404
 from .models import Recete, ReceteUygulama
+from core.models import UygulamaSaati
 from .forms import ReceteFormSet, ReceteForm
 import datetime
 from core.models import Hospital
@@ -53,7 +54,9 @@ class ReceteUygulamaCreate(CreateView):
         with transaction.atomic():
             self.object = form.save(commit=False)
             self.object.hastane = get_object_or_404(Hospital, pk=self.request.session['hastaneId'])
-            self.object = form.save()
+            #self.object = form.save()
+            self.object.save()
+            form.save_m2m()
 
             if receteuygulamas.is_valid():
                 receteuygulamas.instance = self.object
@@ -109,19 +112,28 @@ class ReceteDelete(DeleteView):
 
 
 def hazirlamaList(request):
-    print(request.session['hastaneId'])
     context = {}
+
     if(request.method == 'POST'):
         receteTarihi = request.POST.get('receteTarihi', '')
-        print(receteTarihi)
-        hazirlamaListesi = ReceteUygulama.objects.filter(recete__hastane__id=request.session['hastaneId'],recete__receteTarihi=datetime.datetime.strptime(str(receteTarihi), "%Y-%m-%d").date())
-        print(hazirlamaListesi.query)
+        hazirlamaListesi = Recete.objects.filter(hastane__id=request.session['hastaneId'],receteTarihi=datetime.datetime.strptime(str(receteTarihi), "%Y-%m-%d").date())
         context['hazirlamaListesi'] = hazirlamaListesi
     else:
         today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
         today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
-        hazirlamaListesi = ReceteUygulama.objects.filter(recete__hastane__id=request.session['hastaneId'],recete__receteTarihi__range=(today_min, today_max))
+        hazirlamaListesi = Recete.objects.filter(hastane__id=request.session['hastaneId'],receteTarihi__range=(today_min, today_max))
         context['hazirlamaListesi'] = hazirlamaListesi
+    # if(request.method == 'POST'):
+    #     receteTarihi = request.POST.get('receteTarihi', '')
+    #     print(receteTarihi)
+    #     hazirlamaListesi = ReceteUygulama.objects.filter(recete__hastane__id=request.session['hastaneId'],recete__receteTarihi=datetime.datetime.strptime(str(receteTarihi), "%Y-%m-%d").date())
+    #     print(hazirlamaListesi.query)
+    #     context['hazirlamaListesi'] = hazirlamaListesi
+    # else:
+    #     today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
+    #     today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
+    #     hazirlamaListesi = ReceteUygulama.objects.filter(recete__hastane__id=request.session['hastaneId'],recete__receteTarihi__range=(today_min, today_max))
+    #     context['hazirlamaListesi'] = hazirlamaListesi
     return render(request, "recete/receteHazirlama.html", context)
 
 
@@ -168,7 +180,7 @@ class IlacAutocomplete(autocomplete.Select2QuerySetView):
 
 
 
-def printRecete(request,id):
+def printRecete(request,id,sid):
     # Create a file-like buffer to receive PDF data.
     buffer = io.BytesIO()
 
@@ -188,4 +200,6 @@ def printRecete(request,id):
     # FileResponse sets the Content-Disposition header so that browsers
     # present the option to save the file.
     buffer.seek(0)
-    return FileResponse(buffer, as_attachment=True, filename='etiket.pdf')
+    return FileResponse(buffer, as_attachment=True, filename='etiket.pdf',content_type='application/pdf')
+
+
