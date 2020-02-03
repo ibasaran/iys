@@ -13,6 +13,10 @@ from hasta.models import Hasta
 import io
 from django.http import FileResponse
 from reportlab.pdfgen import canvas
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.pdfbase.pdfmetrics import stringWidth
+from reportlab.rl_config import defaultPageSize
 
 class ReceteList(ListView):
     model = Recete
@@ -181,15 +185,28 @@ class IlacAutocomplete(autocomplete.Select2QuerySetView):
 
 
 def printRecete(request,id,sid):
+
+    recete = Recete.objects.get(pk=id)
+    uygulama = ReceteUygulama.objects.get(pk=sid)
+
+    PAGE_WIDTH  = defaultPageSize[0]
+    PAGE_HEIGHT = defaultPageSize[1]
+    #pdfmetrics.registerFont(TTFont('Verdana', 'Verdana.ttf'))
     # Create a file-like buffer to receive PDF data.
     buffer = io.BytesIO()
 
     # Create the PDF object, using the buffer as its "file."
     p = canvas.Canvas(buffer)
-
+    #p.setFont("Verdana", 8)
+    
     # Draw things on the PDF. Here's where the PDF generation happens.
     # See the ReportLab documentation for the full list of functionality.
-    p.drawString(100, 100, "Buraya bilgiler gelecek.")
+    hastaneAdi = recete.hastane.name
+    hastaneAdi_width = stringWidth(hastaneAdi, "Helvetica", 10)
+    pdf_text_object = p.beginText((PAGE_WIDTH - hastaneAdi_width) / 2.0, 30)
+    pdf_text_object.textOut(hastaneAdi)
+
+    p.drawString(50, 10, recete.hastane.name)
 
     p.setPageSize((300, 200))
 
