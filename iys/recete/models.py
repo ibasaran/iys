@@ -16,6 +16,7 @@ class Recete(models.Model):
     hastane = models.ForeignKey(Hospital, on_delete=models.SET_NULL, null=True, blank=True)
     uygulamaSaati = models.ManyToManyField(UygulamaSaati)
     uygulamaYolu = models.ForeignKey(UygulamaYolu, on_delete=models.SET_NULL, null=True)
+    hemsireNotu = models.CharField(max_length=250, verbose_name='Hemşire Notu',blank=True,null=True)
     
     def __str__(self):
         return self.hasta.name + ' ' + self.hasta.surname + ' ' + self.ilac.adi + ' ' + self.receteTarihi

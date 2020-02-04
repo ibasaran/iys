@@ -1,4 +1,4 @@
-from django.forms import ModelForm, inlineformset_factory,NumberInput, DateInput
+from django.forms import ModelForm, inlineformset_factory,NumberInput, DateInput,TextInput
 from django import forms
 from .models import Recete, ReceteUygulama
 from core.models import Ilac,Mayi,BirimTipi,SureTipi,UygulamaSaati,UygulamaYolu
@@ -21,7 +21,8 @@ class ReceteForm(ModelForm):
         widgets = {
             'istenenMiktar':NumberInput(attrs={'class':'form-control'}),
             'sure':NumberInput(attrs={'class':'form-control'}),
-            'receteTarihi': DateInput(attrs={'class':'date-picker  form-control', 'id':'myDatepicker2'})
+            'receteTarihi': DateInput(attrs={'class':'date-picker  form-control', 'id':'myDatepicker2'}),
+            'hemsireNotu': TextInput(attrs={'class':'form-control'}),
         }
 
 
