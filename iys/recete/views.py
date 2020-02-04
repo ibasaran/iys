@@ -114,21 +114,54 @@ class ReceteDelete(DeleteView):
     def get_success_url(self):
         return reverse('recete:recete-list')
 
+class IlacInfo(object):
 
+    def __init__(self):
+        self.ilacAdi=''
+        self.toplamMiktar=0
+        self.ilacId=None
 
+def addIlac(infoList, recete):
+    ilac = IlacInfo()
+    ilac.ilacId = recete.ilac.id
+    ilac.ilacAdi = recete.ilac.adi
+    ilac.toplamMiktar = (recete.ilac.ml / recete.ilac.mg) * recete.istenenMiktar
+
+    varmi = False
+    if (len(infoList) > 0):
+        for i in infoList:
+            if i.ilacId == ilac.ilacId:
+                varmi = True
+                i.toplamMiktar = i.toplamMiktar + ilac.toplamMiktar
+            
+    if (not  varmi):
+        infoList.append(ilac)
+    return infoList
 
 def hazirlamaList(request):
     context = {}
-
+    ilacInfo = []
     if(request.method == 'POST'):
         receteTarihi = request.POST.get('receteTarihi', '')
         hazirlamaListesi = Recete.objects.filter(hastane__id=request.session['hastaneId'],receteTarihi=datetime.datetime.strptime(str(receteTarihi), "%Y-%m-%d").date())
+        for recete in hazirlamaListesi:
+            for saat in recete.uygulamaSaati.all():
+                addIlac(ilacInfo,recete)
+        
+        
         context['hazirlamaListesi'] = hazirlamaListesi
+        context['infoList'] = ilacInfo
     else:
         today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
         today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
         hazirlamaListesi = Recete.objects.filter(hastane__id=request.session['hastaneId'],receteTarihi__range=(today_min, today_max))
         context['hazirlamaListesi'] = hazirlamaListesi
+        for recete in hazirlamaListesi:
+            for saat in recete.uygulamaSaati.all():
+                addIlac(ilacInfo,recete)
+
+        context['infoList'] = ilacInfo
+
     # if(request.method == 'POST'):
     #     receteTarihi = request.POST.get('receteTarihi', '')
     #     print(receteTarihi)
@@ -267,30 +300,3 @@ def printRecete(request,id,sid):
     return FileResponse(buffer, as_attachment=False, filename='etiket.pdf',content_type='application/pdf')
 
 
-def textsize(canvas):
-    lyrics = '''\
-    well she hit Net Solutions
-    and she registered her own .com site now
-    and filled it up with yahoo profile pics
-    she snarfed in one night now
-    and she made 50 million when Hugh Hefner
-    bought up the rights now
-    and she'll have fun fun fun
-    til her Daddy takes the keyboard away'''
-
-    lyrics = str.split(lyrics, "\n")
-    from reportlab.lib.units import inch
-    from reportlab.lib.colors import magenta, red
-    canvas.setFont("Times-Roman", 20)
-    canvas.setFillColor(red)
-    canvas.drawCentredString(2.75*inch, 2.5*inch, "Font size examples")
-    canvas.setFillColor(magenta)
-    size = 7
-    y = 2.3*inch
-    x = 1.3*inch
-    for line in lyrics:
-        canvas.setFont("Helvetica", size)
-        canvas.drawRightString(x,y,"%s points: " % size)
-        canvas.drawString(x,y, line)
-        y = y-size*1.2
-        size = size+1.5
