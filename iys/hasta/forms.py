@@ -22,5 +22,5 @@ class HastaForm(ModelForm):
             'yasi': NumberInput(attrs={'class':'form-control'}),
             'boy': NumberInput(attrs={'class':'form-control'}),
             'kilo': NumberInput(attrs={'class':'form-control'}),
-            'vucutYuzeyAlani': NumberInput(attrs={'class':'form-control'}),
+            'vucutYuzeyAlani': TextInput(attrs={'class':'form-control'}),
         }

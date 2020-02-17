@@ -13,7 +13,7 @@ class Hasta(models.Model):
     durumTipi = models.ForeignKey(DurumTipi,on_delete=models.SET_NULL,blank=True,null=True)
     boy = models.IntegerField(verbose_name='Boy',blank=True,null=True)
     kilo = models.IntegerField(verbose_name='Kilo',blank=True,null=True)
-    vucutYuzeyAlani = models.IntegerField(verbose_name='Vucut Yüzey Alanı',blank=True,null=True)
+    vucutYuzeyAlani = models.CharField(verbose_name='Vucut Yüzey Alanı',blank=True,null=True)
     kurumBilgisi = models.ForeignKey(KurumBilgisi, on_delete=models.SET_NULL,blank=True,null=True)
     servisBilgisi = models.ForeignKey(ServisBilgileri, on_delete=models.SET_NULL,blank=True,null=True)
 
