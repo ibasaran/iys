@@ -126,10 +126,127 @@
 
 {% block js %}
 <script  type="text/javascript">
-$('.date-picker').datetimepicker({
-    format: 'YYYY-MM-DD'
+
+$( document ).ready(function() {
+  
+  $("#id_durumTipi").prop("selectedIndex", 1);
+
+  $("#id_dogumTarihi").on('input', function(){
+    calculateAge($(this).val());
+
 });
 
-</script>
 
+
+$('#id_dogumTarihi').change(function () {
+    
+});
+
+
+$('#id_boy').change(function () {
+    var boy = $("#id_boy").val();
+    var kilo = $("#id_kilo").val();
+
+    if (boy) {
+      if (kilo) {
+        var result = Math.sqrt(boy * kilo / 3600);
+        $("#id_vucutYuzeyAlani").val(result);
+      }
+    }
+
+});
+
+$('#id_kilo').change(function () {
+  var boy = $("#id_boy").val();
+    var kilo = $("#id_kilo").val();
+
+    if (boy) {
+      if (kilo) {
+        var result = Math.sqrt(boy * kilo / 3600);
+        $("#id_vucutYuzeyAlani").val(result);
+      }
+    }
+});
+
+
+});
+
+function stringToDate(_date,_format,_delimiter)
+{
+            var formatLowerCase=_format.toLowerCase();
+            var formatItems=formatLowerCase.split(_delimiter);
+            var dateItems=_date.split('-');
+            var monthIndex=formatItems.indexOf("mm");
+            var dayIndex=formatItems.indexOf("dd");
+            var yearIndex=formatItems.indexOf("yyyy");
+            var month=parseInt(dateItems[monthIndex]);
+            month-=1;
+            var formatedDate = new Date(dateItems[0],dateItems[1],dateItems[2]);
+            console.log(dateItems[yearIndex]);
+            console.log(month);
+            console.log(dateItems[dayIndex])
+            console.log(dateItems);
+            console.log(formatedDate);
+            return formatedDate;
+}
+
+function calculateAge(date)
+{
+
+  console.log('burasi')
+  console.log(date);
+  var birthdayDate = stringToDate(date,"yyyy-mm-dd","");
+  var birthYear = birthdayDate.getFullYear();
+  var birthMonth = birthdayDate.getMonth();
+  var birthDay = birthdayDate.getDate();
+  
+
+  var todayDate = new Date();
+  todayYear = todayDate.getFullYear();
+  todayMonth = todayDate.getMonth();
+  todayDay = todayDate.getDate();
+ 
+  var age = todayYear - birthYear;
+
+  if (todayMonth < birthMonth - 1)
+  {
+    age--;
+  }
+ 
+  if (birthMonth - 1 == todayMonth && todayDay < birthDay)
+  {
+    age--;
+  }
+  
+  $("#id_yasi").val(age);
+
+
+}
+
+
+
+$('.date-picker').datetimepicker({
+    format: 'YYYY-MM-DD',
+    
+}).on('dp.change', function (ev) {
+  $('#id_dogumTarihi').change();
+});
+
+function tckimlikkontorolu(tcno) {
+	var tckontrol,toplam; tckontrol = tcno; tcno = tcno.value; toplam = Number(tcno.substring(0,1)) + Number(tcno.substring(1,2)) +
+	Number(tcno.substring(2,3)) + Number(tcno.substring(3,4)) +
+	Number(tcno.substring(4,5)) + Number(tcno.substring(5,6)) +
+	Number(tcno.substring(6,7)) + Number(tcno.substring(7,8)) +
+	Number(tcno.substring(8,9)) + Number(tcno.substring(9,10));
+	strtoplam = String(toplam); onunbirlerbas = strtoplam.substring(strtoplam.length,strtoplam.length-1);
+
+	if(onunbirlerbas == tcno.substring(10,11)) {
+		
+	} else{
+		alert("TC numarası yanlış");
+	}
+}
+
+</script>
+<script src="{% static 'base/vendors/validator/validator.js' %}"></script>
 {% endblock js %}

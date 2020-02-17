@@ -4,7 +4,7 @@ from core.models import DurumTipi,KurumBilgisi,ServisBilgileri,Cinsiyet
 
 class Hasta(models.Model):
     protokolNo = models.CharField(max_length=500, verbose_name='Protokol Numarası')
-    tcNo = models.IntegerField(verbose_name='T.C. Kimlik Numarası',blank=True,null=True)
+    tcNo = models.CharField(max_length=11,verbose_name='T.C. Kimlik Numarası',blank=True,null=True)
     name = models.CharField(max_length=300, verbose_name='Adı',blank=True,null=True)
     surname = models.CharField(max_length=300, verbose_name='Soyadı',blank=True,null=True)
     cinsiyet = models.ForeignKey(Cinsiyet,on_delete=models.SET_NULL,blank=True,null=True)
