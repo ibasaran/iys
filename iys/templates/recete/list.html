@@ -22,13 +22,13 @@
     <tbody>
         {% for recete in object_list %}
             <tr>
-                <td>{{recete.hastane.id}}</td>
+                <td>{{recete.hasta.name}}</td>
                 <td>{{recete.hasta.surname}}</td>
                 <td>{{recete.hasta.protokolNo}}</td>
                 <td>{{recete.receteTarihi}}</td>
                 <td>{{recete.ilac.name}}</td>
                 <td>{{recete.ilac.etkenMadde}}</td>
-                <td><a href="{% url 'recete:recete-update' recete.pk %}">edit</a></td>
+                <td><a href="{% url 'recete:recete-update' recete.pk 0 %}">edit</a></td>
                 <td>
                     <form method="post" action="{% url 'recete:recete-delete' recete.pk %}">
                     {% csrf_token %}

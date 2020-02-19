@@ -10,6 +10,21 @@
 </style>
 
 <div class="x_content">
+   
+    {% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
 <form id="demo-form2" action="" method="post" style="margin-top:50px" class="form-horizontal form-label-left">
         {% csrf_token %}
 
@@ -55,6 +70,7 @@
                             <div class="col-md-6 col-sm-6 ">
                             {{form.mayi}}
                             </div>
+                            <p>{{ form.mayi.errors }}</p>
                         </div>
                 
                         <div class="item form-group">
@@ -170,16 +186,62 @@
 
 {{ form.media }}
 
-
+<div id="dialog-confirm" title="Tedavi Durumu">
+        <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>Bu hasta için yeni tedavi bilgisi girmek istiyor musunuz ? </p>
+</div>
 
 {% endblock content %}
 
 
 {% block js %}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script  type="text/javascript" ">
 $('.date-picker').datetimepicker({
     format: 'YYYY-MM-DD'
 });
+
+$( function() {
+
+    var isUpdate = '{{isUpdate}}';
+    var pk = '{{pk}}';
+    var isCreate = '{{isCreate}}'
+   
+
+    if (isCreate) {
+        if (isCreate == 1) {
+            if (isUpdate == 'True') {
+                isUpdate = true
+            } else {
+                isUpdate = false
+            }
+        } else {
+            isUpdate = false
+        }
+    } else {
+        isUpdate = false
+    }
+
+ 
+
+    $( "#dialog-confirm" ).dialog({
+      resizable: false,
+      height: "auto",
+      width: 400,
+      modal: true,
+      autoOpen: isUpdate,
+      buttons: {
+        "Bu Hasta İçin Devam Et": function() {
+            var rurl = "{% url 'recete:recete-add' hpk=1123 %}"
+            location.href = rurl.replace("1123", pk);
+        },
+        "Yeni Hasta İçin Oluştur": function() {
+            location.href = "{% url 'recete:recete-add' hpk=0 %}";
+          $( this ).dialog( "close" );
+        }
+      }
+    });
+  } );
 
 </script>
 

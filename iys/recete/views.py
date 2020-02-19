@@ -36,14 +36,23 @@ class ReceteUygulamaCreate(CreateView):
     form_class = ReceteForm
 
     def get_initial(self):
-        print('getting initial')
-        print(self.request.session['hastaneId'])
-        return {
-            'hastane_id':self.request.session['hastaneId'],
-        }
+        super(ReceteUygulamaCreate, self).get_initial()
+        if (self.kwargs['hpk'] != '0'):
+            print('zero degil')
+            recete = get_object_or_404(Recete, pk=self.kwargs['hpk'])
+            if (recete):
+                return {
+                    'hastane_id':self.request.session['hastaneId'],
+                    'hasta': recete.hasta.id,
+                    'receteTarihi' : recete.receteTarihi
+                }
+        else: 
+            return {
+                'hastane_id':self.request.session['hastaneId'],
+            }
 
     def get_success_url(self):
-        return reverse('recete:recete-update', kwargs={'pk' : self.object.pk})
+        return reverse('recete:recete-update', kwargs={'pk' : self.object.pk, 'isCreate':1})
 
     def get_context_data(self, **kwargs):
         data = super(ReceteUygulamaCreate, self).get_context_data(**kwargs)
@@ -51,11 +60,14 @@ class ReceteUygulamaCreate(CreateView):
             data['receteuygulamas'] = ReceteFormSet(self.request.POST)
         else:
             data['receteuygulamas'] = ReceteFormSet()
+            data['isUpdate'] = False
+            data['pk'] = 0
         return data
 
     def form_valid(self, form):
         context = self.get_context_data()
         receteuygulamas = context['receteuygulamas']
+
         #self.object.hastane.id = self.request.session['hastaneId']
         with transaction.atomic():
             self.object = form.save(commit=False)
@@ -92,6 +104,10 @@ class ReceteUygulamaUpdate(UpdateView):
             data['receteuygulamas'] = ReceteFormSet(self.request.POST, instance=self.object)
         else:
             data['receteuygulamas'] = ReceteFormSet(instance=self.object)
+            data['isUpdate'] = True
+            data['isCreate'] = self.kwargs['isCreate']
+            data['pk'] = str(self.object.pk)
+            
         return data
 
     def form_valid(self, form):

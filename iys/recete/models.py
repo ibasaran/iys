@@ -1,7 +1,7 @@
 from django.db import models
 from hasta.models import Hasta
 from core.models import Ilac, Mayi, BirimTipi,UygulamaYolu,SureTipi,Hospital,UygulamaSaati
-
+from django.core.exceptions import ValidationError
 
 
 class Recete(models.Model):
@@ -17,6 +17,11 @@ class Recete(models.Model):
     uygulamaSaati = models.ManyToManyField(UygulamaSaati)
     uygulamaYolu = models.ForeignKey(UygulamaYolu, on_delete=models.SET_NULL, null=True)
     hemsireNotu = models.CharField(max_length=250, verbose_name='Hemşire Notu',blank=True,null=True)
+
+    # def clean(self):
+    #     if self.mayi is None:
+    #         print('Mayi Seçilmemiş')
+    #         raise ValidationError('Mayi Seçiniz')
     
     def __str__(self):
         return self.hasta.name + ' ' + self.hasta.surname + ' ' + self.ilac.adi + ' ' + self.receteTarihi
