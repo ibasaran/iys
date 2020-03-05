@@ -10,13 +10,15 @@ class Recete(models.Model):
     mayi = models.ForeignKey(Mayi, on_delete=models.SET_NULL, null=True, blank=True)
     istenenMiktar = models.IntegerField(null=True, blank=True, verbose_name='İstenen Miktar')
     birimTipi = models.ForeignKey(BirimTipi, on_delete=models.SET_NULL, null=True, blank=True)
-    sure = models.IntegerField(verbose_name='Süre', null=True, blank=True)
-    sureTipi = models.ForeignKey(SureTipi, on_delete=models.SET_NULL, null=True, blank=True)
+    #sure = models.IntegerField(verbose_name='Süre', null=True, blank=True)
+    #sureTipi = models.ForeignKey(SureTipi, on_delete=models.SET_NULL, null=True, blank=True)
     receteTarihi = models.DateField()
     hastane = models.ForeignKey(Hospital, on_delete=models.SET_NULL, null=True, blank=True)
     uygulamaSaati = models.ManyToManyField(UygulamaSaati)
     uygulamaYolu = models.ForeignKey(UygulamaYolu, on_delete=models.SET_NULL, null=True)
     hemsireNotu = models.CharField(max_length=250, verbose_name='Hemşire Notu',blank=True,null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     # def clean(self):
     #     if self.mayi is None:

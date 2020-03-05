@@ -93,20 +93,20 @@ class Mayi(models.Model):
 
 class Ilac(models.Model):
     etkenMadde = models.CharField(max_length=250, verbose_name='Etken Madde')
-    adi = models.CharField(max_length=250, verbose_name='İlaç Adı')
+    #adi = models.CharField(max_length=250, verbose_name='İlaç Adı')
     piyasaAdi = models.CharField(max_length=250, verbose_name='Piyasa Adı')
     esdegerIlac = models.CharField(max_length=250, verbose_name='Eşdeğer İlaç')
     mg = models.IntegerField( verbose_name='Mg')
     ml = models.IntegerField( verbose_name='Ml')
-    dolumYeri = models.ForeignKey(DolumYeri,on_delete=models.SET_NULL,null=True)
+    #dolumYeri = models.ForeignKey(DolumYeri,on_delete=models.SET_NULL,null=True)
     birimTipi = models.ForeignKey(BirimTipi,on_delete=models.SET_NULL,null=True)
     durumTipi = models.ForeignKey(DurumTipi,on_delete=models.SET_NULL,null=True)
-    saklamaKosulu = models.CharField(max_length=250, verbose_name='Saklama Koşulu')
-    uyari = models.CharField(max_length=250, verbose_name='Uyari')
+    saklamaKosulu = models.TextField(max_length=500, verbose_name='Saklama Koşulu')
+    uyari = models.TextField(max_length=500, verbose_name='Uyari')
 
 
     def __str__(self):
-        return self.adi + ' ' + str(self.etkenMadde) + ' ' + self.piyasaAdi
+        return self.piyasaAdi + ' ' + str(self.etkenMadde) + ' ' + self.piyasaAdi
 
     class Meta:
         verbose_name='İlaç'

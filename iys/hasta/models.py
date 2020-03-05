@@ -16,6 +16,8 @@ class Hasta(models.Model):
     vucutYuzeyAlani = models.CharField(max_length=500,verbose_name='Vucut Yüzey Alanı',blank=True,null=True)
     kurumBilgisi = models.ForeignKey(KurumBilgisi, on_delete=models.SET_NULL,blank=True,null=True)
     servisBilgisi = models.ForeignKey(ServisBilgileri, on_delete=models.SET_NULL,blank=True,null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return  'Hasta Adı ' +  str(self.name) + ' ' + str(self.surname)

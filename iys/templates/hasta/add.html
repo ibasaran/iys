@@ -20,7 +20,7 @@
 {% endif %}
 
 <div class="x_content">
-<form autocomplete="off"  method="POST" action="{% url 'hasta:hastaEdit' id %}"   class="form-horizontal form-label-left">
+<form autocomplete="off"  method="POST" action="{% url 'hasta:hastaAdd' %}"   class="form-horizontal form-label-left">
     {% csrf_token %}
     <div class="item form-group">
       <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Protokol Numarası <span class="required">*</span>

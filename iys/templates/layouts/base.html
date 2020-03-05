@@ -64,7 +64,7 @@
                   <li><a><i class="fa fa-edit"></i> Hasta Bilgileri <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="{% url 'hasta:hastaList' %}">Hasta Listesi</a></li>
-                      <li><a href="{% url 'hasta:hastaEdit' %}">Hasta Ekle</a></li>
+                      <li><a href="{% url 'hasta:hastaAdd'  %}">Hasta Ekle</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-desktop"></i> Reçete Bilgileri <span class="fa fa-chevron-down"></span></a>
@@ -119,7 +119,7 @@
         <!-- /top navigation -->
 
         <!-- page content -->
-                    <div class="right_col" role="main">
+                    <div class="right_col" role="main" style="min-height: 900px;">
                         <div class="">
                             <div class="page-title">
                                 {% block content %}

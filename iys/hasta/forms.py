@@ -15,9 +15,9 @@ class HastaForm(ModelForm):
         fields = ['protokolNo', 'tcNo', 'name', 'surname', 'cinsiyet', 'dogumTarihi', 'yasi', 'durumTipi', 'boy','kilo','vucutYuzeyAlani','kurumBilgisi','servisBilgisi']
         widgets = {
             'protokolNo': TextInput(attrs={'class':'form-control','required':'required'}),
-            'tcNo': TextInput(attrs={'class':'form-control','onblur':'tckimlikkontorolu(this);', 'maxlength':'11'}),
-            'name':TextInput(attrs={'class':'form-control'}),
-            'surname': TextInput(attrs={'class':'form-control'}),
+            'tcNo': TextInput(attrs={'class':'form-control','required':'required','onblur':'tckimlikkontorolu(this);', 'maxlength':'11'}),
+            'name':TextInput(attrs={'class':'form-control','required':'required'}),
+            'surname': TextInput(attrs={'class':'form-control','required':'required'}),
             'dogumTarihi': DateInput(attrs={'class':' date-picker form-control','onchange':'calculateAge(this.value)'}),
             'yasi': NumberInput(attrs={'class':'form-control'}),
             'boy': NumberInput(attrs={'class':'form-control'}),

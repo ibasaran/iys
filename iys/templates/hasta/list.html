@@ -12,6 +12,9 @@
         <th>TC No</th>
         <th>Cinsiyet</th>
         <th>Kurum</th>
+        <th>Durum</th>
+        <th>Oluşturulma Tarihi</th>
+        <th>Düzenle</th>
       </tr>
     </thead>
 
@@ -25,6 +28,11 @@
                 <td>{{hasta.tcNo}}</td>
                 <td>{{hasta.cinsiyet.name}}</td>
                 <td>{{hasta.kurumBilgisi.name}}</td>
+                <td>{{hasta.durumTipi.name}}</td>
+                <td>{{hasta.created_at}}</td>
+                <td>
+                  <a href="{% url 'hasta:hastaEdit' hasta.pk %}">Düzenle</a>
+                </td>
             </tr>
         {% endfor %}
     </tbody>

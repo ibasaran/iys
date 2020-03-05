@@ -4,12 +4,14 @@ from django.urls import path
 
 from .views import (
     hastaList,
-    hastaEdit
+    hastaEdit,
+    hastaAdd
 )
 
 app_name='hasta'
 
 urlpatterns = [
      path('hastaList/', hastaList,name="hastaList"),
-     path('hastaEdit/', hastaEdit,name="hastaEdit"),
+     path('hastaAdd/', hastaAdd,name="hastaAdd"),
+     path('hastaEdit/<int:id>', hastaEdit,name="hastaEdit"),
 ]
