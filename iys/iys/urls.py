@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^', include('core.urls', namespace='core')),
     url(r'^', include('hasta.urls', namespace='hasta')),
     url(r'^', include('recete.urls', namespace='recete')),
+    url(r'^', include('report.urls', namespace='report')),
 ]
 
 admin.site.site_header="IYS SUPER ADMİN YONETIM SAYFASI"

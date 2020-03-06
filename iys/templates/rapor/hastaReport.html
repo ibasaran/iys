@@ -1,0 +1,41 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    .leftColumn {
+        background-color: #343a40;
+        color: aliceblue;
+        width: 200px;
+    }
+</style>
+
+<table class="table table-striped" style="width: 60%; border:1px solid #dee2e6">
+    <tr>
+        <td class="leftColumn">Hasta Adı Soyadı</td>
+        <td>İsmail Başaran</td>
+    </tr>
+    <tr>
+        <td class="leftColumn">TC Kimlik Numarası</td>
+        <td>11111111111</td>
+    </tr>
+    <tr>
+        <td class="leftColumn">Rapor Tarihi</td>
+        <td>25/01/2020</td>
+    </tr>
+</table>
+
+
+
+<table class="table table-striped jambo_table">
+    <thead>
+        <tr class="headings">
+            <th>İlaç Adı</th>
+            <th>Tedavi Tarihi</th>
+            <th>Tedavi Saati</th>
+        </tr>
+    </thead>
+</table>
+
+{% endblock content %}

@@ -6,7 +6,11 @@
 <style>
 #id_uygulamaSaati {
     list-style-type: none;
+    columns: 3;
+  -webkit-columns: 3;
+  -moz-columns: 3;
 }
+
 </style>
 
 <div class="x_content">
@@ -30,7 +34,7 @@
 
         <div  class="col-md-12 col-sm-12 " >
 
-            <div class="col-md-6 col-sm-6 ">
+            <div class="col-md-5 col-sm-5 ">
 
                 <div class="x_panel">
 
@@ -117,7 +121,7 @@
         
             </div>
 
-            <div class="col-md-6 col-sm-6 ">
+            <div class="col-md-7 col-sm-7 ">
                 <div class="x_panel">
                     <div class="x_title">
                                 <h2>Uygulama Bilgileri</h2>
@@ -135,7 +139,17 @@
                             <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Uygulama Saatleri</span>
                             </label>
                             <div class="col-md-6 col-sm-6 ">
-                            {{form.uygulamaSaati}}
+                                    <ul id="id_uygulamaSaati">
+                            {% for field in form.uygulamaSaati %}
+                              
+                                   <li>
+                                        {{ field.tag }}  <!-- Generates the checkbox for the field -->
+                                        {{ field.choice_label|time:"H:i" }}
+                                   </li>
+                               
+
+                            {% endfor %}
+                            </ul>
                             </div>
                         </div>
                     </div>

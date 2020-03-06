@@ -13,7 +13,7 @@ class ReceteForm(ModelForm):
     mayi = forms.ModelChoiceField(required=False,queryset=Mayi.objects.all(), widget=autocomplete.ModelSelect2(url='recete:mayi-autocomplete',attrs={'class':'form-control'}), empty_label='Seçiniz')
     birimTipi = forms.ModelChoiceField(required=False,queryset=BirimTipi.objects.all(), widget=forms.Select(attrs={'class':'form-control'}), empty_label='Seçiniz')
     sureTipi = forms.ModelChoiceField(required=False,queryset=SureTipi.objects.all(), widget=forms.Select(attrs={'class':'form-control'}), empty_label='Seçiniz')
-    uygulamaSaati = forms.ModelMultipleChoiceField(required=True,queryset=UygulamaSaati.objects.all(),widget=forms.CheckboxSelectMultiple)
+    uygulamaSaati = forms.ModelMultipleChoiceField(required=True,queryset=UygulamaSaati.objects.all(),widget=forms.CheckboxSelectMultiple(attrs={"data-columns":"2"}))
     uygulamaYolu = forms.ModelChoiceField(required=False,queryset=UygulamaYolu.objects.all(), widget=forms.Select(attrs={'class':'form-control'}), empty_label='Seçiniz')
 
     def __init__(self, *args, **kwargs):
