@@ -144,7 +144,7 @@
                               
                                    <li>
                                         {{ field.tag }}  <!-- Generates the checkbox for the field -->
-                                        {{ field.choice_label|time:"H:i" }}
+                                        {{ field.choice_label }}
                                    </li>
                                
 
@@ -211,7 +211,7 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script  type="text/javascript">
-$('.date-picker').datetimepicker({
+$('#id_receteTarihi').datetimepicker({
     format: 'DD/MM/YYYY'
 });
 

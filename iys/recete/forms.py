@@ -15,7 +15,9 @@ class ReceteForm(ModelForm):
     sureTipi = forms.ModelChoiceField(required=False,queryset=SureTipi.objects.all(), widget=forms.Select(attrs={'class':'form-control'}), empty_label='Seçiniz')
     uygulamaSaati = forms.ModelMultipleChoiceField(required=True,queryset=UygulamaSaati.objects.all(),widget=forms.CheckboxSelectMultiple(attrs={"data-columns":"2"}))
     uygulamaYolu = forms.ModelChoiceField(required=False,queryset=UygulamaYolu.objects.all(), widget=forms.Select(attrs={'class':'form-control'}), empty_label='Seçiniz')
-
+    receteTarihi = forms.DateField(widget=forms.DateInput(format = '%d/%m/%Y',attrs={'class':'form-control'}), 
+                               input_formats=('%d/%m/%Y',), 
+                               required=False)
     def __init__(self, *args, **kwargs):
         super(ReceteForm, self).__init__(*args, **kwargs)
         self.fields['uygulamaSaati'].error_messages = {'required': 'Uygulama Saati Seçilmelidir.'}
@@ -54,7 +56,7 @@ class ReceteForm(ModelForm):
         widgets = {
             'istenenMiktar':NumberInput(attrs={'class':'form-control'}),
             'sure':NumberInput(attrs={'class':'form-control'}),
-            'receteTarihi': DateInput(attrs={'class':'date-picker  form-control', 'id':'myDatepicker2'}),
+            #'receteTarihi': DateInput(attrs={'class':'date-picker  form-control', 'id':'myDatepicker2'},format = '%d/%m/%Y'),
             'hemsireNotu': TextInput(attrs={'class':'form-control'}),
         }
 
