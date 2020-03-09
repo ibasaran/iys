@@ -3,11 +3,13 @@ from django.urls import path
 
 
 from .views import (
-    openReportForm
+    openReportForm,
+    openReport
 )
 
 app_name='report'
 
 urlpatterns = [
-     path('hastaReport/', openReportForm,name="hastaReport"),
+     path('hastaReportForm/', openReportForm,name="hastaReportForm"),
+     path('hastaReport/', openReport, name="hastaReport")
 ]
