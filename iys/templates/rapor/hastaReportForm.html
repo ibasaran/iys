@@ -5,7 +5,7 @@
 
 <div class="x-content">
 
-    <form id="demo-form2"  action="{% url 'report:hastaReport' %}" method="post" >
+    <form id="demo-form2"  action="{% url 'report:hastaReport' %}" method="post" target="_blank">
     {% csrf_token %}
         <div  class="col-md-12 col-sm-12 " >
             <div class="x_panel">
@@ -55,3 +55,16 @@
 {{ form.media }}
 
 {% endblock content %}
+
+{% block js %}
+
+    <script type="text/javascript">
+        $('#id_baslangicTarihi').datetimepicker({
+            format: 'DD/MM/YYYY'
+        });
+        $('#id_bitisTarihi').datetimepicker({
+            format: 'DD/MM/YYYY'
+        });
+    </script>
+
+{% endblock js %}

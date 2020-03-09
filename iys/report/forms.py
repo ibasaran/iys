@@ -9,3 +9,9 @@ class HastaReportForm(forms.Form):
     hasta = forms.ModelChoiceField(required=False,queryset=Hasta.objects.all(), widget=autocomplete.ModelSelect2(url='recete:hasta-autocomplete',attrs={'class':'form-control'}), empty_label='Seçiniz')
     baslangicTarihi = forms.DateField(initial=datetime.date.today)
     bitisTarihi = forms.DateField(initial=datetime.date.today)
+
+    class Meta:
+        widgets: {
+            'baslangicTarihi': forms.DateInput(attrs={'class':'date-picker  form-control', 'id':'myDatepicker1'}),
+            'bitisTarihi': forms.DateInput(attrs={'class':'date-picker  form-control', 'id':'myDatepicker2'}),
+        }

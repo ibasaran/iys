@@ -1,0 +1,52 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    .leftColumn {
+        background-color: #343a40;
+        color: aliceblue;
+        width: 200px;
+    }
+</style>
+
+<table class="table table-striped" style="width: 60%; border:1px solid #dee2e6">
+    <tr>
+        <td class="leftColumn">Hasta Adı Soyadı</td>
+        <td>{{hasta.name}} {{hasta.surname}}</td>
+    </tr>
+    <tr>
+        <td class="leftColumn">TC Kimlik Numarası</td>
+        <td>{{hasta.tcNo}}</td>
+    </tr>
+    <tr>
+        <td class="leftColumn">Rapor Tarihi</td>
+        <td>{{hasta.dogumTarihi}}</td>
+    </tr>
+</table>
+
+
+
+<table class="table table-striped jambo_table">
+    <thead>
+        <tr class="headings">
+            <th>İlaç Adı</th>
+            <th>Tedavi Tarihi</th>
+            <th>Tedavi Saati</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for recete in tedaviListesi %}
+            {% for hazirmaSaati in recete.uygulamaSaati.all %}
+                <tr>
+                    <td>{{recete.ilac.piyasaAdi}}</td>
+                    <td>{{recete.receteTarihi}}</td>
+                    <td>{{hazirmaSaati.saat}}</td>
+                </tr>
+            {% endfor %}
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}

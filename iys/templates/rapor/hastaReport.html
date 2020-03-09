@@ -1,52 +1,124 @@
-{% extends 'layouts/base.html' %}
-{% load static %}
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Sales Report</title>
+    <style type="text/css">
 
-{% block content %}
+        @font-face {
+            font-family: FreeSans;
+            src: url("/usr/share/fonts/truetype/freefont/FreeSans.ttf");
+        }
 
-<style>
-    .leftColumn {
-        background-color: #343a40;
-        color: aliceblue;
-        width: 200px;
-    }
-</style>
+        body {
+            font-family: FreeSans;
+        }
 
-<table class="table table-striped" style="width: 60%; border:1px solid #dee2e6">
-    <tr>
-        <td class="leftColumn">Hasta Adı Soyadı</td>
-        <td>{{hasta.name}} {{hasta.surname}}</td>
-    </tr>
-    <tr>
-        <td class="leftColumn">TC Kimlik Numarası</td>
-        <td>{{hasta.tcNo}}</td>
-    </tr>
-    <tr>
-        <td class="leftColumn">Rapor Tarihi</td>
-        <td>{{hasta.dogumTarihi}}</td>
-    </tr>
-</table>
+        @page {
+            size: A4;
+            margin: 1cm;
+        }
 
+        .table {
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 5px;
+            background-color: #fff;
+        }
 
+        .table th,
+        .table td {
+            padding: 5px;
+            vertical-align: top;
+            border-top: 1px solid #000;
+            text-align: center;
+        }
 
-<table class="table table-striped jambo_table">
-    <thead>
-        <tr class="headings">
-            <th>İlaç Adı</th>
-            <th>Tedavi Tarihi</th>
-            <th>Tedavi Saati</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for recete in tedaviListesi %}
-            {% for hazirmaSaati in recete.uygulamaSaati.all %}
+        .table thead th {
+            vertical-align: bottom;
+            border-bottom: 2px solid #000;
+        }
+
+        .table tbody + tbody {
+            border-top: 2px solid #000;
+        }
+
+        .table .table {
+            background-color: #fff;
+        }
+
+        .list-group {
+            display: block;
+            width: 100%;
+            list-style: none;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        .list-group p {
+            width: 100%;
+            height: 20px;
+            line-height: 20px;
+            list-style: none;
+            font-size: 1.1em;
+        }
+
+        .leftColumn {
+            background-color: #343a40;
+            color: aliceblue;
+            width: 200px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h3>Hasta Tedavi Raporu - {{ today | date:"d/m/Y" }}</h3>
+        </div>
+
+        <div class="list-group">
+            <table class="table" style="width: 60%; border:1px solid #dee2e6">
+                    <tr>
+                        <th class="leftColumn">Hasta Adı Soyadı</th>
+                        <td >{{hasta.name}} {{hasta.surname}}</td>
+                    </tr>
+                    <tr>
+                        <td class="leftColumn">TC Kimlik Numarası</td>
+                        <td>{{hasta.tcNo}}</td>
+                    </tr>
+                    <tr>
+                        <td class="leftColumn">Rapor Tarihi</td>
+                        <td>{{hasta.dogumTarihi}}</td>
+                    </tr>
+            </table>
+        </div>
+
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>{{recete.ilac.piyasaAdi}}</td>
-                    <td>{{recete.receteTarihi}}</td>
-                    <td>{{hazirmaSaati.saat}}</td>
+                    <th>İlaç Adı</th>
+                    <th>Tedavi Tarihi</th>
+                    <th>Tedavi Saati</th>
                 </tr>
-            {% endfor %}
-        {% endfor %}
-    </tbody>
-</table>
+            </thead>
+            <tbody>
+                {% for recete in tedaviListesi %}
+                    {% for hazirmaSaati in recete.uygulamaSaati.all %}
+                        <tr>
+                            <td>{{recete.ilac.piyasaAdi}}</td>
+                            <td>{{recete.receteTarihi}}</td>
+                            <td>{{hazirmaSaati.saat}}</td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 
-{% endblock content %}
+</body>
+</html>
+
