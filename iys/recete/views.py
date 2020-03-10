@@ -140,7 +140,7 @@ class IlacInfo(object):
 def addIlac(infoList, recete):
     ilac = IlacInfo()
     ilac.ilacId = recete.ilac.id
-    ilac.ilacAdi = recete.ilac.adi
+    ilac.ilacAdi = recete.ilac.piyasaAdi
     ilac.toplamMiktar = (recete.ilac.ml / recete.ilac.mg) * recete.istenenMiktar
 
     varmi = False
