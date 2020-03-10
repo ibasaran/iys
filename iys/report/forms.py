@@ -10,8 +10,4 @@ class HastaReportForm(forms.Form):
     baslangicTarihi = forms.DateField(initial=datetime.date.today)
     bitisTarihi = forms.DateField(initial=datetime.date.today)
 
-    class Meta:
-        widgets: {
-            'baslangicTarihi': forms.DateInput(attrs={'class':'date-picker  form-control', 'id':'myDatepicker1'}),
-            'bitisTarihi': forms.DateInput(attrs={'class':'date-picker  form-control', 'id':'myDatepicker2'}),
-        }
+   
