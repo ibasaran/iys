@@ -7,8 +7,20 @@
 #id_uygulamaSaati {
     list-style-type: none;
     columns: 3;
-  -webkit-columns: 3;
-  -moz-columns: 3;
+    -webkit-columns: 3;
+    -moz-columns: 3;
+    -webkit-column-width: 33%;
+    -moz-column-width: 33%;
+    column-width: 33%;
+    padding: 0;
+    margin:0;
+}
+
+#uygulamaSaatiDiv {
+    width: 420px;
+    height: 250px;
+    border: 1px solid;
+    overflow-y: scroll;
 }
 
 </style>
@@ -138,13 +150,13 @@
                         <div class="item form-group">
                             <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Uygulama Saatleri</span>
                             </label>
-                            <div class="col-md-6 col-sm-6 ">
-                                    <ul id="id_uygulamaSaati">
+                            <div id="uygulamaSaatiDiv" class="col-md-6 col-sm-6 ">
+                                    <ul id="id_uygulamaSaati" >
                             {% for field in form.uygulamaSaati %}
                               
                                    <li>
                                         {{ field.tag }}  <!-- Generates the checkbox for the field -->
-                                        {{ field.choice_label }}
+                                        {{ field.choice_label|slice:":-3" }}
                                    </li>
                                
 

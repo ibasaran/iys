@@ -26,7 +26,7 @@ class Recete(models.Model):
     #         raise ValidationError('Mayi Seçiniz')
     
     def __str__(self):
-        return self.hasta.name + ' ' + self.hasta.surname + ' ' + self.ilac.adi + ' ' + self.receteTarihi
+        return str(self.hasta.name) or '' + ' ' + str(self.hasta.surname) or '' + ' ' + str(self.ilac.piyasaAdi) or ''
 
     class Meta:
         verbose_name = 'Reçete'

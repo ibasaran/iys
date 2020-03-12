@@ -63,7 +63,7 @@ class DolumTipi(models.Model):
         return self.name
 
     class Meta:
-        verbose_name='Dolum Tipi'
+        verbose_name='Dolum Yeri'
 
 
 class DolumYeri(models.Model):
