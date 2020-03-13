@@ -243,7 +243,7 @@ def printRecete(request,id,sid):
     hasta_adi = recete.hasta.name
     servis_adi = recete.hasta.servisBilgisi.servisAdi
     tc_no = recete.hasta.tcNo
-    ilac_adi = recete.ilac.adi
+    ilac_adi = recete.ilac.piyasaAdi
     hazirlama_yeri = recete.uygulamaYolu.adi
     mayi = recete.mayi.name
     istenenMik = recete.istenenMiktar
