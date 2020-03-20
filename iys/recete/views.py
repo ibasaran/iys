@@ -238,7 +238,7 @@ class IlacAutocomplete(autocomplete.Select2QuerySetView):
 def printRecete(request,id,sid):
 
     recete = Recete.objects.get(pk=id)
-    uygulama = ReceteUygulama.objects.get(pk=sid)
+    #uygulama = ReceteUygulama.objects.get(pk=sid)
 
     hasta_adi = recete.hasta.name
     servis_adi = recete.hasta.servisBilgisi.servisAdi
