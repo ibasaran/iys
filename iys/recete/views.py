@@ -159,7 +159,7 @@ def hazirlamaList(request):
     ilacInfo = []
     if(request.method == 'POST'):
         receteTarihi = request.POST.get('receteTarihi', '')
-        hazirlamaListesi = Recete.objects.filter(hastane__id=request.session['hastaneId'],receteTarihi=datetime.datetime.strptime(str(receteTarihi), "%Y-%m-%d").date())
+        hazirlamaListesi = Recete.objects.filter(hastane__id=request.session['hastaneId'],receteTarihi=datetime.datetime.strptime(str(receteTarihi), "%d/%m/%Y").date())
         for recete in hazirlamaListesi:
             for saat in recete.uygulamaSaati.all():
                 addIlac(ilacInfo,recete)
