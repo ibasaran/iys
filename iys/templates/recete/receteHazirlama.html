@@ -1,6 +1,6 @@
 {% extends 'layouts/base.html' %}
 {% load static %}
-
+{%load time_checker%}
 {% block content %}
 
 
@@ -88,7 +88,7 @@
                           <td>{{recete.receteTarihi}}</td>
                           <td>{{recete.ilac.piyasaAdi}}</td>
                           <td>{{recete.hasta.servisBilgisi.servisAdi}}</td>
-                          <td>{{hazirmaSaati.saat}}</td>
+                          <td>{{hazirmaSaati.saat|timeChecker}}</td>
                           <td><a href="{% url 'recete:recete-print' recete.pk hazirmaSaati.pk%}" target="_new">Yazdır(PDF)</a></td>
                       </tr>
                     {% endfor %}
