@@ -20,7 +20,7 @@ class Hasta(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return  'Hasta Adı ' +  str(self.name) + ' ' + str(self.surname)
+        return  str(self.name) + ' ' + str(self.surname)
 
     class Meta:
         verbose_name = 'Hasta Bilgileri'
