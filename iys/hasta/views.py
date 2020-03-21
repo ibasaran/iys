@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from hasta.forms import HastaForm
 from hasta.models import Hasta
 
@@ -28,7 +28,8 @@ def hastaEdit(request, id):
     message = None
     info = None
     if (request.POST):
-        hastaForm = HastaForm(request.POST)
+        hastaModel = get_object_or_404(Hasta,pk=id)
+        hastaForm = HastaForm(request.POST or None, instance=hastaModel)
         if hastaForm.is_valid():
             hastaForm.save()
             info = 'Başarı ile güncellendi.'

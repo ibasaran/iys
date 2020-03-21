@@ -1,2 +1,6 @@
+django
 django-autocomplete-light
 reportlab
+psycopg2-binary
+psycopg2==2.7.5
+xhtml2pdf
