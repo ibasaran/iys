@@ -72,6 +72,7 @@
                   <th>TC No</th>
                   <th>Reçete Tarihi</th>
                   <th>İlaç Adı</th>
+                  <th>İstenen Miktar</th>
                   <th>Servis Adı</th>
                   <th>Uygulama Saati</th>
                   <th>Yazdır</th>
@@ -87,6 +88,7 @@
                           <td>{{recete.hasta.tcNo}}</td>
                           <td>{{recete.receteTarihi}}</td>
                           <td>{{recete.ilac.piyasaAdi}}</td>
+                          <td>{{recete.ilac.istenenMiktar}}</td>
                           <td>{{recete.hasta.servisBilgisi.servisAdi}}</td>
                           <td>{{hazirmaSaati.saat|timeChecker}}</td>
                           <td><a href="{% url 'recete:recete-print' recete.pk hazirmaSaati.pk%}" target="_new">Yazdır(PDF)</a></td>

@@ -202,29 +202,18 @@ function stringToDate(_date,_format,_delimiter)
             var month=parseInt(dateItems[monthIndex]);
             month-=1;
             var formatedDate = new Date(dateItems[2],dateItems[1],dateItems[0]);
-            console.log(dateItems[yearIndex]);
-            console.log(month);
-            console.log(dateItems[dayIndex])
-            console.log(dateItems);
-            console.log(formatedDate);
+            
             return formatedDate;
 }
 
 function calculateAge(date)
 {
 
-  console.log('burasi')
-  console.log(date);
   var birthdayDate = stringToDate(date,"dd/mm/yyyy","/");
   var birthYear = birthdayDate.getFullYear();
   var birthMonth = birthdayDate.getMonth();
   var birthDay = birthdayDate.getDate();
 
-  console.log('birth year')
-  console.log(birthDay);
-  console.log(birthMonth);
-  console.log(birthYear);
-  
 
   var todayDate = new Date();
   todayYear = todayDate.getFullYear();

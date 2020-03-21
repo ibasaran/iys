@@ -18,7 +18,7 @@ class HastaForm(ModelForm):
             'tcNo': TextInput(attrs={'class':'form-control','required':'required','onblur':'tckimlikkontorolu(this);', 'maxlength':'11'}),
             'name':TextInput(attrs={'class':'form-control','required':'required'}),
             'surname': TextInput(attrs={'class':'form-control','required':'required'}),
-            'dogumTarihi': DateInput(attrs={'class':' date-picker form-control','onchange':'calculateAge(this.value)'}),
+            'dogumTarihi': DateInput(format=('%d/%m/%Y'),attrs={'class':' date-picker form-control','onchange':'calculateAge(this.value)'}),
             'yasi': NumberInput(attrs={'class':'form-control'}),
             'boy': NumberInput(attrs={'class':'form-control'}),
             'kilo': NumberInput(attrs={'class':'form-control'}),

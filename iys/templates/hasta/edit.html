@@ -170,7 +170,7 @@ $('#id_boy').change(function () {
     if (boy) {
       if (kilo) {
         var result = Math.sqrt(boy * kilo / 3600);
-        $("#id_vucutYuzeyAlani").val(result);
+        $("#id_vucutYuzeyAlani").val(Math.round(result*100)/100);
       }
     }
 
@@ -183,7 +183,7 @@ $('#id_kilo').change(function () {
     if (boy) {
       if (kilo) {
         var result = Math.sqrt(boy * kilo / 3600);
-        $("#id_vucutYuzeyAlani").val(result);
+        $("#id_vucutYuzeyAlani").val(Math.round(result*100)/100);
       }
     }
 });
@@ -193,33 +193,27 @@ $('#id_kilo').change(function () {
 
 function stringToDate(_date,_format,_delimiter)
 {
-            var formatLowerCase=_format.toLowerCase();
-            var formatItems=formatLowerCase.split(_delimiter);
-            var dateItems=_date.split('-');
-            var monthIndex=formatItems.indexOf("mm");
-            var dayIndex=formatItems.indexOf("dd");
-            var yearIndex=formatItems.indexOf("yyyy");
-            var month=parseInt(dateItems[monthIndex]);
-            month-=1;
-            var formatedDate = new Date(dateItems[0],dateItems[1],dateItems[2]);
-            console.log(dateItems[yearIndex]);
-            console.log(month);
-            console.log(dateItems[dayIndex])
-            console.log(dateItems);
-            console.log(formatedDate);
-            return formatedDate;
+  var formatLowerCase=_format.toLowerCase();
+  var formatItems=formatLowerCase.split(_delimiter);
+  var dateItems=_date.split('/');
+  var monthIndex=formatItems.indexOf("dd");
+  var dayIndex=formatItems.indexOf("mm");
+  var yearIndex=formatItems.indexOf("yyyy");
+  var month=parseInt(dateItems[monthIndex]);
+  month-=1;
+  var formatedDate = new Date(dateItems[2],dateItems[1],dateItems[0]);
+  
+  return formatedDate;
 }
 
 function calculateAge(date)
 {
 
-  console.log('burasi')
-  console.log(date);
-  var birthdayDate = stringToDate(date,"yyyy-mm-dd","");
+  var birthdayDate = stringToDate(date,"dd/mm/yyyy","/");
   var birthYear = birthdayDate.getFullYear();
   var birthMonth = birthdayDate.getMonth();
   var birthDay = birthdayDate.getDate();
-  
+
 
   var todayDate = new Date();
   todayYear = todayDate.getFullYear();
@@ -242,8 +236,6 @@ function calculateAge(date)
 
 
 }
-
-
 
 $('.date-picker').datetimepicker({
     format: 'DD/MM/YYYY',

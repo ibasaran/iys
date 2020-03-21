@@ -7,8 +7,8 @@ from django.core.exceptions import ValidationError
 class Recete(models.Model):
     hasta = models.ForeignKey(Hasta, on_delete=models.SET_NULL, null=True, blank=True)
     ilac = models.ForeignKey(Ilac, on_delete=models.SET_NULL, null=True, blank=True)
-    mayi = models.ForeignKey(Mayi, on_delete=models.SET_NULL, null=True, blank=True)
-    istenenMiktar = models.IntegerField(null=True, blank=True, verbose_name='İstenen Miktar')
+    mayi = models.ForeignKey(Mayi, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Sulandırma Mayisi")
+    istenenMiktar = models.IntegerField(null=True, blank=True, verbose_name='İstenen İlaç Miktarı')
     birimTipi = models.ForeignKey(BirimTipi, on_delete=models.SET_NULL, null=True, blank=True)
     #sure = models.IntegerField(verbose_name='Süre', null=True, blank=True)
     #sureTipi = models.ForeignKey(SureTipi, on_delete=models.SET_NULL, null=True, blank=True)
