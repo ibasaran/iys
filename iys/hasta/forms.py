@@ -9,7 +9,9 @@ class HastaForm(ModelForm):
     servisBilgisi = forms.ModelChoiceField(required=False,queryset=ServisBilgileri.objects.all(), widget=forms.Select(attrs={'class':'form-control'}), empty_label='Seçiniz')
     cinsiyet = forms.ModelChoiceField(required=False,queryset=Cinsiyet.objects.all(), widget=forms.Select(attrs={'class':'form-control'}), empty_label='Seçiniz')
     durumTipi = forms.ModelChoiceField(required=False,queryset=DurumTipi.objects.all(), widget=forms.Select(attrs={'class':'form-control'}), empty_label='Seçiniz')
-
+    dogumTarihi = forms.DateField(widget=forms.DateInput(format = '%d/%m/%Y',attrs={'class':'form-control'}), 
+                               input_formats=('%d/%m/%Y',), 
+                               required=False)
     class Meta:
         model = Hasta
         fields = ['protokolNo', 'tcNo', 'name', 'surname', 'cinsiyet', 'dogumTarihi', 'yasi', 'durumTipi', 'boy','kilo','vucutYuzeyAlani','kurumBilgisi','servisBilgisi']
