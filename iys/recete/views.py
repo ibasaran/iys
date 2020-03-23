@@ -267,10 +267,14 @@ def printRecete(request,id,sid):
     mayi = recete.mayi.name
     istenenMik = recete.istenenMiktar
     hemsireNotu = recete.hemsireNotu
-    cekilecekMl = (recete.ilac.ml / recete.ilac.mg) * istenenMik
+    cekilecekMl = ( recete.ilac.ml * istenenMik ) / recete.ilac.mg
     tamamlanacakMiktar = recete.mayi.miktari - cekilecekMl
     toplamHacim = recete.mayi.miktari
     istenenMikBirimTip = recete.birimTipi.name
+    dolumYeri = recete.dolumTipi.name
+
+    toplamMk = recete.ilac.mg
+    KalanMk = toplamMk - istenenMik
 
 
     reportlab.rl_config.TTFSearchPath.append(str(settings.BASE_DIR))
@@ -302,16 +306,17 @@ def printRecete(request,id,sid):
     p.line(0,140,300,140)
 
     p.drawString(5, 125, 'İlaç Adı: ' + str(ilac_adi))
-    p.drawString(5, 110, 'Hazirma Yeri: ' + str(hazirlama_yeri))
-    p.drawString(5, 95, mayi)
-    p.drawString(5, 80, 'İstl Mik: ' + str(istenenMik) + ' ' + str(istenenMikBirimTip))
-    p.drawString(5, 40, 'Hemşire Notu: ' + '' if hemsireNotu is None else str(hemsireNotu))
+    p.drawString(5, 110, 'Hazirma Yeri: ' + str(dolumYeri))
+    p.drawString(5, 95, 'Sulan. Mayisi: ' + mayi)
+    #p.drawString(5, 80, 'İstl Mik: ' + str(istenenMik) + ' ' + str(istenenMikBirimTip))
+    p.drawString(5,65, 'Not')
+    p.drawString(5, 40, '' if hemsireNotu is None else str(hemsireNotu))
 
-    p.drawString(170, 110, 'İstl Mik: ' + str(istenenMik) + ' ' + str(istenenMikBirimTip))
-    p.drawString(170, 95, 'Tamln. Mik: ' + str(tamamlanacakMiktar) + ' ML' )
-    p.drawString(170, 80, 'Çekilen Mik: ' + str(cekilecekMl) + ' ML' )
-    p.line(165,75,280,75)
-    p.drawString(165, 60, 'Tpl Hacim: ' + str(toplamHacim) + ' ML')
+    p.drawString(170, 110, 'Toplam Mik: ' + str(toplamMk) + ' Mg')
+    p.drawString(170, 95, 'İstenen. Mik: ' + str(istenenMik) + ' ' + str(istenenMikBirimTip))
+    p.drawString(170, 80, 'Kalan Mk:' + str(KalanMk) )
+    #p.line(165,75,280,75)
+    p.drawString(170, 65,'Çekilen Mik: ' + str(cekilecekMl) + ' ML' )
 
     p.line(0,30,300,30)
 

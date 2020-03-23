@@ -3,14 +3,16 @@ from hasta.models import Hasta
 from django import forms
 from core.models import Cinsiyet, DurumTipi,ServisBilgileri,KurumBilgisi
 
+class DateInput(forms.DateInput):
+    input_type = 'text'
 
 class HastaForm(ModelForm):
     kurumBilgisi = forms.ModelChoiceField(required=False,queryset=KurumBilgisi.objects.all(), widget=forms.Select(attrs={'class':'form-control'}), empty_label='Seçiniz')
     servisBilgisi = forms.ModelChoiceField(required=False,queryset=ServisBilgileri.objects.all(), widget=forms.Select(attrs={'class':'form-control'}), empty_label='Seçiniz')
     cinsiyet = forms.ModelChoiceField(required=False,queryset=Cinsiyet.objects.all(), widget=forms.Select(attrs={'class':'form-control'}), empty_label='Seçiniz')
     durumTipi = forms.ModelChoiceField(required=False,queryset=DurumTipi.objects.all(), widget=forms.Select(attrs={'class':'form-control'}), empty_label='Seçiniz')
-    dogumTarihi = forms.DateField(widget=forms.DateInput(format = '%d/%m/%Y',attrs={'class':'form-control'}), 
-                               input_formats=('%d/%m/%Y',), 
+    dogumTarihi = forms.DateField(widget=DateInput( format = '%d/%m/%Y',attrs={'class':'form-control', 'size':10,'pattern':"\d{1,2}/\d{1,2}/\d{4}",'oninput':"this.value = DDMMYYYY(this.value, event)", 'placeholder':'GÜN/AY/YIL'}), 
+                               input_formats=('%d/%m/%Y',),
                                required=False)
     class Meta:
         model = Hasta
