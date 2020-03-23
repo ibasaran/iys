@@ -168,6 +168,7 @@ $( document ).ready(function() {
   $("#id_durumTipi").prop("selectedIndex", 1);
 
   $("#id_dogumTarihi").on('input', function(){
+    alert('2');
     calculateAge($(this).val());
 
 });
@@ -175,7 +176,8 @@ $( document ).ready(function() {
 
 
 $('#id_dogumTarihi').change(function () {
-    
+  alert('1');
+    calculateAge($(this).val());
 });
 
 
@@ -211,7 +213,7 @@ function stringToDate(_date,_format,_delimiter)
 {
             var formatLowerCase=_format.toLowerCase();
             var formatItems=formatLowerCase.split(_delimiter);
-            var dateItems=_date.split('/');
+            var dateItems=String(_date).split('/');
             var monthIndex=formatItems.indexOf("dd");
             var dayIndex=formatItems.indexOf("mm");
             var yearIndex=formatItems.indexOf("yyyy");
@@ -259,7 +261,9 @@ $('#id_dogumTarihi').datetimepicker({
     format: 'DD/MM/YYYY',
     
 }).on('dp.change', function (ev) {
+  calculateAge(ev.date._i);
   $('#id_dogumTarihi').change();
+ 
 });
 
 function tckimlikkontorolu(tcno) {
