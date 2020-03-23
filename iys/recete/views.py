@@ -19,10 +19,22 @@ from reportlab.pdfbase.pdfmetrics import stringWidth
 from reportlab.rl_config import defaultPageSize
 import reportlab
 from django.conf import settings
+from core.models import Hospital, HospitalUser
 
 class ReceteList(ListView):
     model = Recete
     template_name = 'recete/list.html'
+
+    def get_queryset(self):
+        hastaneId = self.request.session['hastaneId']
+        user = self.request.user
+        hastane = Hospital.objects.get(pk=hastaneId)
+        hastaneKullanici = HospitalUser.objects.get(authorizedUser=user, hospital=hastane)
+
+        if user.username == 'erkan':
+            return Recete.objects.all()
+        else:
+            return Recete.objects.filter(hasta__servisBilgisi=hastaneKullanici.servis)
 
 
 class ReceteCreate(CreateView):
@@ -212,7 +224,15 @@ class HastaAutocomplete(autocomplete.Select2QuerySetView):
         #if not self.request.user.is_authenticated():
         #    return Mayi.objects.none()
 
-        qs = Hasta.objects.all()
+        hastaneId = self.request.session['hastaneId']
+        user = self.request.user
+        hastane = Hospital.objects.get(pk=hastaneId)
+
+        hastaneKullanici = HospitalUser.objects.get(authorizedUser=user, hospital=hastane)
+        if (user.username == 'erkan'): 
+            qs = Hasta.objects.all()
+        else:
+            qs = Hasta.objects.filter(servisBilgisi=hastaneKullanici.servis)
 
         if self.q:
             qs = qs.filter(name__istartswith=self.q)

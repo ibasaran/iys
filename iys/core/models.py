@@ -12,15 +12,6 @@ class Hospital(models.Model):
 
     class Meta:
         verbose_name='Hastane'
-        
-
-
-class HospitalUser(models.Model):
-    authorizedUser = models.ForeignKey(User,on_delete=models.SET_NULL, null=True)
-    hospital = models.ForeignKey(Hospital,on_delete=models.SET_NULL,null=True)
-
-    class Meta:
-        verbose_name = 'Hastane Kullanıcı'
 
 
 class BirimTipi(models.Model):
@@ -42,6 +33,23 @@ class DurumTipi(models.Model):
 
     class Meta:
         verbose_name='Durum Tipi'
+
+class ServisBilgileri(models.Model):
+    servisAdi = models.CharField(max_length=250, verbose_name='Servis Adı')
+    durumTipi = models.ForeignKey(DurumTipi,on_delete=models.SET_NULL,null=True)
+    def __str__(self):
+        return self.servisAdi
+
+    class Meta:
+        verbose_name='ServisBilgileri'
+
+class HospitalUser(models.Model):
+    authorizedUser = models.ForeignKey(User,on_delete=models.SET_NULL, null=True)
+    hospital = models.ForeignKey(Hospital,on_delete=models.SET_NULL,null=True)
+    servis = models.ForeignKey(ServisBilgileri,on_delete=models.SET_NULL,null=True)
+
+    class Meta:
+        verbose_name = 'Hastane Kullanıcı'
 
 class TozBilgileri(models.Model):
     name = models.CharField(max_length=250, verbose_name='Toz Adı')
@@ -121,16 +129,6 @@ class UygulamaYolu(models.Model):
 
     class Meta:
         verbose_name='Uygulama Yolu'
-
-
-class ServisBilgileri(models.Model):
-    servisAdi = models.CharField(max_length=250, verbose_name='Servis Adı')
-    durumTipi = models.ForeignKey(DurumTipi,on_delete=models.SET_NULL,null=True)
-    def __str__(self):
-        return self.servisAdi
-
-    class Meta:
-        verbose_name='ServisBilgileri'
 
 
 class Cinsiyet(models.Model):

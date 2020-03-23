@@ -1,10 +1,26 @@
 from django.shortcuts import render,get_object_or_404
 from hasta.forms import HastaForm
 from hasta.models import Hasta
+from core.models import Hospital, HospitalUser
+from django.contrib.auth.models import User
 
 
 def hastaList(request):
-    return render(request, 'hasta/list.html', {'hastalar':Hasta.objects.all()})
+
+    hastaneId = request.session['hastaneId']
+    user = request.user
+    hastane = Hospital.objects.get(pk=hastaneId)
+
+    hastaneKullanici = HospitalUser.objects.get(authorizedUser=user, hospital=hastane)
+
+    if (hastaneKullanici):
+        hastalar = Hasta.objects.filter(servisBilgisi=hastaneKullanici.servis)
+        return render(request, 'hasta/list.html', {'hastalar':hastalar})
+    else:
+        if (request.user.username == 'erkan'):
+            return render(request, 'hasta/list.html', {'hastalar':Hasta.objects.all()})
+        else:
+            return render(request, 'hasta/list.html', {'hastalar':{}})
 
 
 def hastaAdd(request):
@@ -20,6 +36,8 @@ def hastaAdd(request):
             else:
                 hastaForm.save()
                 info = 'Başarı ile kaydedildi.'
+        else:
+            print('FORM Valid degil')
     hastaForm = HastaForm()
 
     return render(request, 'hasta/add.html', {'hastaForm':hastaForm, 'info':info, 'message':message})

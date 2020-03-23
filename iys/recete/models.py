@@ -1,6 +1,6 @@
 from django.db import models
 from hasta.models import Hasta
-from core.models import Ilac, Mayi, BirimTipi,UygulamaYolu,SureTipi,Hospital,UygulamaSaati
+from core.models import Ilac, Mayi, BirimTipi,UygulamaYolu,SureTipi,Hospital,UygulamaSaati,DolumTipi
 from django.core.exceptions import ValidationError
 
 
@@ -19,6 +19,8 @@ class Recete(models.Model):
     hemsireNotu = models.CharField(max_length=250, verbose_name='Hemşire Notu',blank=True,null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    dolumTipi = models.ForeignKey(DolumTipi,on_delete=models.SET_NULL, null=True, blank=True)
+
 
     # def clean(self):
     #     if self.mayi is None:

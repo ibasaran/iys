@@ -5,7 +5,8 @@ from django.http import HttpResponseRedirect, JsonResponse
 from hasta.models import Hasta
 from recete.models import Recete
 import datetime
-from core.models import Hospital
+from core.models import Hospital,HospitalUser
+from django.contrib.auth.models import User
 
 def login_page(request):
 
