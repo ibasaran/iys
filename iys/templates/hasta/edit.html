@@ -19,6 +19,21 @@
   </div>
 {% endif %}
 
+{% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
+
 <div class="x_content">
 <form autocomplete="off"  method="POST" action="{% url 'hasta:hastaEdit' id %}"   class="form-horizontal form-label-left">
     {% csrf_token %}
@@ -26,7 +41,7 @@
       <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Protokol Numarası <span class="required">*</span>
       </label>
       <div class="col-md-6 col-sm-6 ">
-        {{hastaForm.protokolNo}}
+        {{form.protokolNo}}
       </div>
     </div>
 
@@ -34,7 +49,7 @@
         <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">T.C. Kimilik Numarası </span>
         </label>
         <div class="col-md-6 col-sm-6 ">
-          {{hastaForm.tcNo}}
+          {{form.tcNo}}
         </div>
     </div>
 
@@ -42,7 +57,7 @@
         <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Adı</span>
         </label>
         <div class="col-md-6 col-sm-6 ">
-          {{hastaForm.name}}
+          {{form.name}}
         </div>
     </div>
 
@@ -50,7 +65,7 @@
         <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Soyadı</span>
         </label>
         <div class="col-md-6 col-sm-6 ">
-          {{hastaForm.surname}}
+          {{form.surname}}
         </div>
     </div>
 
@@ -58,7 +73,7 @@
         <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Cinsiyeti</span>
         </label>
         <div class="col-md-6 col-sm-6 ">
-          {{hastaForm.cinsiyet}}
+          {{form.cinsiyet}}
         </div>
     </div>
 
@@ -67,7 +82,7 @@
         <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Doğum Tarihi</span>
         </label>
         <div class="col-md-6 col-sm-6 ">
-          {{hastaForm.dogumTarihi}}
+          {{form.dogumTarihi}}
         </div>
     </div>
 
@@ -75,7 +90,7 @@
         <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Yaşı</span>
         </label>
         <div class="col-md-6 col-sm-6 ">
-          {{hastaForm.yasi}}
+          {{form.yasi}}
         </div>
     </div>
 
@@ -83,7 +98,7 @@
         <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Durum Tipi</span>
         </label>
         <div class="col-md-6 col-sm-6 ">
-          {{hastaForm.durumTipi}}
+          {{form.durumTipi}}
         </div>
     </div>
 
@@ -92,7 +107,7 @@
         <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Boy</span>
         </label>
         <div class="col-md-6 col-sm-6 ">
-          {{hastaForm.boy}}
+          {{form.boy}}
         </div>
     </div>
 
@@ -100,7 +115,7 @@
         <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Kilo</span>
         </label>
         <div class="col-md-6 col-sm-6 ">
-          {{hastaForm.kilo}}
+          {{form.kilo}}
         </div>
     </div>
     
@@ -108,7 +123,7 @@
         <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Vucut Yüzey Alanı</span>
         </label>
         <div class="col-md-6 col-sm-6 ">
-          {{hastaForm.vucutYuzeyAlani}}
+          {{form.vucutYuzeyAlani}}
         </div>
     </div>
 
@@ -116,7 +131,7 @@
         <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Kurum Bilgisi</span>
         </label>
         <div class="col-md-6 col-sm-6 ">
-          {{hastaForm.kurumBilgisi}}
+          {{form.kurumBilgisi}}
         </div>
     </div>
 
@@ -125,7 +140,7 @@
         <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Servis Bilgisi</span>
         </label>
         <div class="col-md-6 col-sm-6 ">
-          {{hastaForm.servisBilgisi}}
+          {{form.servisBilgisi}}
         </div>
     </div>
 

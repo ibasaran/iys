@@ -26,6 +26,7 @@ def hastaList(request):
 def hastaAdd(request):
     message = None
     info = None
+    hastaForm = HastaForm()
     if (request.POST):
         hastaForm = HastaForm(request.POST)
         if hastaForm.is_valid():
@@ -38,9 +39,9 @@ def hastaAdd(request):
                 info = 'Başarı ile kaydedildi.'
         else:
             print('FORM Valid degil')
-    hastaForm = HastaForm()
+    #hastaForm = HastaForm()
 
-    return render(request, 'hasta/add.html', {'hastaForm':hastaForm, 'info':info, 'message':message})
+    return render(request, 'hasta/add.html', {'form':hastaForm, 'info':info, 'message':message})
 
 def hastaEdit(request, id):
     message = None
@@ -59,4 +60,4 @@ def hastaEdit(request, id):
         hasta = Hasta.objects.get(pk=id)
         hastaForm = HastaForm(instance=hasta)
 
-    return render(request, 'hasta/edit.html', {'id':id,'hastaForm':hastaForm, 'info':info, 'message':message})
+    return render(request, 'hasta/edit.html', {'id':id,'form':hastaForm, 'info':info, 'message':message})

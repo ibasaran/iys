@@ -24,3 +24,11 @@ class HastaForm(ModelForm):
             'kilo': NumberInput(attrs={'class':'form-control'}),
             'vucutYuzeyAlani': TextInput(attrs={'class':'form-control'}),
         }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        servisBilgisi = cleaned_data.get('servisBilgisi')
+
+        if servisBilgisi is None:
+            print('SERVIS BİLGİSİ BOS OLAMAZ')
+            raise forms.ValidationError("Servis Bilgisi Boş Olamaz")
