@@ -26,11 +26,11 @@ class ReceteList(ListView):
     template_name = 'recete/list.html'
 
     def get_queryset(self):
+        user = self.request.user
         if user.username == 'erkan':
             return Recete.objects.all()
         else:
             hastaneId = self.request.session['hastaneId']
-            user = self.request.user
             hastane = Hospital.objects.get(pk=hastaneId)
             hastaneKullanici = HospitalUser.objects.get(authorizedUser=user, hospital=hastane)
             return Recete.objects.filter(hasta__servisBilgisi=hastaneKullanici.servis)
