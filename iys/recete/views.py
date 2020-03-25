@@ -260,7 +260,7 @@ def printRecete(request,id,sid):
     recete = Recete.objects.get(pk=id)
     #uygulama = ReceteUygulama.objects.get(pk=sid)
 
-    hasta_adi = recete.hasta.name + recete.hasta.surname
+    hasta_adi = recete.hasta.name + ' ' +recete.hasta.surname
     servis_adi = recete.hasta.servisBilgisi.servisAdi
     tc_no = recete.hasta.tcNo
     ilac_adi = recete.ilac.piyasaAdi
