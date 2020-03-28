@@ -104,7 +104,7 @@
             </table>
         </div>
         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-        <table id="ilacHazirlamaTamam" class="table table-striped table-bordered" style="width:100%">
+          <table id="ilacHazirlamaTamam" class="table table-striped table-bordered" style="width:100%">
               <thead>
                 <tr>
                   <th>Protokol No</th>
@@ -134,21 +134,10 @@
                             <td><a href="{% url 'recete:recete-print' recete.pk hazirmaSaati.pk%}" target="_new">Yazdır(PDF)</a></td>
                         </tr>
                       {% endif %}
-                      <tr>
-                          <td>{{recete.hasta.protokolNo }}</td>
-                          <td>{{recete.hasta.name }} {{recete.hasta.surname }}</td>
-                          <td>{{recete.hasta.tcNo}}</td>
-                          <td>{{recete.receteTarihi}}</td>
-                          <td>{{recete.ilac.piyasaAdi}}</td>
-                          <td>{{recete.istenenMiktar}}  {{recete.birimTipi.name}}</td>
-                          <td>{{recete.hasta.servisBilgisi.servisAdi}}</td>
-                          <td>{{hazirmaSaati.saat|timeChecker}}</td>
-                          <td><a href="{% url 'recete:recete-print' recete.pk hazirmaSaati.pk%}" target="_new">Yazdır(PDF)</a></td>
-                      </tr>
                     {% endfor %}
                   {% endfor %}
               </tbody>
-            </table>
+          </table>
         </div>
       </div>
     </div>

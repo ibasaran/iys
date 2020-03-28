@@ -14,7 +14,7 @@ class Recete(models.Model):
     #sureTipi = models.ForeignKey(SureTipi, on_delete=models.SET_NULL, null=True, blank=True)
     receteTarihi = models.DateField()
     hastane = models.ForeignKey(Hospital, on_delete=models.SET_NULL, null=True, blank=True)
-    uygulamaSaati = models.ManyToManyField(UygulamaSaati, related_name='saats')
+    uygulamaSaati = models.ManyToManyField(UygulamaSaati)
     uygulamaYolu = models.ForeignKey(UygulamaYolu, on_delete=models.SET_NULL, null=True)
     hemsireNotu = models.CharField(max_length=250, verbose_name='Hemşire Notu',blank=True,null=True)
     created_at = models.DateTimeField(auto_now_add=True)
