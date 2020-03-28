@@ -29,7 +29,7 @@ class ReceteList(ListView):
 
     def get_queryset(self):
         user = self.request.user
-        if user.username == 'erkan':
+        if user.username == 'erkan' or user.username == 'aysel':
             return Recete.objects.all()
         else:
             hastaneId = self.request.session['hastaneId']
@@ -233,14 +233,15 @@ class HastaAutocomplete(autocomplete.Select2QuerySetView):
         #if not self.request.user.is_authenticated():
         #    return Mayi.objects.none()
 
-        hastaneId = self.request.session['hastaneId']
+        
         user = self.request.user
-        hastane = Hospital.objects.get(pk=hastaneId)
-
-        hastaneKullanici = HospitalUser.objects.get(authorizedUser=user, hospital=hastane)
-        if (user.username == 'erkan'): 
+       
+        if (user.username == 'erkan' or user.username == 'aysel'): 
             qs = Hasta.objects.all()
         else:
+            hastaneId = self.request.session['hastaneId']
+            hastane = Hospital.objects.get(pk=hastaneId)
+            hastaneKullanici = HospitalUser.objects.get(authorizedUser=user, hospital=hastane)
             qs = Hasta.objects.filter(servisBilgisi=hastaneKullanici.servis)
 
         if self.q:
@@ -269,7 +270,7 @@ def printRecete(request,id,sid):
     recete = Recete.objects.get(pk=id)
     #uygulama = ReceteUygulama.objects.get(pk=sid)
 
-    hasta_adi = recete.hasta.name
+    hasta_adi = recete.hasta.name + ' ' +recete.hasta.surname
     servis_adi = recete.hasta.servisBilgisi.servisAdi
     tc_no = recete.hasta.tcNo
     ilac_adi = recete.ilac.piyasaAdi
