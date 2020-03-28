@@ -20,6 +20,8 @@ from reportlab.rl_config import defaultPageSize
 import reportlab
 from django.conf import settings
 from core.models import Hospital, HospitalUser
+from django.utils import timezone
+from django.db.models import Q
 
 class ReceteList(ListView):
     model = Recete
@@ -168,9 +170,12 @@ def addIlac(infoList, recete):
 def hazirlamaList(request):
     context = {}
     ilacInfo = []
+    now = datetime.datetime.now().time()
+    context['now'] = now
+    print(now)
     if(request.method == 'POST'):
         receteTarihi = request.POST.get('receteTarihi', '')
-        hazirlamaListesi = Recete.objects.filter(hastane__id=request.session['hastaneId'],receteTarihi=datetime.datetime.strptime(str(receteTarihi), "%d/%m/%Y").date())
+        hazirlamaListesi = Recete.objects.filter(hastane__id=request.session['hastaneId'],receteTarihi=datetime.datetime.strptime(str(receteTarihi), "%d/%m/%Y").date(),uygulamaSaati__saat__gte=now)
         for recete in hazirlamaListesi:
             for saat in recete.uygulamaSaati.all():
                 addIlac(ilacInfo,recete)
@@ -181,10 +186,15 @@ def hazirlamaList(request):
     else:
         today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
         today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
-        hazirlamaListesi = Recete.objects.filter(hastane__id=request.session['hastaneId'],receteTarihi__range=(today_min, today_max))
+        hazirlamaListesi = Recete.objects.filter(hastane__id=request.session['hastaneId'],receteTarihi__range=(today_min, today_max)).filter(Q(uygulamaSaati__saat__gt = now) or Q(uygulamaSaati__saat = now))
         context['hazirlamaListesi'] = hazirlamaListesi
+        print(hazirlamaListesi.query)
         for recete in hazirlamaListesi:
-            for saat in recete.uygulamaSaati.all():
+            for saat in recete.uygulamaSaati.filter(saat__gt = now):
+                print(saat)
+                print(type(saat))
+                if saat.saat > now:
+                    print('oo yeah')
                 addIlac(ilacInfo,recete)
 
         context['infoList'] = ilacInfo

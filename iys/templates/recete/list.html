@@ -15,7 +15,9 @@
         <th>İlac Adı</th>
         <th>Etken Madde</th>
         <th>Düzenle</th>
-        <th>Sil</th>
+        {% if request.user.username == "admin" %}
+          <th>Sil</th>
+        {% endif %}
       </tr>
     </thead>
 
@@ -29,12 +31,14 @@
                 <td>{{recete.ilac.piyasaAdi}}</td>
                 <td>{{recete.ilac.etkenMadde}}</td>
                 <td><a href="{% url 'recete:recete-update' recete.pk 0 %}">edit</a></td>
-                <td>
-                    <form method="post" action="{% url 'recete:recete-delete' recete.pk %}">
-                    {% csrf_token %}
-                        <input type="submit"  value="Sil"/>
-                    </form>
-                </td>
+                {% if request.user.username == "admin" %}
+                    <td>
+                        <form method="post" action="{% url 'recete:recete-delete' recete.pk %}">
+                        {% csrf_token %}
+                            <input type="submit"  value="Sil"/>
+                        </form>
+                    </td>
+                {% endif %}
             </tr>
         {% endfor %}
     </tbody>
