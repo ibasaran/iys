@@ -22,6 +22,7 @@ from django.conf import settings
 from core.models import Hospital, HospitalUser
 from django.utils import timezone
 from django.db.models import Q
+from datetime import timedelta
 
 class ReceteList(ListView):
     model = Recete
@@ -29,13 +30,49 @@ class ReceteList(ListView):
 
     def get_queryset(self):
         user = self.request.user
-        if user.username == 'erkan' or user.username == 'aysel':
-            return Recete.objects.all()
+        # 0 : today 1: yesterday 2:all
+        try:
+            showIndex = self.kwargs['type']
+        except:
+            showIndex = 0
+
+        if user.username == 'erkan' or user.username == 'aysel' or user.username=='ismail'or user.username == 'admin':
+            if showIndex == '0':
+                return Recete.objects.all()
+            elif showIndex == '1':
+                yesterday_min = datetime.datetime.combine(datetime.date.today() - timedelta(days = 1), datetime.time.min)
+                yesterday_max = datetime.datetime.combine(datetime.date.today() - timedelta(days = 1), datetime.time.max)
+                return Recete.objects.filter(receteTarihi__range=(yesterday_min,yesterday_max))
+            else:
+                today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
+                today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
+                return Recete.objects.filter(receteTarihi__range=(today_min,today_max))
+        # elif user.username == 'admin':
+        #     if showIndex == '0':
+        #         return Recete.objects.all()
+        #     elif showIndex == '1':
+        #         yesterday_min = datetime.datetime.combine(datetime.date.today() - timedelta(days = 1), datetime.time.min)
+        #         yesterday_max = datetime.datetime.combine(datetime.date.today() - timedelta(days = 1), datetime.time.max)
+        #         return Recete.objects.filter(receteTarihi__range=(yesterday_min,yesterday_max))
+        #     else:
+        #         today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
+        #         today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
+        #         return Recete.objects.filter(receteTarihi__range=(today_min,today_max))
         else:
             hastaneId = self.request.session['hastaneId']
             hastane = Hospital.objects.get(pk=hastaneId)
             hastaneKullanici = HospitalUser.objects.get(authorizedUser=user, hospital=hastane)
-            return Recete.objects.filter(hasta__servisBilgisi=hastaneKullanici.servis)
+
+            if showIndex == '0':
+                return Recete.objects.filter(hasta__servisBilgisi=hastaneKullanici.servis, hasta__durumTipi__id=1)
+            elif showIndex == '1':
+                yesterday_min = datetime.datetime.combine(datetime.date.today() - timedelta(days = 1), datetime.time.min)
+                yesterday_max = datetime.datetime.combine(datetime.date.today() - timedelta(days = 1), datetime.time.max)
+                return Recete.objects.filter(hasta__servisBilgisi=hastaneKullanici.servis, hasta__durumTipi__id=1, receteTarihi__range=(yesterday_min,yesterday_max))
+            else:
+                today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
+                today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
+                return Recete.objects.filter(hasta__servisBilgisi=hastaneKullanici.servis, hasta__durumTipi__id=1, receteTarihi__range=(today_min,today_max))
 
 
 class ReceteCreate(CreateView):
