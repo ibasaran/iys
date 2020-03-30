@@ -14,7 +14,7 @@ class ReceteForm(ModelForm):
     birimTipi = forms.ModelChoiceField(required=False,queryset=BirimTipi.objects.all(), widget=forms.Select(attrs={'class':'form-control'}), empty_label='Seçiniz')
     dolumTipi = forms.ModelChoiceField(required=False,queryset=DolumTipi.objects.all(), widget=forms.Select(attrs={'class':'form-control'}), empty_label='Seçiniz')
     sureTipi = forms.ModelChoiceField(required=False,queryset=SureTipi.objects.all(), widget=forms.Select(attrs={'class':'form-control'}), empty_label='Seçiniz')
-    uygulamaSaati = forms.ModelMultipleChoiceField(required=True,queryset=UygulamaSaati.objects.all(),widget=forms.CheckboxSelectMultiple(attrs={"data-columns":"2"}))
+    uygulamaSaati = forms.ModelMultipleChoiceField(required=True,queryset=UygulamaSaati.objects.all().order_by('saat'),widget=forms.CheckboxSelectMultiple(attrs={"data-columns":"2"}))
     uygulamaYolu = forms.ModelChoiceField(required=False,queryset=UygulamaYolu.objects.all(), widget=forms.Select(attrs={'class':'form-control'}), empty_label='Seçiniz')
     receteTarihi = forms.DateField(widget=forms.DateInput(format = '%d/%m/%Y',attrs={'class':'form-control'}), 
                                input_formats=('%d/%m/%Y',), 
