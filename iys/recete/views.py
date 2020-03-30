@@ -64,15 +64,15 @@ class ReceteList(ListView):
             hastaneKullanici = HospitalUser.objects.get(authorizedUser=user, hospital=hastane)
 
             if showIndex == '0':
-                return Recete.objects.filter(hasta__servisBilgisi=hastaneKullanici.servis, hasta__durumTipi__id=1)
+                return Recete.objects.filter(hasta__servisBilgisi=hastaneKullanici.servis)
             elif showIndex == '1':
                 yesterday_min = datetime.datetime.combine(datetime.date.today() - timedelta(days = 1), datetime.time.min)
                 yesterday_max = datetime.datetime.combine(datetime.date.today() - timedelta(days = 1), datetime.time.max)
-                return Recete.objects.filter(hasta__servisBilgisi=hastaneKullanici.servis, hasta__durumTipi__id=1, receteTarihi__range=(yesterday_min,yesterday_max))
+                return Recete.objects.filter(hasta__servisBilgisi=hastaneKullanici.servis, receteTarihi__range=(yesterday_min,yesterday_max))
             else:
                 today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
                 today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
-                return Recete.objects.filter(hasta__servisBilgisi=hastaneKullanici.servis, hasta__durumTipi__id=1, receteTarihi__range=(today_min,today_max))
+                return Recete.objects.filter(hasta__servisBilgisi=hastaneKullanici.servis, receteTarihi__range=(today_min,today_max))
 
 
 class ReceteCreate(CreateView):
