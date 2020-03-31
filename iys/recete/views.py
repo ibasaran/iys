@@ -225,8 +225,8 @@ def addIlac(infoList, recete):
 def hazirlamaList(request):
     context = {}
     ilacInfo = []
-    now = datetime.datetime.now() + timedelta(hours=3)
-    context['now'] = now.time()
+    now = datetime.datetime.now().time()
+    context['now'] = now
 
     hazirnacankTedaviler = []
     bekleyenTedaviler = []
@@ -248,7 +248,6 @@ def hazirlamaList(request):
             for saat in recete.uygulamaSaati.all():
                 if saat.saat > now:
                     addIlac(ilacInfo,recete)
-                    
         context['infoList'] = ilacInfo
 
     # if(request.method == 'POST'):
