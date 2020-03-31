@@ -225,8 +225,12 @@ def addIlac(infoList, recete):
 def hazirlamaList(request):
     context = {}
     ilacInfo = []
-    now = datetime.datetime.now().time()
-    context['now'] = now
+    now = datetime.datetime.now() + timedelta(hours=3)
+    context['now'] = now.time()
+
+    hazirnacankTedaviler = []
+    bekleyenTedaviler = []
+
     if(request.method == 'POST'):
         receteTarihi = request.POST.get('receteTarihi', '')
         hazirlamaListesi = Recete.objects.filter(hastane__id=request.session['hastaneId'],receteTarihi=datetime.datetime.strptime(str(receteTarihi), "%d/%m/%Y").date())
@@ -241,9 +245,10 @@ def hazirlamaList(request):
         hazirlamaListesi = Recete.objects.filter(hastane__id=request.session['hastaneId'],receteTarihi__range=(today_min, today_max))
         context['hazirlamaListesi'] = hazirlamaListesi
         for recete in hazirlamaListesi:
-            for saat in recete.uygulamaSaati.filter(saat__gt = now):
+            for saat in recete.uygulamaSaati.all():
                 if saat.saat > now:
                     addIlac(ilacInfo,recete)
+                    
         context['infoList'] = ilacInfo
 
     # if(request.method == 'POST'):
