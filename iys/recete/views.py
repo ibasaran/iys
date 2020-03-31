@@ -22,6 +22,7 @@ from django.conf import settings
 from core.models import Hospital, HospitalUser
 from django.utils import timezone
 from django.db.models import Q
+from datetime import timedelta
 
 class ReceteList(ListView):
     model = Recete
