@@ -88,14 +88,32 @@ class ReceteUygulamaCreate(CreateView):
     def get_initial(self):
         super(ReceteUygulamaCreate, self).get_initial()
         if (self.kwargs['hpk'] != '0'):
-            print('zero degil')
-            recete = get_object_or_404(Recete, pk=self.kwargs['hpk'])
-            if (recete):
-                return {
-                    'hastane_id':self.request.session['hastaneId'],
-                    'hasta': recete.hasta.id,
-                    'receteTarihi' : recete.receteTarihi
-                }
+            if 'tekrar' in self.kwargs['hpk']:
+                hpk = self.kwargs['hpk']
+                hpk = hpk.replace('tekrar', '')
+                recete = get_object_or_404(Recete, pk=hpk)
+                print(recete.uygulamaSaati)
+                if (recete):
+                    return {
+                        'hastane_id':self.request.session['hastaneId'],
+                        'hasta': recete.hasta.id,
+                        'receteTarihi' : recete.receteTarihi,
+                        'ilac': recete.ilac,
+                        'mayi': recete.mayi,
+                        'istenenMiktar': recete.istenenMiktar,
+                        'birimTipi': recete.birimTipi,
+                        'dolumTipi': recete.dolumTipi,
+                        'hemsireNotu': recete.hemsireNotu,
+                        'uygulamaYolu': recete.uygulamaYolu
+                    }
+            else:
+                recete = get_object_or_404(Recete, pk=self.kwargs['hpk'])
+                if (recete):
+                    return {
+                        'hastane_id':self.request.session['hastaneId'],
+                        'hasta': recete.hasta.id,
+                        'receteTarihi' : recete.receteTarihi
+                    }
         else: 
             return {
                 'hastane_id':self.request.session['hastaneId'],
@@ -145,7 +163,7 @@ class ReceteUygulamaUpdate(UpdateView):
     form_class = ReceteForm
 
     def get_success_url(self):
-        return reverse('recete:recete-update', kwargs={'pk' : self.object.pk})
+        return reverse('recete:recete-update', kwargs={'pk' : self.object.pk, 'isCreate':'0'})
 
 
     def get_context_data(self, **kwargs):
@@ -178,7 +196,7 @@ class ReceteDelete(DeleteView):
     #success_url = '/'
 
     def get_success_url(self):
-        return reverse('recete:recete-list')
+        return reverse('recete:recete-list',kwargs={'type' : 0})
 
 class IlacInfo(object):
 
