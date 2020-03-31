@@ -22,7 +22,6 @@ from django.conf import settings
 from core.models import Hospital, HospitalUser
 from django.utils import timezone
 from django.db.models import Q
-from datetime import timedelta
 
 class ReceteList(ListView):
     model = Recete
@@ -225,9 +224,9 @@ def addIlac(infoList, recete):
 def hazirlamaList(request):
     context = {}
     ilacInfo = []
-    now = datetime.datetime.now().time()
+    now = datetime.datetime.now() + datetime.timedelta(hours=3)
+    now = now.time()
     context['now'] = now
-
     hazirnacankTedaviler = []
     bekleyenTedaviler = []
 
