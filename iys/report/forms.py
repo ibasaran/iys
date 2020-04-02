@@ -10,4 +10,10 @@ class HastaReportForm(forms.Form):
     baslangicTarihi = forms.DateField(initial=datetime.date.today)
     bitisTarihi = forms.DateField(initial=datetime.date.today)
 
+
+class DurumRaporu(forms.Form):
+    baslangicTarihi = forms.DateField(initial=datetime.date.today)
+    bitisTarihi = forms.DateField(initial=datetime.date.today)
+    detay = forms.BooleanField() 
+
    

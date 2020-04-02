@@ -43,6 +43,7 @@
         <th>Servis Adı</th>
         <th>Etken Madde</th>
         <th>Düzenle</th>
+        <th>Tekrarla</th>
         {% if request.user.username == "admin" %}
           <th>Sil</th>
         {% endif %}
@@ -59,7 +60,12 @@
                 <td>{{recete.ilac.piyasaAdi}}</td>
                 <td>{{recete.hasta.servisBilgisi.servisAdi}}</td>
                 <td>{{recete.ilac.etkenMadde}}</td>
-                <td><a href="{% url 'recete:recete-update' recete.pk 0 %}">edit</a></td>
+                <td><a href="{% url 'recete:recete-update' recete.pk 0 %}">Düzenle</a></td>
+                <td>
+                  {% with recete.pk|stringformat:"i"|add:"tekrar" as addpk %}
+                  <a href="{% url 'recete:recete-add'  hpk=addpk %}">Tekrarla</a>
+                  {% endwith %}
+                </td>
                 {% if request.user.username == "admin" %}
                     <td>
                         <form method="post" action="{% url 'recete:recete-delete' recete.pk %}">

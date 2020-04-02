@@ -23,6 +23,8 @@ from core.models import Hospital, HospitalUser
 from django.utils import timezone
 from django.db.models import Q
 from datetime import timedelta
+from django import forms
+from django.forms.utils import ErrorList
 
 class ReceteList(ListView):
     model = Recete
@@ -34,7 +36,7 @@ class ReceteList(ListView):
         try:
             showIndex = self.kwargs['type']
         except:
-            showIndex = 0
+            showIndex = 2
 
         if user.username == 'erkan' or user.username == 'aysel' or user.username=='ismail'or user.username == 'admin':
             if showIndex == '0':
@@ -64,15 +66,15 @@ class ReceteList(ListView):
             hastaneKullanici = HospitalUser.objects.get(authorizedUser=user, hospital=hastane)
 
             if showIndex == '0':
-                return Recete.objects.filter(hasta__servisBilgisi=hastaneKullanici.servis)
+                return Recete.objects.filter(hasta__servisBilgisi=hastaneKullanici.servis,hasta__durumTipi='1')
             elif showIndex == '1':
                 yesterday_min = datetime.datetime.combine(datetime.date.today() - timedelta(days = 1), datetime.time.min)
                 yesterday_max = datetime.datetime.combine(datetime.date.today() - timedelta(days = 1), datetime.time.max)
-                return Recete.objects.filter(hasta__servisBilgisi=hastaneKullanici.servis, receteTarihi__range=(yesterday_min,yesterday_max))
+                return Recete.objects.filter(hasta__servisBilgisi=hastaneKullanici.servis, receteTarihi__range=(yesterday_min,yesterday_max),hasta__durumTipi='1')
             else:
                 today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
                 today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
-                return Recete.objects.filter(hasta__servisBilgisi=hastaneKullanici.servis, receteTarihi__range=(today_min,today_max))
+                return Recete.objects.filter(hasta__servisBilgisi=hastaneKullanici.servis, receteTarihi__range=(today_min,today_max),hasta__durumTipi='1')
 
 
 class ReceteCreate(CreateView):
@@ -135,6 +137,17 @@ class ReceteUygulamaCreate(CreateView):
     def form_valid(self, form):
         context = self.get_context_data()
         receteuygulamas = context['receteuygulamas']
+        receteTarihi = form.cleaned_data['receteTarihi']
+        hasta = form.cleaned_data['hasta']
+        ilac = form.cleaned_data['ilac']
+        ayniRecete = Recete.objects.filter(receteTarihi=receteTarihi, hasta=hasta, ilac=ilac)
+
+        if (ayniRecete):
+            #raise forms.ValidationError("Bu hasta için %s tarihli %s isimli ilaç reçetesi zaten oluşturulmuş." % (receteTarihi,ilac.piyasaAdi))
+            form._errors[forms.forms.NON_FIELD_ERRORS] = ErrorList([
+                    u"Bu hasta için %s tarihli %s isimli ilaç reçetesi zaten oluşturulmuş." % (receteTarihi,ilac.piyasaAdi)
+            ])
+            return self.form_invalid(form)
 
         #self.object.hastane.id = self.request.session['hastaneId']
         with transaction.atomic():
@@ -233,7 +246,7 @@ def hazirlamaList(request):
 
     if(request.method == 'POST'):
         receteTarihi = request.POST.get('receteTarihi', '')
-        hazirlamaListesi = Recete.objects.filter(hastane__id=request.session['hastaneId'],receteTarihi=datetime.datetime.strptime(str(receteTarihi), "%d/%m/%Y").date())
+        hazirlamaListesi = Recete.objects.filter(hastane__id=request.session['hastaneId'],receteTarihi=datetime.datetime.strptime(str(receteTarihi), "%d/%m/%Y").date(),hasta__durumTipi='1')
         for recete in hazirlamaListesi:
             for saat in recete.uygulamaSaati.all():
                 addIlac(ilacInfo,recete)
@@ -242,7 +255,7 @@ def hazirlamaList(request):
     else:
         today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
         today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
-        hazirlamaListesi = Recete.objects.filter(hastane__id=request.session['hastaneId'],receteTarihi__range=(today_min, today_max))
+        hazirlamaListesi = Recete.objects.filter(hastane__id=request.session['hastaneId'],receteTarihi__range=(today_min, today_max),hasta__durumTipi='1')
         context['hazirlamaListesi'] = hazirlamaListesi
         for recete in hazirlamaListesi:
             for saat in recete.uygulamaSaati.all():

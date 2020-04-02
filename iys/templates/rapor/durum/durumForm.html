@@ -1,0 +1,70 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="x-content">
+
+    <form id="demo-form2"  action="{% url 'report:durumReport' %}" method="post" target="_blank">
+    {% csrf_token %}
+        <div  class="col-md-12 col-sm-12 " >
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Durum Raporu</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="item form-group">
+                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Başlangıç Tarihi </span>
+                            </label>
+                        <div class="col-md-6 col-sm-6 ">
+                            {{form.baslangicTarihi}}
+                        </div>
+                    </div>
+                </div>
+                <div class="x_content">
+                    <div class="item form-group">
+                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Bitiş Tarihi </span>
+                            </label>
+                        <div class="col-md-6 col-sm-6 ">
+                            {{form.bitisTarihi}}
+                        </div>
+                    </div>
+                </div>
+                <div class="x_content">
+                    <div class="item form-group">
+                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Detay </span>
+                            </label>
+                        <div class="col-md-6 col-sm-6 ">
+                            {{form.detay}}
+                        </div>
+                    </div>
+                </div>
+            <input class="btn btn-success" type="submit" value="    RAPORU AL    "/>
+            </div>
+            
+        </div>
+        
+
+    </form>
+
+</div>
+
+<script type="text/javascript" src="{% static 'base/vendors/jquery/dist/jquery.min.js' %}"></script>
+
+{{ form.media }}
+
+{% endblock content %}
+
+{% block js %}
+
+    <script type="text/javascript">
+        $('#id_baslangicTarihi').datetimepicker({
+            format: 'DD/MM/YYYY'
+        });
+        $('#id_bitisTarihi').datetimepicker({
+            format: 'DD/MM/YYYY'
+        });
+    </script>
+
+{% endblock js %}

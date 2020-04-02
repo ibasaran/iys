@@ -85,7 +85,7 @@
               <tbody>
                   {% for recete in hazirlamaListesi %}
                     {% for hazirmaSaati in recete.uygulamaSaati.all %}
-                      {% if hazirmaSaati.saat >= now %}
+                      {% if hazirmaSaati.saat > now %}
                         <tr>
                             <td>{{recete.hasta.protokolNo }}</td>
                             <td>{{recete.hasta.name }} {{recete.hasta.surname }}</td>

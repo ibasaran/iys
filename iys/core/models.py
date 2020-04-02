@@ -111,6 +111,7 @@ class Ilac(models.Model):
     durumTipi = models.ForeignKey(DurumTipi,on_delete=models.SET_NULL,null=True)
     saklamaKosulu = models.TextField(max_length=500, verbose_name='Saklama Koşulu')
     uyari = models.TextField(max_length=500, verbose_name='Uyari')
+    fiyat = models.DecimalField(null=True,blank=True, verbose_name='İlaç Fiyatı',max_digits=25, decimal_places=2)
 
 
     def __str__(self):

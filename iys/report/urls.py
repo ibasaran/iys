@@ -4,12 +4,16 @@ from django.urls import path
 
 from .views import (
     openReportForm,
-    openReport
+    openReport,
+    durumReportForm,
+    durumReport
 )
 
 app_name='report'
 
 urlpatterns = [
      path('hastaReportForm/', openReportForm,name="hastaReportForm"),
-     path('hastaReport/', openReport, name="hastaReport")
+     path('hastaReport/', openReport, name="hastaReport"),
+     path('durumReportForm/', durumReportForm, name="durumReportForm"),
+     path('durumReport/', durumReport, name="durumReport"),
 ]

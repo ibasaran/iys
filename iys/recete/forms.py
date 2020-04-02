@@ -24,12 +24,16 @@ class ReceteForm(ModelForm):
         self.fields['uygulamaSaati'].error_messages = {'required': 'Uygulama Saati Seçilmelidir.'}
     def clean(self):
         cleaned_data = super().clean()
+        id = cleaned_data.get('id')
         mayi = cleaned_data.get('mayi')
         uygulamaSaati = cleaned_data.get('uygulamaSaati')
         uygulamaYolu = cleaned_data.get('uygulamaYolu')
         ilac = cleaned_data.get('ilac')
         hasta = cleaned_data.get('hasta')
         istenenMiktar = cleaned_data.get('istenenMiktar')
+        dolumTipi = cleaned_data.get('dolumTipi')
+        receteTarihi = cleaned_data.get('receteTarihi')
+
         if mayi is None:
             raise forms.ValidationError("Mayi Boş Olamaz")
 
@@ -44,6 +48,9 @@ class ReceteForm(ModelForm):
 
         if istenenMiktar is None:
             raise forms.ValidationError("İstenen Miktar Belirtilmelidir.")
+
+        if dolumTipi is None:
+            raise forms.ValidationError("Dolum Yeri Belirtilmelidir.")
 
         
 

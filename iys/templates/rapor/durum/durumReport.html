@@ -77,43 +77,29 @@
 <div class="container">
     <div class="card">
         <div class="card-header">
-            <h3>Hasta Tedavi Raporu - {{ today | date:"d/m/Y" }}</h3>
+            <h3>Durum Raporu - {{ today | date:"d/m/Y" }}</h3>
         </div>
-
-        <div class="list-group">
-            <table class="table" style="width: 60%; border:1px solid #dee2e6">
-                    <tr>
-                        <th class="leftColumn">Hasta Adı Soyadı</th>
-                        <td >{{hasta.name}} {{hasta.surname}}</td>
-                    </tr>
-                    <tr>
-                        <td class="leftColumn">TC Kimlik Numarası</td>
-                        <td>{{hasta.tcNo}}</td>
-                    </tr>
-                    <tr>
-                        <td class="leftColumn">Rapor Tarihi</td>
-                        <td>{{hasta.dogumTarihi}}</td>
-                    </tr>
-            </table>
-        </div>
-
         <table class="table">
             <thead>
                 <tr>
                     <th>İlaç Adı</th>
-                    <th>Tedavi Tarihi</th>
-                    <th>Tedavi Saati</th>
+                    <th>İlaç Mg</th>
+                    <th>Toplam İstenen Miktar</th>
+                    <th>Toplam Kalan Miktar</th>
+                    <th>Toplam Artırılan İlaç Sayısı</th>
+                    <th>Kar</th>
                 </tr>
             </thead>
             <tbody>
-                {% for recete in tedaviListesi %}
-                    {% for hazirmaSaati in recete.uygulamaSaati.all %}
-                        <tr>
-                            <td>{{recete.ilac.piyasaAdi}}</td>
-                            <td>{{recete.receteTarihi}}</td>
-                            <td>{{hazirmaSaati.saat|timeChecker}}</td>
-                        </tr>
-                    {% endfor %}
+                {% for info in ilacInfo %}
+                    <tr>
+                        <td>{{info.ilacAdi}}</td>
+                        <td>{{info.ilacMik}}</td>
+                        <td>{{info.toplamIstenenMik}}</td>
+                        <td>{{info.toplamKalanMik}}</td>
+                        <td>{{info.toplamKarEdilenIlacSayisi}}</td>
+                        <td>{{info.toplamKar}}</td>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>
