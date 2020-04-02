@@ -17,7 +17,7 @@ def hastaList(request):
     hastaneKullanici = HospitalUser.objects.get(authorizedUser=user, hospital=hastane)
 
     if (hastaneKullanici):
-        hastalar = Hasta.objects.filter(servisBilgisi=hastaneKullanici.servis, durumTipi='1')
+        hastalar = Hasta.objects.filter(servisBilgisi=hastaneKullanici.servis)
         return render(request, 'hasta/list.html', {'hastalar':hastalar})
     else:
         return render(request, 'hasta/list.html', {'hastalar':{}})
