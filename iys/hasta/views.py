@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 
 def hastaList(request):
 
-    if (request.user.username == 'erkan' or request.user.username == 'aysel'):
+    if (request.user.username == 'erkan' or request.user.username == 'aysel' or request.user.username == 'admin'):
         return render(request, 'hasta/list.html', {'hastalar':Hasta.objects.all()})
 
     hastaneId = request.session['hastaneId']

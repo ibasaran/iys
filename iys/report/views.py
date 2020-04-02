@@ -88,7 +88,8 @@ def addIlac(infoList, recete):
     ilac.toplamIstenenMik = ilac.toplamIstenenMik + recete.istenenMiktar
     ilac.toplamKalanMik = ilac.toplamKalanMik + (recete.ilac.mg -  recete.istenenMiktar)
     ilac.toplamKarEdilenIlacSayisi = ilac.toplamKalanMik / ilac.ilacMik
-    ilac.toplamKar = Decimal(ilac.toplamKarEdilenIlacSayisi) * recete.ilac.fiyat
+    if (recete.ilac.fiyat)
+        ilac.toplamKar = Decimal(ilac.toplamKarEdilenIlacSayisi) * recete.ilac.fiyat
 
     varmi = False
     if (len(infoList) > 0):
