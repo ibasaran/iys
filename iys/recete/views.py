@@ -246,7 +246,7 @@ def hazirlamaList(request):
 
     if(request.method == 'POST'):
         receteTarihi = request.POST.get('receteTarihi', '')
-        hazirlamaListesi = Recete.objects.filter(hastane__id=request.session['hastaneId'],receteTarihi=datetime.datetime.strptime(str(receteTarihi), "%d/%m/%Y").date(),hasta__durumTipi='1')
+        hazirlamaListesi = Recete.objects.filter(hastane__id=request.session['hastaneId'],receteTarihi=datetime.datetime.strptime(str(receteTarihi), "%d/%m/%Y").date(),hasta__durumTipi__name='AKTİF')
         for recete in hazirlamaListesi:
             for saat in recete.uygulamaSaati.all():
                 addIlac(ilacInfo,recete)
@@ -255,7 +255,7 @@ def hazirlamaList(request):
     else:
         today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
         today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
-        hazirlamaListesi = Recete.objects.filter(hastane__id=request.session['hastaneId'],receteTarihi__range=(today_min, today_max),hasta__durumTipi='1')
+        hazirlamaListesi = Recete.objects.filter(hastane__id=request.session['hastaneId'],receteTarihi__range=(today_min, today_max),hasta__durumTipi__name='AKTİF')
         context['hazirlamaListesi'] = hazirlamaListesi
         for recete in hazirlamaListesi:
             for saat in recete.uygulamaSaati.all():
