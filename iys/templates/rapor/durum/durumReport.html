@@ -82,6 +82,12 @@
             width: 200px;
         }
 
+        .rightColumn {
+            background-color: #fff;
+            color: aliceblue;
+            width: 200px;
+        }
+
         .mybody tr:nth-child(even){background-color: #f2f2f2;}
 
     </style>
@@ -99,26 +105,26 @@
         </div>
 
         <div class="list-group">
-            <table class="table" >
+            <table class="table" style="width: 60%; border:1px solid #dee2e6">
                     <tr>
                         <th class="leftColumn">Toplam Hasta Sayısı</th>
-                        <td style="width:300px;">{{toplamHastaSayisi}}</td>
+                        <td class="rightColumn">{{toplamHastaSayisi}}</td>
                     </tr>
                     <tr>
                         <td class="leftColumn">Toplam Reçete Sayısı</td>
-                        <td>{{toplamReceteSayisi}}</td>
+                        <td class="rightColumn">{{toplamReceteSayisi}}</td>
                     </tr>
                     <tr>
                         <td class="leftColumn">Toplam Uygulanan Tedavi Sayısı</td>
-                        <td>{{toplamUygulananTedaviSayisi}}</td>
+                        <td class="rightColumn">{{toplamUygulananTedaviSayisi}}</td>
                     </tr>
                     <tr>
                         <td class="leftColumn">Toplam Artırılan İlaç Adeti</td>
-                        <td>{{toplamArtirilanIlacAdeti}}</td>
+                        <td class="rightColumn"> {{toplamArtirilanIlacAdeti}}</td>
                     </tr>
                     <tr>
                         <td class="leftColumn">Toplam Elde Edilen Kar(TL)</td>
-                        <td>{{toplamKar}}</td>
+                        <td class="rightColumn">{{toplamKar}}</td>
                     </tr>
             </table>
         </div>
