@@ -108,7 +108,7 @@ def addIlac(infoList, recete):
         ilac.toplamKarEdilenIlacSayisi = ilac.toplamKalanMik / ilac.ilacMik
         if (recete.ilac.fiyat):
             ilac.toplamKar = Decimal(ilac.toplamKarEdilenIlacSayisi) * recete.ilac.fiyat
-            toplamKar = toplamKar + ilac.toplamKar
+            
         infoList.append(ilac)
     return infoList    
 
@@ -137,7 +137,7 @@ def durumReport(request):
         for recete in receteler:
             toplamReceteSayisi = toplamReceteSayisi + 1
             for saat in recete.uygulamaSaati.all():
-                addIlac(ilacInfo,recete,toplamKar)
+                addIlac(ilacInfo,recete)
                 toplamUygulananTedaviSayisi = toplamUygulananTedaviSayisi + 1
 
 
