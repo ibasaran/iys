@@ -78,6 +78,7 @@ class IlacInfo(object):
         self.toplamIstenenMik=0
         self.toplamKalanMik=0
         self.toplamKarEdilenIlacSayisi=0
+        self.toplamKar=0
 
 
 def addIlac(infoList, recete):
@@ -99,6 +100,7 @@ def addIlac(infoList, recete):
                 i.toplamKarEdilenIlacSayisi = i.toplamKalanMik / ilac.ilacMik
                 if (recete.ilac.fiyat):
                     i.toplamKar = Decimal(i.toplamKarEdilenIlacSayisi) * recete.ilac.fiyat
+
             
     if (not  varmi):
         ilac.toplamIstenenMik = ilac.toplamIstenenMik + recete.istenenMiktar
@@ -106,10 +108,17 @@ def addIlac(infoList, recete):
         ilac.toplamKarEdilenIlacSayisi = ilac.toplamKalanMik / ilac.ilacMik
         if (recete.ilac.fiyat):
             ilac.toplamKar = Decimal(ilac.toplamKarEdilenIlacSayisi) * recete.ilac.fiyat
+            toplamKar = toplamKar + ilac.toplamKar
         infoList.append(ilac)
     return infoList    
 
 def durumReport(request):
+    ilacInfo = []
+    toplamReceteSayisi = 0
+    toplamUygulananTedaviSayisi = 0
+    toplamHastaSayisi = 0
+    toplamKar = 0
+    toplamArtirilanIlacAdeti = 0
     if (request.POST):
         baslangicTarihi = request.POST['baslangicTarihi']
         if (baslangicTarihi is None ):
@@ -124,29 +133,39 @@ def durumReport(request):
             bitisTarihi = str(bitisTarihi)
             bitisTarihi = datetime.datetime.strptime(bitisTarihi, '%d/%m/%Y').date()
         receteler = Recete.objects.filter(receteTarihi__range=(baslangicTarihi, bitisTarihi))
-        toplamReceteSayisi = 0
-        toplamUygulananTedaviSayisi = 0
-        toplamHastaSayisi = 0
-        toplamKar = 0
-        ilacInfo = []
-
+        toplamHastaSayisi = Hasta.objects.count()
         for recete in receteler:
+            toplamReceteSayisi = toplamReceteSayisi + 1
             for saat in recete.uygulamaSaati.all():
-                addIlac(ilacInfo,recete)
+                addIlac(ilacInfo,recete,toplamKar)
                 toplamUygulananTedaviSayisi = toplamUygulananTedaviSayisi + 1
+
+
+        for ilc in ilacInfo:
+            toplamArtirilanIlacAdeti = toplamArtirilanIlacAdeti + ilc.toplamKarEdilenIlacSayisi
+            toplamKar = toplamKar + ilc.toplamKar
+
 
         template = get_template('rapor/durum/durumReport.html')
         html = template.render({'ilacInfo':ilacInfo, 
             'toplamHastaSayisi':toplamHastaSayisi, 
             'today': timezone.now(),
             'toplamReceteSayisi':toplamReceteSayisi,
-            'toplamUygulananTedaviSayisi':toplamUygulananTedaviSayisi})
+            'toplamUygulananTedaviSayisi':toplamUygulananTedaviSayisi,
+            'toplamArtirilanIlacAdeti':toplamArtirilanIlacAdeti})
         response = BytesIO()
         pdf = pisa.pisaDocument(BytesIO(str(html).encode('utf-8')), response)
         if not pdf.err:
             return HttpResponse(response.getvalue(), content_type='application/pdf')
         else:
             return HttpResponse("Error Rendering PDF", status=400)
+    else:
+        return render(request, 'rapor/durum/durumReport.html', {'ilacInfo':ilacInfo, 
+            'toplamHastaSayisi':toplamHastaSayisi, 
+            'today': timezone.now(),
+            'toplamReceteSayisi':toplamReceteSayisi,
+            'toplamUygulananTedaviSayisi':toplamUygulananTedaviSayisi})
+
 
         
 
