@@ -189,7 +189,8 @@ def durumReport(request):
             'toplamArtirilanIlacAdeti':toplamArtirilanIlacAdeti,
             'hastaList':hastaList,
             'genelYuzde':genelYuzde,
-            'toplamKullanilanIlacAdeti':toplamKullanilanIlacAdeti})
+            'toplamKullanilanIlacAdeti':toplamKullanilanIlacAdeti,
+            'toplamKar':toplamKar})
         response = BytesIO()
         pdf = pisa.pisaDocument(BytesIO(str(html).encode('utf-8')), response)
         if not pdf.err:
