@@ -1,0 +1,160 @@
+<!doctype html>
+{%load time_checker%}
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"> 
+    <title>Hasta Raporu</title>
+    <style type="text/css">
+
+        @font-face {
+            font-family: Arial;
+            src: url("/home/appuser/projects/iys/iys/arial.ttf");
+            
+        }
+
+        body {
+            font-family: Arial;
+        }
+
+        @page {
+            size: A4;
+            margin: 1cm;
+            @frame header_frame {           /* Static frame */
+            -pdf-frame-content: header_content;
+            left: 275pt; width: 512pt; top: 10pt; height: 40pt;
+            }
+            @frame col1_frame {             /* Content frame 1 */
+                top: 45pt; 
+            }
+        }
+
+        .table {
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 5px;
+            background-color: #fff;
+        }
+
+        .table th,
+        .table td {
+            padding: 5px;
+            vertical-align: top;
+            border-top: 1px solid #000;
+            text-align: center;
+        }
+
+        .table thead th {
+            vertical-align: bottom;
+            border-bottom: 2px solid #000;
+            background-color : #20639B;
+            color: #fff
+        }
+
+        .table tbody + tbody {
+            border-top: 2px solid #000;
+        }
+
+        .table .table {
+            background-color: #fff;
+        }
+
+        .list-group {
+            display: block;
+            width: 100%;
+            list-style: none;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        .list-group p {
+            width: 100%;
+            height: 20px;
+            line-height: 20px;
+            list-style: none;
+            font-size: 1.1em;
+        }
+
+        .leftColumn {
+            background-color: #343a40;
+            color: aliceblue;
+            width: 200px;
+        }
+
+        .rightColumn {
+            background-color: #fff;
+            color: black;
+            width: 200px;
+        }
+
+        .mybody tr:nth-child(even){background-color: #f2f2f2;}
+
+    </style>
+</head>
+<body>
+
+<div id="header_content">
+    <img style="width:50px;height:50px" src="http://iys.ibasaran.com/static/base/images/iyslogo.png" width="200" height="150"  />
+</div>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h3>Durum Raporu - {{ today | date:"d/m/Y" }}</h3>
+        </div>
+
+        <div class="list-group">
+            <table class="table" style="width: 60%; border:1px solid #dee2e6">
+                    <tr>
+                        <th class="leftColumn">Toplam Hasta Sayısı</th>
+                        <td class="rightColumn">{{toplamHastaSayisi}}</td>
+                    </tr>
+                    <tr>
+                        <td class="leftColumn">Toplam Reçete Sayısı</td>
+                        <td class="rightColumn">{{toplamReceteSayisi}}</td>
+                    </tr>
+                    <tr>
+                        <td class="leftColumn">Toplam Uygulanan Tedavi Sayısı</td>
+                        <td class="rightColumn">{{toplamUygulananTedaviSayisi}}</td>
+                    </tr>
+                    <tr>
+                        <td class="leftColumn">Toplam Artırılan İlaç Adeti</td>
+                        <td class="rightColumn"> {{toplamArtirilanIlacAdeti}}</td>
+                    </tr>
+                    <tr>
+                        <td class="leftColumn">Toplam Elde Edilen Kar(TL)</td>
+                        <td class="rightColumn">{{toplamKar}}</td>
+                    </tr>
+            </table>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Hasta Adı</th>
+                    <th>İlaç Adı</th>
+                    <th>İlaç (Mg)</th>
+                    <th>İstenen Miktar</th>
+                    <th>Artan Miktar</th>
+                    
+                </tr>
+            </thead>
+            <tbody class="mybody">
+                {% for hasta in hastaList %}
+                    <tr>
+                        <td>{{hasta.hastaAdi}}</td>
+                        <td>{{hasta.ilacAdi}}</td>
+                        <td>{{hasta.ilacMik}}</td>
+                        <td>{{hasta.istenenMik}}</td>
+                        <td>{{hasta.kalanMik}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
+

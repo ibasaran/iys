@@ -80,6 +80,23 @@ class IlacInfo(object):
         self.toplamKarEdilenIlacSayisi=0
         self.toplamKar=0
 
+class HastaInfo(object):
+    def __init__(self):
+        self.ilacAdi=''
+        self.hastaAdi = ''
+        self.istenenMik = 0
+        self.ilacMik = 0
+        self.kalanMik = 0
+
+
+def addHasta(hastaList, recete):
+    hastaInfo = HastaInfo()
+    hastaInfo.ilacAdi = recete.ilac.piyasaAdi
+    hastaInfo.hastaAdi = recete.hasta.name + ' ' + recete.hasta.surname
+    hastaInfo.istenenMik = recete.istenenMiktar
+    hastaInfo.ilacMik = recete.ilac.mg
+    hastaInfo.kalanMik = recete.ilac.mg - recete.istenenMiktar
+    hastaList.append(hastaInfo)
 
 def addIlac(infoList, recete):
     ilac = IlacInfo()
@@ -119,6 +136,7 @@ def durumReport(request):
     toplamHastaSayisi = 0
     toplamKar = 0
     toplamArtirilanIlacAdeti = 0
+    hastaList = []
     if (request.POST):
         baslangicTarihi = request.POST['baslangicTarihi']
         if (baslangicTarihi is None ):
@@ -138,6 +156,7 @@ def durumReport(request):
             toplamReceteSayisi = toplamReceteSayisi + 1
             for saat in recete.uygulamaSaati.all():
                 addIlac(ilacInfo,recete)
+                addHasta(hastaList,recete)
                 toplamUygulananTedaviSayisi = toplamUygulananTedaviSayisi + 1
 
 
@@ -145,14 +164,17 @@ def durumReport(request):
             toplamArtirilanIlacAdeti = toplamArtirilanIlacAdeti + ilc.toplamKarEdilenIlacSayisi
             toplamKar = toplamKar + ilc.toplamKar
 
-
-        template = get_template('rapor/durum/durumReport.html')
+        if request.POST.get('detay',False):
+            template = get_template('rapor/durum/durumReportDetail.html')
+        else:
+            template = get_template('rapor/durum/durumReport.html')
         html = template.render({'ilacInfo':ilacInfo, 
             'toplamHastaSayisi':toplamHastaSayisi, 
             'today': timezone.now(),
             'toplamReceteSayisi':toplamReceteSayisi,
             'toplamUygulananTedaviSayisi':toplamUygulananTedaviSayisi,
-            'toplamArtirilanIlacAdeti':toplamArtirilanIlacAdeti})
+            'toplamArtirilanIlacAdeti':toplamArtirilanIlacAdeti,
+            'hastaList':hastaList})
         response = BytesIO()
         pdf = pisa.pisaDocument(BytesIO(str(html).encode('utf-8')), response)
         if not pdf.err:
