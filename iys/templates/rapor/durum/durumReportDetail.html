@@ -113,6 +113,28 @@
   clear: both;
 }
 
+
+#customers {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
     </style>
 </head>
 <body>
@@ -121,8 +143,8 @@
     <img style="width:50px;height:50px" src="http://iys.ibasaran.com/static/base/images/iyslogo.png" width="200" height="150"  />
 </div>
 
-<div id="footer_content">(c) - page <pdf:pagenumber>
-of <pdf:pagecount>
+<div id="footer_content"> sayfa <pdf:pagenumber>
+/ <pdf:pagecount>
 </div>
 
 <div class="container">
@@ -132,7 +154,7 @@ of <pdf:pagecount>
         </div>
 
         <div>
-            <table class="table2" style="width: 60%; border:1px solid #dee2e6">
+            <table id="customers" class="table2" style="width: 60%; border:1px solid #dee2e6">
                     <tr>
                         <th class="leftColumn">Toplam Hasta Sayısı</th>
                         <td class="rightColumn">{{toplamHastaSayisi}}</td>
