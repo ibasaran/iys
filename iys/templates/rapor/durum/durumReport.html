@@ -19,15 +19,23 @@
         }
 
         @page {
-            size: A4;
-            margin: 1cm;
-            @frame header_frame {           /* Static frame */
-            -pdf-frame-content: header_content;
-            left: 275pt; width: 512pt; top: 10pt; height: 40pt;
+            size: A4 portrait;
+            margin: 2cm;
+            @frame header_frame { /* Static Frame */
+                -pdf-frame-content: header_content;
+                left: 275pt; width: 512pt; top: 10pt; height: 40pt;
             }
-            @frame col1_frame {             /* Content frame 1 */
-                top: 45pt; 
+            @frame content_frame { /* Content Frame */
+                -pdf-frame-content: wrap;
+                left: 50pt; width: 512pt; top: 90pt; height: 632pt;
             }
+            @frame footer_frame { /* Another static Frame */
+                -pdf-frame-content: footer_content;
+                left: 50pt; width: 512pt; top: 772pt; height: 20pt;
+            }
+        }
+        .pagebreak {
+            page-break-after: always
         }
 
         .table {
@@ -119,12 +127,20 @@
                         <td class="rightColumn">{{toplamUygulananTedaviSayisi}}</td>
                     </tr>
                     <tr>
+                        <td class="leftColumn">Toplam Kullanıclan İlaç Adeti</td>
+                        <td class="rightColumn"> {{toplamKullanilanIlacAdeti|floatformat:2}}</td>
+                    </tr>
+                    <tr>
                         <td class="leftColumn">Toplam Artırılan İlaç Adeti</td>
-                        <td class="rightColumn"> {{toplamArtirilanIlacAdeti}}</td>
+                        <td class="rightColumn"> {{toplamArtirilanIlacAdeti|floatformat:2}}</td>
                     </tr>
                     <tr>
                         <td class="leftColumn">Toplam Elde Edilen Kar(TL)</td>
-                        <td class="rightColumn">{{toplamKar}}</td>
+                        <td class="rightColumn">{{toplamKar|floatformat:2}}</td>
+                    </tr>
+                    <tr>
+                        <td class="leftColumn">Genel Olarak Ne Kadar Tasarruf Edildi</td>
+                        <td class="rightColumn">{{genelYuzde|floatformat:2}}</td>
                     </tr>
             </table>
         </div>
@@ -136,8 +152,10 @@
                     <th>İlaç Mg</th>
                     <th>Toplam İstenen Miktar</th>
                     <th>Toplam Kalan Miktar</th>
+                    <th>Toplam Kullanilan İlaç Sayısı</th>
                     <th>Toplam Artırılan İlaç Sayısı</th>
                     <th>Kar</th>
+                    <th>% Tasarruf </th>
                 </tr>
             </thead>
             <tbody class="mybody">
@@ -147,8 +165,10 @@
                         <td>{{info.ilacMik}}</td>
                         <td>{{info.toplamIstenenMik}}</td>
                         <td>{{info.toplamKalanMik}}</td>
-                        <td>{{info.toplamKarEdilenIlacSayisi}}</td>
-                        <td>{{info.toplamKar}}</td>
+                        <td>{{info.kullanilanIlac|floatformat:2}}</td>
+                        <td>{{info.toplamKarEdilenIlacSayisi|floatformat:2}}</td>
+                        <td>{{info.toplamKar|floatformat:2}}</td>
+                        <td>{{info.percentage|floatformat:2}}</td>
                     </tr>
                 {% endfor %}
             </tbody>

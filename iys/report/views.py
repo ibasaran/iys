@@ -11,6 +11,7 @@ import xhtml2pdf.pisa as pisa
 from django.utils import timezone
 import datetime
 from decimal import Decimal
+import math
 
 # Create your views here.
 
@@ -79,6 +80,8 @@ class IlacInfo(object):
         self.toplamKalanMik=0
         self.toplamKarEdilenIlacSayisi=0
         self.toplamKar=0
+        self.kullanilanIlac=0
+        self.percentage=0
 
 class HastaInfo(object):
     def __init__(self):
@@ -114,15 +117,20 @@ def addIlac(infoList, recete):
                     i.toplamKalanMik = i.toplamKalanMik + (recete.ilac.mg * 2  -  recete.istenenMiktar)
                 else:
                     i.toplamKalanMik = i.toplamKalanMik + (recete.ilac.mg -  recete.istenenMiktar)
-                i.toplamKarEdilenIlacSayisi = i.toplamKalanMik / ilac.ilacMik
+                i.toplamKarEdilenIlacSayisi = math.ceil(i.toplamKalanMik / ilac.ilacMik)
+                i.kullanilanIlac = math.ceil(i.toplamIstenenMik / ilac.ilacMik)
+                i.percentage = (100 * i.toplamKarEdilenIlacSayisi) / (i.toplamKarEdilenIlacSayisi + i.kullanilanIlac)
                 if (recete.ilac.fiyat):
                     i.toplamKar = Decimal(i.toplamKarEdilenIlacSayisi) * recete.ilac.fiyat
+                    
 
             
     if (not  varmi):
         ilac.toplamIstenenMik = ilac.toplamIstenenMik + recete.istenenMiktar
         ilac.toplamKalanMik = ilac.toplamKalanMik + (recete.ilac.mg -  recete.istenenMiktar)
-        ilac.toplamKarEdilenIlacSayisi = ilac.toplamKalanMik / ilac.ilacMik
+        ilac.toplamKarEdilenIlacSayisi = math.ceil(ilac.toplamKalanMik / ilac.ilacMik)
+        ilac.kullanilanIlac = math.ceil(ilac.toplamIstenenMik / ilac.ilacMik)
+        ilac.percentage = (100 * ilac.toplamKarEdilenIlacSayisi) / (ilac.toplamKarEdilenIlacSayisi + ilac.kullanilanIlac)
         if (recete.ilac.fiyat):
             ilac.toplamKar = Decimal(ilac.toplamKarEdilenIlacSayisi) * recete.ilac.fiyat
             
@@ -136,6 +144,8 @@ def durumReport(request):
     toplamHastaSayisi = 0
     toplamKar = 0
     toplamArtirilanIlacAdeti = 0
+    toplamKullanilanIlacAdeti = 0
+    genelYuzde = 0
     hastaList = []
     if (request.POST):
         baslangicTarihi = request.POST['baslangicTarihi']
@@ -162,7 +172,10 @@ def durumReport(request):
 
         for ilc in ilacInfo:
             toplamArtirilanIlacAdeti = toplamArtirilanIlacAdeti + ilc.toplamKarEdilenIlacSayisi
+            toplamKullanilanIlacAdeti = toplamKullanilanIlacAdeti + ilc.kullanilanIlac
             toplamKar = toplamKar + ilc.toplamKar
+
+        genelYuzde = math.ceil((100 * toplamArtirilanIlacAdeti) / (toplamArtirilanIlacAdeti + toplamKullanilanIlacAdeti))
 
         if request.POST.get('detay',False):
             template = get_template('rapor/durum/durumReportDetail.html')
@@ -174,7 +187,9 @@ def durumReport(request):
             'toplamReceteSayisi':toplamReceteSayisi,
             'toplamUygulananTedaviSayisi':toplamUygulananTedaviSayisi,
             'toplamArtirilanIlacAdeti':toplamArtirilanIlacAdeti,
-            'hastaList':hastaList})
+            'hastaList':hastaList,
+            'genelYuzde':genelYuzde,
+            'toplamKullanilanIlacAdeti':toplamKullanilanIlacAdeti})
         response = BytesIO()
         pdf = pisa.pisaDocument(BytesIO(str(html).encode('utf-8')), response)
         if not pdf.err:
