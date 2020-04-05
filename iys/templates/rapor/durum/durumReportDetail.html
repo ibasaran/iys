@@ -132,36 +132,28 @@ of <pdf:pagecount>
         </div>
 
         <div>
-            <div class="row">
-            <div class="column" style="background-color:#aaa;">
-                <h2>Column 1</h2>
-                <p>Some text..</p>
-            </div>
-            <div class="column" style="background-color:#bbb;">
-                <h2>Column 2</h2>
-                <p>Some text..</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="column" style="background-color:#aaa;">
-                <h2>Column 1</h2>
-                <p>Some text..</p>
-            </div>
-            <div class="column" style="background-color:#bbb;">
-                <h2>Column 2</h2>
-                <p>Some text..</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="column" style="background-color:#aaa;">
-                <h2>Column 1</h2>
-                <p>Some text..</p>
-            </div>
-            <div class="column" style="background-color:#bbb;">
-                <h2>Column 2</h2>
-                <p>Some text..</p>
-            </div>
-        </div>
+            <table class="table2" style="width: 60%; border:1px solid #dee2e6">
+                    <tr>
+                        <th class="leftColumn">Toplam Hasta Sayısı</th>
+                        <td class="rightColumn">{{toplamHastaSayisi}}</td>
+                    </tr>
+                    <tr>
+                        <td class="leftColumn">Toplam Reçete Sayısı</td>
+                        <td class="rightColumn">{{toplamReceteSayisi}}</td>
+                    </tr>
+                    <tr>
+                        <td class="leftColumn">Toplam Uygulanan Tedavi Sayısı</td>
+                        <td class="rightColumn">{{toplamUygulananTedaviSayisi}}</td>
+                    </tr>
+                    <tr>
+                        <td class="leftColumn">Toplam Artırılan İlaç Adeti</td>
+                        <td class="rightColumn"> {{toplamArtirilanIlacAdeti}}</td>
+                    </tr>
+                    <tr>
+                        <td class="leftColumn">Toplam Elde Edilen Kar(TL)</td>
+                        <td class="rightColumn">{{toplamKar}}</td>
+                    </tr>
+            </table>
         </div>
 
         <table class="table">
