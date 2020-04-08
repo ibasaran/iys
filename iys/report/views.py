@@ -94,6 +94,7 @@ class HastaInfo(object):
         self.istenenMik = 0
         self.ilacMik = 0
         self.kalanMik = 0
+        self.eczaneIlacMik = 0
 
 
 def addHasta(hastaList, recete):
@@ -104,8 +105,10 @@ def addHasta(hastaList, recete):
     hastaInfo.ilacMik = recete.ilac.mg
     if (recete.ilac.mg -  recete.istenenMiktar) < 0:
         hastaInfo.kalanMik = recete.ilac.mg * 2  - recete.istenenMiktar
+        hastaInfo.eczaneIlacMik = 2
     else:
         hastaInfo.kalanMik = recete.ilac.mg - recete.istenenMiktar
+        hastaInfo.eczaneIlacMik = 1
     hastaList.append(hastaInfo)
 
 def addIlac(infoList, recete):
