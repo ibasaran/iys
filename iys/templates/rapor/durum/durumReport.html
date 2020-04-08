@@ -166,19 +166,29 @@
             <tbody class="mybody">
                 {% for info in ilacInfo %}
                     <tr>
-                        <td>{{info.ilacAdi}}</td>
-                        <td>{{info.ilacMik}}</td>
-                        <td>{{info.tedaviSayisi}}</td>
-                        <td>{{info.eczaneMg}}</td>
-                        <td>{{info.toplamIstenenMik}}</td>
-                        <td>{{info.toplamKalanMik}}</td>
-                        <td>{{info.toplamKarEdilenIlacSayisi|floatformat:2}}</td>
-                        <td>{{info.toplamKar|floatformat:2}}</td>
-                        <td>{{info.percentage|floatformat:2}}</td>
+                        <td>{{info.ilacAdi}} </td>
+                        <td>{{info.ilacMik}} </td>
+                        <td>{{info.tedaviSayisi}} </td>
+                        <td>{{info.eczaneMg}} </td>
+                        <td>{{info.toplamIstenenMik}} </td>
+                        <td>{{info.toplamKalanMik}} </td>
+                        <td>{{info.toplamKarEdilenIlacSayisi|floatformat:2}} </td>
+                        <td>{{info.toplamKar|floatformat:2}} </td>
+                        <td>{{info.percentage|floatformat:2}} </td>
                     </tr>
                 {% endfor %}
 
-               
+                <tr>
+                    <td>TOPLAM</td>
+                    <td> </td>
+                    <td>{{toplamUygulananTedaviSayisi}}</td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td>{{toplamKullanilanIlacAdeti|floatformat:2}}</td>
+                    <td>{{toplamKar|floatformat:2}}</td>
+                    <td>{{genelYuzde|floatformat:2}}</td>
+                </tr>
             </tbody>
         </table>
     </div>
