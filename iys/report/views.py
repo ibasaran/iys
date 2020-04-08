@@ -121,12 +121,14 @@ def addIlac(infoList, recete):
             if i.ilacId == ilac.ilacId:
                 varmi = True
                 i.tedaviSayisi = i.tedaviSayisi + 1
-                i.eczaneMg = i.eczaneMg + recete.ilac.mg
-                i.eczaneIlcSayisi = i.eczaneIlcSayisi + 1
                 i.toplamIstenenMik = i.toplamIstenenMik + recete.istenenMiktar
                 if (recete.ilac.mg -  recete.istenenMiktar) < 0:
                     i.toplamKalanMik = i.toplamKalanMik + (recete.ilac.mg * 2  -  recete.istenenMiktar)
+                    i.eczaneIlcSayisi = i.eczaneIlcSayisi + 2
+                    i.eczaneMg = i.eczaneMg + recete.ilac.mg * 2
                 else:
+                    i.eczaneIlcSayisi = i.eczaneIlcSayisi + 1
+                    i.eczaneMg = i.eczaneMg + recete.ilac.mg
                     i.toplamKalanMik = i.toplamKalanMik + (recete.ilac.mg -  recete.istenenMiktar)
                 i.toplamKarEdilenIlacSayisi = math.ceil(i.toplamKalanMik / ilac.ilacMik)
                 i.kullanilanIlac = math.ceil(i.toplamIstenenMik / ilac.ilacMik)
