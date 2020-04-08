@@ -127,6 +127,10 @@
                         <td class="rightColumn">{{toplamUygulananTedaviSayisi}}</td>
                     </tr>
                     <tr>
+                        <td class="leftColumn">Eczanenin Verdiği Toplam İlaç Sayısı</td>
+                        <td class="rightColumn">{{toplamEczIlcSayisi}}</td>
+                    </tr>
+                    <tr>
                         <td class="leftColumn">Toplam Kullanıclan İlaç Sayısı</td>
                         <td class="rightColumn"> {{toplamKullanilanIlacAdeti|floatformat:2}}</td>
                     </tr>
@@ -150,11 +154,12 @@
                 <tr>
                     <th>İlaç Adı</th>
                     <th>İlaç Mg</th>
-                    <th>Toplam İstenen Miktar</th>
-                    <th>Toplam Kalan Miktar</th>
-                    <th>Toplam Kullanilan İlaç Sayısı</th>
+                    <th>Uygulanan Tedavi Sayısı</th>
+                    <th>Eczanenin Verdiği İlaç Miktarı (Mg)</th>
+                    <th>Toplam İstenen Miktar (Mg)</th>
+                    <th>Toplam Artırılan Miktar (Mg)</th>
                     <th>Toplam Artırılan İlaç Sayısı</th>
-                    <th>Kar</th>
+                    <th>Kar (TL)</th>
                     <th>% Tasarruf</th>
                 </tr>
             </thead>
@@ -163,9 +168,10 @@
                     <tr>
                         <td>{{info.ilacAdi}}</td>
                         <td>{{info.ilacMik}}</td>
+                        <td>{{info.tedaviSayisi}}</td>
+                        <td>{{info.eczaneMg}}</td>
                         <td>{{info.toplamIstenenMik}}</td>
                         <td>{{info.toplamKalanMik}}</td>
-                        <td>{{info.kullanilanIlac|floatformat:2}}</td>
                         <td>{{info.toplamKarEdilenIlacSayisi|floatformat:2}}</td>
                         <td>{{info.toplamKar|floatformat:2}}</td>
                         <td>{{info.percentage|floatformat:2}}</td>

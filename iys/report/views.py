@@ -82,6 +82,10 @@ class IlacInfo(object):
         self.toplamKar=0
         self.kullanilanIlac=0
         self.percentage=0
+        self.hastaSayisi=0
+        self.eczaneMg = 0
+        self.eczaneIlcSayisi = 0
+        self.tedaviSayisi = 0
 
 class HastaInfo(object):
     def __init__(self):
@@ -98,7 +102,10 @@ def addHasta(hastaList, recete):
     hastaInfo.hastaAdi = recete.hasta.name + ' ' + recete.hasta.surname
     hastaInfo.istenenMik = recete.istenenMiktar
     hastaInfo.ilacMik = recete.ilac.mg
-    hastaInfo.kalanMik = recete.ilac.mg - recete.istenenMiktar
+    if (recete.ilac.mg -  recete.istenenMiktar) < 0:
+        hastaInfo.kalanMik = recete.ilac.mg * 2  - recete.istenenMiktar
+    else:
+        hastaInfo.kalanMik = recete.ilac.mg - recete.istenenMiktar
     hastaList.append(hastaInfo)
 
 def addIlac(infoList, recete):
@@ -106,7 +113,9 @@ def addIlac(infoList, recete):
     ilac.ilacId = recete.ilac.id
     ilac.ilacAdi = recete.ilac.piyasaAdi
     ilac.ilacMik = recete.ilac.mg
-
+    ilac.eczaneMg = ilac.eczaneMg + recete.ilac.mg
+    ilac.eczaneIlcSayisi = ilac.eczaneIlcSayisi + 1
+    ilac.tedaviSayisi = ilac.tedaviSayisi + 1
     varmi = False
     if (len(infoList) > 0):
         for i in infoList:
@@ -146,6 +155,7 @@ def durumReport(request):
     toplamArtirilanIlacAdeti = 0
     toplamKullanilanIlacAdeti = 0
     genelYuzde = 0
+    toplamEczIlcSayisi = 0
     hastaList = []
     if (request.POST):
         baslangicTarihi = request.POST['baslangicTarihi']
@@ -174,6 +184,7 @@ def durumReport(request):
             toplamArtirilanIlacAdeti = toplamArtirilanIlacAdeti + ilc.toplamKarEdilenIlacSayisi
             toplamKullanilanIlacAdeti = toplamKullanilanIlacAdeti + ilc.kullanilanIlac
             toplamKar = toplamKar + ilc.toplamKar
+            toplamEczIlcSayisi = toplamEczIlcSayisi + ilc.eczaneIlcSayisi
 
         genelYuzde = math.ceil((100 * toplamArtirilanIlacAdeti) / (toplamArtirilanIlacAdeti + toplamKullanilanIlacAdeti))
 
@@ -190,7 +201,8 @@ def durumReport(request):
             'hastaList':hastaList,
             'genelYuzde':genelYuzde,
             'toplamKullanilanIlacAdeti':toplamKullanilanIlacAdeti,
-            'toplamKar':toplamKar})
+            'toplamKar':toplamKar,
+            'toplamEczIlcSayisi':toplamEczIlcSayisi})
         response = BytesIO()
         pdf = pisa.pisaDocument(BytesIO(str(html).encode('utf-8')), response)
         if not pdf.err:
