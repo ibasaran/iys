@@ -113,14 +113,16 @@ def addIlac(infoList, recete):
     ilac.ilacId = recete.ilac.id
     ilac.ilacAdi = recete.ilac.piyasaAdi
     ilac.ilacMik = recete.ilac.mg
-    ilac.eczaneMg = ilac.eczaneMg + recete.ilac.mg
-    ilac.eczaneIlcSayisi = ilac.eczaneIlcSayisi + 1
-    ilac.tedaviSayisi = ilac.tedaviSayisi + 1
+    
+    
     varmi = False
     if (len(infoList) > 0):
         for i in infoList:
             if i.ilacId == ilac.ilacId:
                 varmi = True
+                ilac.tedaviSayisi = ilac.tedaviSayisi + 1
+                ilac.eczaneMg = ilac.eczaneMg + recete.ilac.mg
+                ilac.eczaneIlcSayisi = ilac.eczaneIlcSayisi + 1
                 i.toplamIstenenMik = i.toplamIstenenMik + recete.istenenMiktar
                 if (recete.ilac.mg -  recete.istenenMiktar) < 0:
                     i.toplamKalanMik = i.toplamKalanMik + (recete.ilac.mg * 2  -  recete.istenenMiktar)
@@ -140,6 +142,9 @@ def addIlac(infoList, recete):
         ilac.toplamKarEdilenIlacSayisi = math.ceil(ilac.toplamKalanMik / ilac.ilacMik)
         ilac.kullanilanIlac = math.ceil(ilac.toplamIstenenMik / ilac.ilacMik)
         ilac.percentage = (100 * ilac.toplamKarEdilenIlacSayisi) / (ilac.toplamKarEdilenIlacSayisi + ilac.kullanilanIlac)
+        ilac.tedaviSayisi = ilac.tedaviSayisi + 1
+        ilac.eczaneMg = ilac.eczaneMg + recete.ilac.mg
+        ilac.eczaneIlcSayisi = ilac.eczaneIlcSayisi + 1
         if (recete.ilac.fiyat):
             ilac.toplamKar = Decimal(ilac.toplamKarEdilenIlacSayisi) * recete.ilac.fiyat
             
