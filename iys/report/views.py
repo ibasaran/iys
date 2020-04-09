@@ -82,6 +82,10 @@ class IlacInfo(object):
         self.toplamKar=0
         self.kullanilanIlac=0
         self.percentage=0
+        self.hastaSayisi=0
+        self.eczaneMg = 0
+        self.eczaneIlcSayisi = 0
+        self.tedaviSayisi = 0
 
 class HastaInfo(object):
     def __init__(self):
@@ -90,6 +94,7 @@ class HastaInfo(object):
         self.istenenMik = 0
         self.ilacMik = 0
         self.kalanMik = 0
+        self.eczaneIlacMik = 0
 
 
 def addHasta(hastaList, recete):
@@ -98,7 +103,12 @@ def addHasta(hastaList, recete):
     hastaInfo.hastaAdi = recete.hasta.name + ' ' + recete.hasta.surname
     hastaInfo.istenenMik = recete.istenenMiktar
     hastaInfo.ilacMik = recete.ilac.mg
-    hastaInfo.kalanMik = recete.ilac.mg - recete.istenenMiktar
+    if (recete.ilac.mg -  recete.istenenMiktar) < 0:
+        hastaInfo.kalanMik = recete.ilac.mg * 2  - recete.istenenMiktar
+        hastaInfo.eczaneIlacMik = 2
+    else:
+        hastaInfo.kalanMik = recete.ilac.mg - recete.istenenMiktar
+        hastaInfo.eczaneIlacMik = 1
     hastaList.append(hastaInfo)
 
 def addIlac(infoList, recete):
@@ -106,18 +116,22 @@ def addIlac(infoList, recete):
     ilac.ilacId = recete.ilac.id
     ilac.ilacAdi = recete.ilac.piyasaAdi
     ilac.ilacMik = recete.ilac.mg
-
     varmi = False
     if (len(infoList) > 0):
         for i in infoList:
             if i.ilacId == ilac.ilacId:
                 varmi = True
+                i.tedaviSayisi = i.tedaviSayisi + 1
                 i.toplamIstenenMik = i.toplamIstenenMik + recete.istenenMiktar
                 if (recete.ilac.mg -  recete.istenenMiktar) < 0:
                     i.toplamKalanMik = i.toplamKalanMik + (recete.ilac.mg * 2  -  recete.istenenMiktar)
+                    i.eczaneIlcSayisi = i.eczaneIlcSayisi + 2
+                    i.eczaneMg = i.eczaneMg + recete.ilac.mg * 2
                 else:
+                    i.eczaneIlcSayisi = i.eczaneIlcSayisi + 1
+                    i.eczaneMg = i.eczaneMg + recete.ilac.mg
                     i.toplamKalanMik = i.toplamKalanMik + (recete.ilac.mg -  recete.istenenMiktar)
-                i.toplamKarEdilenIlacSayisi = math.ceil(i.toplamKalanMik / ilac.ilacMik)
+                i.toplamKarEdilenIlacSayisi = math.floor(i.toplamKalanMik / ilac.ilacMik)
                 i.kullanilanIlac = math.ceil(i.toplamIstenenMik / ilac.ilacMik)
                 i.percentage = (100 * i.toplamKarEdilenIlacSayisi) / (i.toplamKarEdilenIlacSayisi + i.kullanilanIlac)
                 if (recete.ilac.fiyat):
@@ -126,11 +140,21 @@ def addIlac(infoList, recete):
 
             
     if (not  varmi):
+        if (recete.ilac.mg -  recete.istenenMiktar) < 0:
+            ilac.eczaneMg = ilac.eczaneMg + recete.ilac.mg * 2 
+            ilac.eczaneIlcSayisi = ilac.eczaneIlcSayisi + 2
+            ilac.toplamKalanMik = ilac.toplamKalanMik + (recete.ilac.mg * 2 -  recete.istenenMiktar)
+        else:
+            ilac.eczaneMg = ilac.eczaneMg + recete.ilac.mg
+            ilac.eczaneIlcSayisi = ilac.eczaneIlcSayisi + 1
+            ilac.toplamKalanMik = ilac.toplamKalanMik + (recete.ilac.mg -  recete.istenenMiktar)
+
         ilac.toplamIstenenMik = ilac.toplamIstenenMik + recete.istenenMiktar
-        ilac.toplamKalanMik = ilac.toplamKalanMik + (recete.ilac.mg -  recete.istenenMiktar)
-        ilac.toplamKarEdilenIlacSayisi = math.ceil(ilac.toplamKalanMik / ilac.ilacMik)
+        ilac.toplamKarEdilenIlacSayisi = math.floor(ilac.toplamKalanMik / ilac.ilacMik)
         ilac.kullanilanIlac = math.ceil(ilac.toplamIstenenMik / ilac.ilacMik)
         ilac.percentage = (100 * ilac.toplamKarEdilenIlacSayisi) / (ilac.toplamKarEdilenIlacSayisi + ilac.kullanilanIlac)
+        ilac.tedaviSayisi = ilac.tedaviSayisi + 1
+        
         if (recete.ilac.fiyat):
             ilac.toplamKar = Decimal(ilac.toplamKarEdilenIlacSayisi) * recete.ilac.fiyat
             
@@ -146,6 +170,7 @@ def durumReport(request):
     toplamArtirilanIlacAdeti = 0
     toplamKullanilanIlacAdeti = 0
     genelYuzde = 0
+    toplamEczIlcSayisi = 0
     hastaList = []
     if (request.POST):
         baslangicTarihi = request.POST['baslangicTarihi']
@@ -174,6 +199,7 @@ def durumReport(request):
             toplamArtirilanIlacAdeti = toplamArtirilanIlacAdeti + ilc.toplamKarEdilenIlacSayisi
             toplamKullanilanIlacAdeti = toplamKullanilanIlacAdeti + ilc.kullanilanIlac
             toplamKar = toplamKar + ilc.toplamKar
+            toplamEczIlcSayisi = toplamEczIlcSayisi + ilc.eczaneIlcSayisi
 
         genelYuzde = math.ceil((100 * toplamArtirilanIlacAdeti) / (toplamArtirilanIlacAdeti + toplamKullanilanIlacAdeti))
 
@@ -190,7 +216,8 @@ def durumReport(request):
             'hastaList':hastaList,
             'genelYuzde':genelYuzde,
             'toplamKullanilanIlacAdeti':toplamKullanilanIlacAdeti,
-            'toplamKar':toplamKar})
+            'toplamKar':toplamKar,
+            'toplamEczIlcSayisi':toplamEczIlcSayisi})
         response = BytesIO()
         pdf = pisa.pisaDocument(BytesIO(str(html).encode('utf-8')), response)
         if not pdf.err:
