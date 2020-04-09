@@ -7,13 +7,33 @@ import datetime
 
 class HastaReportForm(forms.Form):
     hasta = forms.ModelChoiceField(required=False,queryset=Hasta.objects.all(), widget=autocomplete.ModelSelect2(url='recete:hasta-autocomplete',attrs={'class':'form-control'}), empty_label='Seçiniz')
-    baslangicTarihi = forms.DateField(initial=datetime.date.today)
-    bitisTarihi = forms.DateField(initial=datetime.date.today)
+    baslangicTarihi = forms.DateField(widget=DateInput(
+        attrs={
+            "data-inputmask":"'mask': '99/99/9999'",
+            'class':'form-control'
+        }
+    ))
+    bitisTarihi = forms.DateField(widget=DateInput(
+        attrs={
+            "data-inputmask":"'mask': '99/99/9999'",
+            'class':'form-control'
+        }
+    ))
 
 
 class DurumRaporu(forms.Form):
-    baslangicTarihi = forms.DateField(initial=datetime.date.today)
-    bitisTarihi = forms.DateField(initial=datetime.date.today)
-    detay = forms.BooleanField(required=False) 
+    baslangicTarihi = forms.DateField(widget=DateInput(
+        attrs={
+            "data-inputmask":"'mask': '99/99/9999'",
+            'class':'form-control'
+        }
+    ))
+    bitisTarihi = forms.DateField( widget=DateInput(
+        attrs={
+            "data-inputmask":"'mask': '99/99/9999'",
+            'class':'form-control'
+        }
+    ))
+    detay = forms.BooleanField(required=False)
 
    

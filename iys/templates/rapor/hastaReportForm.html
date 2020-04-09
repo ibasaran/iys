@@ -58,13 +58,7 @@
 
 {% block js %}
 
-    <script type="text/javascript">
-        $('#id_baslangicTarihi').datetimepicker({
-            format: 'DD/MM/YYYY'
-        });
-        $('#id_bitisTarihi').datetimepicker({
-            format: 'DD/MM/YYYY'
-        });
-    </script>
+   <script type="text/javascript" src="{% static 'base/vendors/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js' %}"></script>
+
 
 {% endblock js %}
