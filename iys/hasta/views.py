@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 def hastaList(request):
 
     if (request.user.username == 'erkan' or request.user.username == 'aysel' or request.user.username == 'admin'):
-        return render(request, 'hasta/list.html', {'hastalar':Hasta.objects.all()})
+        return render(request, 'hasta/list.html', {'hastalar':Hasta.objects.all().order_by('-created_at')})
 
     hastaneId = request.session['hastaneId']
     user = request.user
@@ -17,7 +17,7 @@ def hastaList(request):
     hastaneKullanici = HospitalUser.objects.get(authorizedUser=user, hospital=hastane)
 
     if (hastaneKullanici):
-        hastalar = Hasta.objects.filter(servisBilgisi=hastaneKullanici.servis, durumTipi__name='AKTİF')
+        hastalar = Hasta.objects.filter(servisBilgisi=hastaneKullanici.servis, durumTipi__name='AKTİF').order_by('-created_at')
         return render(request, 'hasta/list.html', {'hastalar':hastalar})
     else:
         return render(request, 'hasta/list.html', {'hastalar':{}})

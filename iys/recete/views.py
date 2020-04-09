@@ -40,15 +40,15 @@ class ReceteList(ListView):
 
         if user.username == 'erkan' or user.username == 'aysel' or user.username=='ismail'or user.username == 'admin':
             if showIndex == '0':
-                return Recete.objects.all()
+                return Recete.objects.all().order_by('-created_at')
             elif showIndex == '1':
                 yesterday_min = datetime.datetime.combine(datetime.date.today() - timedelta(days = 1), datetime.time.min)
                 yesterday_max = datetime.datetime.combine(datetime.date.today() - timedelta(days = 1), datetime.time.max)
-                return Recete.objects.filter(receteTarihi__range=(yesterday_min,yesterday_max))
+                return Recete.objects.filter(receteTarihi__range=(yesterday_min,yesterday_max)).order_by('-created_at')
             else:
                 today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
                 today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
-                return Recete.objects.filter(receteTarihi__range=(today_min,today_max))
+                return Recete.objects.filter(receteTarihi__range=(today_min,today_max)).order_by('-created_at')
         # elif user.username == 'admin':
         #     if showIndex == '0':
         #         return Recete.objects.all()
@@ -66,15 +66,15 @@ class ReceteList(ListView):
             hastaneKullanici = HospitalUser.objects.get(authorizedUser=user, hospital=hastane)
 
             if showIndex == '0':
-                return Recete.objects.filter(hasta__servisBilgisi=hastaneKullanici.servis,hasta__durumTipi__name='AKTİF')
+                return Recete.objects.filter(hasta__servisBilgisi=hastaneKullanici.servis,hasta__durumTipi__name='AKTİF').order_by('-created_at')
             elif showIndex == '1':
                 yesterday_min = datetime.datetime.combine(datetime.date.today() - timedelta(days = 1), datetime.time.min)
                 yesterday_max = datetime.datetime.combine(datetime.date.today() - timedelta(days = 1), datetime.time.max)
-                return Recete.objects.filter(hasta__servisBilgisi=hastaneKullanici.servis, receteTarihi__range=(yesterday_min,yesterday_max),hasta__durumTipi__name='AKTİF')
+                return Recete.objects.filter(hasta__servisBilgisi=hastaneKullanici.servis, receteTarihi__range=(yesterday_min,yesterday_max),hasta__durumTipi__name='AKTİF').order_by('-created_at')
             else:
                 today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
                 today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
-                return Recete.objects.filter(hasta__servisBilgisi=hastaneKullanici.servis, receteTarihi__range=(today_min,today_max),hasta__durumTipi__name='AKTİF')
+                return Recete.objects.filter(hasta__servisBilgisi=hastaneKullanici.servis, receteTarihi__range=(today_min,today_max),hasta__durumTipi__name='AKTİF').order_by('-created_at')
 
 
 class ReceteCreate(CreateView):
@@ -94,19 +94,18 @@ class ReceteUygulamaCreate(CreateView):
                 hpk = self.kwargs['hpk']
                 hpk = hpk.replace('tekrar', '')
                 recete = get_object_or_404(Recete, pk=hpk)
-                print(recete.uygulamaSaati)
                 if (recete):
                     return {
                         'hastane_id':self.request.session['hastaneId'],
                         'hasta': recete.hasta.id,
-                        'receteTarihi' : recete.receteTarihi,
                         'ilac': recete.ilac,
                         'mayi': recete.mayi,
                         'istenenMiktar': recete.istenenMiktar,
                         'birimTipi': recete.birimTipi,
                         'dolumTipi': recete.dolumTipi,
                         'hemsireNotu': recete.hemsireNotu,
-                        'uygulamaYolu': recete.uygulamaYolu
+                        'uygulamaYolu': recete.uygulamaYolu,
+                        'uygulamaSaati':recete.uygulamaSaati.all()
                     }
             else:
                 recete = get_object_or_404(Recete, pk=self.kwargs['hpk'])

@@ -9,7 +9,7 @@
     <div  style="padding:0; max-width:150px;float:left">
       <form method="GET" action="{% url 'recete:recete-list' type=0 %}">
         <div >
-            <button type="submit" class="btn btn-warning">Bütün Reçeteler</button>
+            <button id="butun" type="submit" class="btn btn-primary">Bütün Reçeteler</button>
           </div>
       </form>
     </div>
@@ -17,7 +17,7 @@
       <form method="GET" action="{% url 'recete:recete-list' type=1 %}"> 
       
         <div  style="padding:0">
-            <button type="submit" class="btn btn-success">Dünün Reçeteleri</button>
+            <button id="dun" type="submit" class="btn btn-primary">Dünün Reçeteleri</button>
           </div>
       </form>
     </div>
@@ -25,7 +25,7 @@
       <form method="GET" action="{% url 'recete:recete-list' type=2 %}">
       
         <div  style="padding:0">
-            <button type="submit" class="btn btn-primary">Bugünün Reçeteleri</button>
+            <button id="bugun" type="submit" class="btn btn-primary">Bugünün Reçeteleri</button>
           </div>
       </form>
     </div>
@@ -43,7 +43,7 @@
         <th>Servis Adı</th>
         <th>Etken Madde</th>
         <th>Düzenle</th>
-        {% comment %} <th>Tekrarla</th> {% endcomment %}
+        <th>Tekrarla</th>
         {% if request.user.username == "admin" %}
           <th>Sil</th>
         {% endif %}
@@ -61,11 +61,11 @@
                 <td>{{recete.hasta.servisBilgisi.servisAdi}}</td>
                 <td>{{recete.ilac.etkenMadde}}</td>
                 <td><a href="{% url 'recete:recete-update' recete.pk 0 %}">Düzenle</a></td>
-                {% comment %} <td>
+                <td>
                   {% with recete.pk|stringformat:"i"|add:"tekrar" as addpk %}
                   <a href="{% url 'recete:recete-add'  hpk=addpk %}">Tekrarla</a>
                   {% endwith %}
-                </td> {% endcomment %}
+                </td>
                 {% if request.user.username == "admin" %}
                     <td>
                         <form method="post" action="{% url 'recete:recete-delete' recete.pk %}">
@@ -82,3 +82,28 @@
 
 
 {% endblock content %}
+
+
+{% block js %}
+
+
+
+<script>
+
+  $( function() {
+    var wurl = window.location.pathname;
+    if (wurl.indexOf("0") !== -1){
+      $("#butun").attr('class', "btn btn-warning");
+    } else if (wurl.indexOf("1") !== -1) {
+      $("#dun").attr('class', "btn btn-warning");
+    } else if (wurl.indexOf("2") !== -1) {
+      $("#bugun").attr('class', "btn btn-warning");
+    } else {
+      alert('any');
+    }
+  });
+  
+</script>
+
+
+{% endblock js %}
