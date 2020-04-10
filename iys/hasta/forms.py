@@ -36,3 +36,22 @@ class HastaForm(ModelForm):
         if servisBilgisi is None:
             print('SERVIS BİLGİSİ BOS OLAMAZ')
             raise forms.ValidationError("Servis Bilgisi Boş Olamaz")
+
+
+
+
+class HastaAramaForm(forms.Form):
+    protokolNo = forms.CharField(max_length=100,required=False,
+    widget=TextInput(attrs={'class':'form-control'}))
+    name = forms.CharField(max_length=100,required=False,widget=TextInput(attrs={'class':'form-control','required':'required'}))
+    surname = forms.CharField(max_length=100,required=False,widget=TextInput(attrs={'class':'form-control','required':'required'}))
+    tcNo = forms.CharField(max_length=11, required=False,widget=TextInput(attrs={'class':'form-control','required':'required'}))
+    dogumTarihi = forms.DateField(required=False, widget=DateInput(
+        attrs={
+            "data-inputmask":"'mask': '99/99/9999'",
+            'class':'form-control'
+        }
+    ))
+    servisBilgisi = forms.ModelChoiceField(required=False,queryset=ServisBilgileri.objects.all(), widget=forms.Select(attrs={'class':'form-control'}), empty_label='Seçiniz')
+    cinsiyet = forms.ModelChoiceField(required=False,queryset=Cinsiyet.objects.all(), widget=forms.Select(attrs={'class':'form-control'}), empty_label='Seçiniz')
+    durumTipi = forms.ModelChoiceField(required=False,queryset=DurumTipi.objects.all(), widget=forms.Select(attrs={'class':'form-control'}), empty_label='Seçiniz')

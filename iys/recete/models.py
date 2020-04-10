@@ -20,7 +20,8 @@ class Recete(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     dolumTipi = models.ForeignKey(DolumTipi,on_delete=models.SET_NULL, null=True, blank=True)
-
+    durduruldu = models.BooleanField(blank=True,null=True,default=False)
+    durdurulmaTarihi = models.DateTimeField(blank=True,null=True)
 
     # def clean(self):
     #     if self.mayi is None:

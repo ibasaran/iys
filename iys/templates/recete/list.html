@@ -44,6 +44,7 @@
         <th>Etken Madde</th>
         <th>Düzenle</th>
         <th>Tekrarla</th>
+         <th>Durdur</th>
         {% if request.user.username == "admin" %}
           <th>Sil</th>
         {% endif %}
@@ -52,7 +53,11 @@
 
     <tbody>
         {% for recete in object_list %}
+          {% if recete.durduruldu %}
+            <tr style="background-color:#ED553B; color:white">
+          {% else %}
             <tr>
+          {% endif %}
                 <td>{{recete.hasta.name}}</td>
                 <td>{{recete.hasta.surname}}</td>
                 <td>{{recete.hasta.protokolNo}}</td>
@@ -65,6 +70,9 @@
                   {% with recete.pk|stringformat:"i"|add:"tekrar" as addpk %}
                   <a href="{% url 'recete:recete-add'  hpk=addpk %}">Tekrarla</a>
                   {% endwith %}
+                </td>
+                <td>
+                  <a href="{% url 'recete:receteDurdur'  recete.pk %}">Durdur</a>
                 </td>
                 {% if request.user.username == "admin" %}
                     <td>

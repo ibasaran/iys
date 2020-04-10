@@ -1,7 +1,7 @@
 from django.urls import reverse
 from django.db import transaction
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render,get_object_or_404, redirect
 from .models import Recete, ReceteUygulama
 from core.models import UygulamaSaati
 from .forms import ReceteFormSet, ReceteForm
@@ -208,7 +208,15 @@ class ReceteDelete(DeleteView):
     #success_url = '/'
 
     def get_success_url(self):
-        return reverse('recete:recete-list',kwargs={'type' : 0})
+        return reverse('recete:recete-list',kwargs={'type' : 2})
+
+
+def receteDurdur(request,id):
+    recete = get_object_or_404(Recete, pk=id)
+    recete.durduruldu = True
+    recete.durdurulmaTarihi = datetime.datetime.now() + datetime.timedelta(hours=3)
+    recete.save()
+    return redirect(reverse('recete:recete-list',kwargs={'type' : 2}))
 
 class IlacInfo(object):
 
@@ -245,7 +253,7 @@ def hazirlamaList(request):
 
     if(request.method == 'POST'):
         receteTarihi = request.POST.get('receteTarihi', '')
-        hazirlamaListesi = Recete.objects.filter(hastane__id=request.session['hastaneId'],receteTarihi=datetime.datetime.strptime(str(receteTarihi), "%d/%m/%Y").date(),hasta__durumTipi__name='AKTİF')
+        hazirlamaListesi = Recete.objects.filter(hastane__id=request.session['hastaneId'],receteTarihi=datetime.datetime.strptime(str(receteTarihi), "%d/%m/%Y").date(),hasta__durumTipi__name='AKTİF',durduruldu=False)
         for recete in hazirlamaListesi:
             for saat in recete.uygulamaSaati.all():
                 addIlac(ilacInfo,recete)
@@ -254,7 +262,7 @@ def hazirlamaList(request):
     else:
         today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
         today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
-        hazirlamaListesi = Recete.objects.filter(hastane__id=request.session['hastaneId'],receteTarihi__range=(today_min, today_max),hasta__durumTipi__name='AKTİF')
+        hazirlamaListesi = Recete.objects.filter(hastane__id=request.session['hastaneId'],receteTarihi__range=(today_min, today_max),hasta__durumTipi__name='AKTİF',durduruldu=False)
         context['hazirlamaListesi'] = hazirlamaListesi
         for recete in hazirlamaListesi:
             for saat in recete.uygulamaSaati.all():

@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'recete/(?P<pk>[0-9]+)/(?P<isCreate>[0-9]+)/$', views.ReceteUygulamaUpdate.as_view(), name='recete-update'),
     url(r'recete/(?P<pk>[0-9]+)/delete/$', views.ReceteDelete.as_view(), name='recete-delete'),
     path('receteHazirla/', views.hazirlamaList , name='hazirlamaList'),
+    path('receteDurdur/<int:id>', views.receteDurdur , name='receteDurdur'),
     url(
          r'^mayi-autocomplete/$',
         views.MayiAutocomplete.as_view(),

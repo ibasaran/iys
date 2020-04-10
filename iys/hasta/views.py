@@ -1,5 +1,5 @@
 from django.shortcuts import render,get_object_or_404
-from hasta.forms import HastaForm
+from hasta.forms import HastaForm, HastaAramaForm
 from hasta.models import Hasta
 from core.models import Hospital, HospitalUser
 from django.contrib.auth.models import User
@@ -61,3 +61,20 @@ def hastaEdit(request, id):
         hastaForm = HastaForm(instance=hasta)
 
     return render(request, 'hasta/edit.html', {'id':id,'form':hastaForm, 'info':info, 'message':message})
+
+
+def hastaAra(request):
+    message = None
+    info = None
+    if (request.POST):
+        hastaAramaForm = HastaAramaForm(request.POST)
+        if hastaAramaForm.is_valid():
+            hastaAramaForm.save()
+            info = 'Başarı ile güncellendi.'
+        else:
+            message = "Hatalı kayıt! Tekrar deneyiniz."
+        hastaAramaForm = HastaAramaForm()
+    else:
+        hastaAramaForm = HastaAramaForm()
+
+    return render(request, 'hasta/search.html', {'form':hastaAramaForm, 'info':info, 'message':message})
