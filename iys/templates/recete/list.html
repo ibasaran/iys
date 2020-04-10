@@ -72,7 +72,7 @@
                   {% endwith %}
                 </td>
                 <td>
-                  <a href="{% url 'recete:receteDurdur'  recete.pk %}">Durdur</a>
+                  <a href="#" onclick="openDialog({{recete.pk}})">Durdur</a>
                 </td>
                 {% if request.user.username == "admin" %}
                     <td>
@@ -88,15 +88,21 @@
   </table>
 
 
-
+<div id="dialog-confirm" title="Reçete Durdurma">
+        <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>Bu reçeteyi durdurdurmak (stoplamak) istiyor musunu ? </p>
+</div>
 {% endblock content %}
 
 
 {% block js %}
 
-
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script>
+var dialog;
+var pk;
+
 
   $( function() {
     var wurl = window.location.pathname;
@@ -109,7 +115,37 @@
     } else {
       alert('any');
     }
+
+
+
+
+ dialog = $( "#dialog-confirm" ).dialog({
+      resizable: false,
+      height: "auto",
+      width: 400,
+      modal: true,
+      autoOpen: false,
+      buttons: {
+        "Durdur": function() {
+            var rurl = "{% url 'recete:receteDurdur'  1123 %}"
+            location.href = rurl.replace("1123", pk);
+        },
+        "İptal": function() {
+          $( this ).dialog( "close" );
+        }
+      }
+    });
+
+
+    
+
+
   });
+
+  function openDialog(pkid) {
+      pk = pkid;
+      dialog.dialog( "open" );
+    }
   
 </script>
 
